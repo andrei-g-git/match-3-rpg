@@ -1,9 +1,10 @@
 extends TextureButton
 """
-			Y
-	o--------------->
-	|
-  X |  
+			row
+	o------------------------>
+  c |
+  o |  
+  l |
 	|
 	v
 """
@@ -13,6 +14,8 @@ var drag_direction = Vector2.ZERO
 var _total_drag = Vector2.ZERO
 
 @export var drag_treshold: int = 16
+@export var side_length: int = 64
+@export var margin : int = 3
 
 var _grid_index = Vector2i.ZERO
 var tween : Tween
@@ -29,10 +32,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass	
 
+
 func update(self_position, destination):
+	var reverse_destination = MathUtilities.invert_vecotr(destination)
 	if self_position == _grid_index:
-		var target_pixel_position = destination * 45
+		var target_pixel_position = reverse_destination * (side_length + margin)
 		move(target_pixel_position)
+
 
 func move(target: Vector2):
 	var delta = target - position
@@ -41,14 +47,7 @@ func move(target: Vector2):
 		.set_trans(Tween.TRANS_ELASTIC) \
 		.set_ease(Tween.EASE_OUT) \
 		.tween_property(self, "position", target, 0.5)
-	#tween.interpolate_value(
-		#position,
-		#delta,
-		#0.15,
-		#0.3,
-		#Tween.TRANS_ELASTIC,
-		#Tween.EASE_OUT
-	#)
+
 
 func get_grid_index() -> Vector2i:
 	return _grid_index

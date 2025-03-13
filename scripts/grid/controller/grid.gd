@@ -1,11 +1,11 @@
 extends GridContainer
 
 """
-			Y
-	o--------------->
-	|
-  X |  
-	|
+			row
+	o------------------------------->
+  c |
+  o |  
+  l |
 	v
 """
 @export var cols : int
@@ -20,13 +20,22 @@ var _pieces_in_grid : Array[Array] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	model = GridModel.new()
-	columns = cols
-	
 	pieces = piecessss#.slice(0, 3)	
+	var possible_tile_names : Array[String] = []
+	for tile_resource in pieces:
+		var tile_name = (tile_resource as Resource) \
+			.instantiate() \
+			.name \
+			.replace("&", "")
+		possible_tile_names.append(tile_name)
+	model = GridModel.new(
+		possible_tile_names,
+		cols,
+		rows
+	)
 	
-	_spawn_pieces(_pieces_in_grid)
+	columns = cols
+	_spawn_pieces()#_pieces_in_grid)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,35 +43,38 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _spawn_pieces(pieces_in_grid: Array[Array]):
-	#var pieces_in_grid: Array[Array] = []
-	pieces_in_grid.resize(rows)
-	for a in rows:
-		pieces_in_grid[a].resize(cols)
-		for b in cols:
-			pieces_in_grid[a][b] = ""	
-
-	var test_array = []
-
-	for x in rows:
-		for y in cols:
-			var loops = 0
-			var piece = _choose_random_piece(pieces)
-			#.append(piece.name.replace("&", ""))
-
-			#print(piece.name)
-			while(_is_match_at(x, y, pieces_in_grid, piece.name) and loops < 100): # can be recursive function
-				piece = _choose_random_piece(pieces)
-				loops += 1
-			#await get_tree().create_timer(0.2).timeout
-			var this_tile_name = piece.name.replace("&", "")
-			pieces_in_grid[x][y] = this_tile_name#piece.name.replace("&", "")
-			piece.set_grid_index(x, y)
-			add_child(piece)  #MVC ALL PIECE VIEWS SHOULD BE RE_POPULATED EACH TIME AN ACTION IS COMPLETED
+func _spawn_pieces():#pieces_in_grid: Array[Array]):
+	##var pieces_in_grid: Array[Array] = []
+	#pieces_in_grid.resize(rows)
+	#for a in rows:
+		#pieces_in_grid[a].resize(cols)
+		#for b in cols:
+			#pieces_in_grid[a][b] = ""	
+#
+	#var test_array = []
+#
+	#for x in rows:
+		#for y in cols:
+			#var loops = 0
+			#var piece = _choose_random_piece(pieces)
+			##.append(piece.name.replace("&", ""))
+#
+			##print(piece.name)
+			#while(_is_match_at(x, y, pieces_in_grid, piece.name) and loops < 100): # can be recursive function
+				#piece = _choose_random_piece(pieces)
+				#loops += 1
+			##await get_tree().create_timer(0.2).timeout
+			#var this_tile_name = piece.name.replace("&", "")
+			#pieces_in_grid[x][y] = this_tile_name#piece.name.replace("&", "")
 			
-			model.register(piece)
-			
-			(piece as BaseButton).pressed.connect(_handle_possible_swap.bind(piece, pieces_in_grid, pieces, this_tile_name)) # this is basically observer pattern shit so it can stay...
+	var pieces_in_grid = model.create_grid()
+	print_array_initials(pieces_in_grid, "TEST NEW MODEL SPAWN")
+			#piece.set_grid_index(x, y)
+			#add_child(piece)  #MVC ALL PIECE VIEWS SHOULD BE RE_POPULATED EACH TIME AN ACTION IS COMPLETED
+			#
+			#model.register(piece)
+			#
+			#(piece as BaseButton).pressed.connect(_handle_possible_swap.bind(piece, pieces_in_grid, pieces, this_tile_name)) # this is basically observer pattern shit so it can stay...
 	var bp = 123
 	
 	#return pieces_in_grid
