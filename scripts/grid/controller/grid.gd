@@ -43,41 +43,48 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _spawn_pieces():#pieces_in_grid: Array[Array]):
-	##var pieces_in_grid: Array[Array] = []
-	#pieces_in_grid.resize(rows)
-	#for a in rows:
-		#pieces_in_grid[a].resize(cols)
-		#for b in cols:
-			#pieces_in_grid[a][b] = ""	
-#
-	#var test_array = []
-#
-	#for x in rows:
-		#for y in cols:
-			#var loops = 0
-			#var piece = _choose_random_piece(pieces)
-			##.append(piece.name.replace("&", ""))
-#
-			##print(piece.name)
-			#while(_is_match_at(x, y, pieces_in_grid, piece.name) and loops < 100): # can be recursive function
-				#piece = _choose_random_piece(pieces)
-				#loops += 1
-			##await get_tree().create_timer(0.2).timeout
-			#var this_tile_name = piece.name.replace("&", "")
-			#pieces_in_grid[x][y] = this_tile_name#piece.name.replace("&", "")
-			
+func _spawn_pieces():#pieces_in_grid: Array[Array]):	
 	var pieces_in_grid = model.create_grid()
 	print_array_initials(pieces_in_grid, "TEST NEW MODEL SPAWN")
 			#piece.set_grid_index(x, y)
 			#add_child(piece)  #MVC ALL PIECE VIEWS SHOULD BE RE_POPULATED EACH TIME AN ACTION IS COMPLETED
 			#
 			#model.register(piece)
-			#
-			#(piece as BaseButton).pressed.connect(_handle_possible_swap.bind(piece, pieces_in_grid, pieces, this_tile_name)) # this is basically observer pattern shit so it can stay...
+	var grid_children =  _populate_grid_with_nodes(pieces_in_grid, piecessss, cols, rows)
+	model.initialize_observers()
+	for x in rows:
+		for y in cols:
+			var tile_node = grid_children[x][y]	
+			tile_node.set_grid_index(x, y)
+			model.register(tile_node, x, y)	
+			(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, pieces_in_grid, piecessss, pieces_in_grid[x][y])) # this is basically observer pattern shit so it can stay...
 	var bp = 123
 	
 	#return pieces_in_grid
+
+
+func _populate_grid_with_nodes(grid : Array[Array], possible_pieces : Array[Resource], cols: int, rows: int):
+	var possible_instance_names : Array[String] = []
+	var instance_grid : Array[Array] = []
+	instance_grid = Collections.resize_2d_array(instance_grid, rows, cols, "")
+	for tile_resource in possible_pieces:
+		possible_instance_names.append(tile_resource.instantiate().name.replace("&", ""))
+	for x in rows:
+		for y in cols:
+			for z in possible_instance_names.size():
+				var instance_name = possible_instance_names[z]
+				var looped_tile = grid[x][y]
+				if instance_name == grid[x][y]:
+					var instance = possible_pieces[z].instantiate() #
+					instance_grid[x][y] = instance
+
+					add_child(instance)  #this doens't work for some reason despite instance_grid seemingly getting the righth items...
+	#for a in rows: #godot is geting a bit flaky for me...
+		#for b in cols:
+			#add_child(instance_grid[a][b])
+			#print(a, "    ", b, "   ", instance_grid[a][b].name)
+	return instance_grid
+
 
 func _choose_random_piece(pieces_: Array[Resource]):
 	var random = floor(randi_range(0, pieces_.size() - 1))
@@ -143,10 +150,10 @@ func _handle_possible_swap(tile: BaseButton, tiles: Array[Array], tile_resources
 	
 	#_remove_matches(new_board)
 	
-	print_array_initials(tiles, "original")
-	print_array_initials(new_board, "altered")
+	#print_array_initials(tiles, "original")
+	#print_array_initials(new_board, "altered")
 	
-	_populate_grid(new_board, tile_resources)
+	#_populate_grid(new_board, tile_resources)
 
 
 func _swap_2_tiles(

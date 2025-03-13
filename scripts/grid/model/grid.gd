@@ -4,7 +4,9 @@ var last_grid: Array[Array] = []
 var current_grid: Array[Array] = []
 #var source: Vector2i = Vector2i.ZERO #might not need
 #var destination: Vector2i = Vector2i.ZERO
-var tile_nodes: Array[Control] = []
+#var tile_nodes: Array[Control] = []
+var tile_nodes: Array[Array] = [] #it's not strictly following the observer pattern but a 2d array is useful for picking specific observers
+
 var possible_tiles: Array[String] = []
 var columns := 0
 var rows := 0
@@ -78,8 +80,12 @@ func _generate_non_matching_tile(default_or_chosen_tile: String, x: int, y: int,
 	return default_or_chosen_tile #i have no idea what I'm doing lol
 
 
-func register(tile: Control): #should be typed as whatever class the tile is; later I should give the tile node an interface
-	tile_nodes.append(tile)
+func initialize_observers():
+	Collections.resize_2d_array(tile_nodes, rows, columns, null)
+
+func register(tile: Control, x: int, y: int): #should be typed as whatever class the tile is; later I should give the tile node an interface
+	#tile_nodes.append(tile)
+	tile_nodes[x][y] = tile
 	
 func notify(x: int, y: int):
 	#this is inefficient but it decouples the observer's interface
@@ -107,7 +113,26 @@ func swap_2(
 	return []	
 	
 func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
-	for tile in tile_nodes:
-		tile.update(source, destination)
-		tile.update(destination, source)
+	var source_node : Control = tile_nodes[source.x][source.y]
+	var destination_node : Control = tile_nodes[destination.x][destination.y]
+	_print_grid_coords("@@@@@@@@@@@")
+	source_node.update(destination)
+	destination_node.update(source)
+	_print_grid_coords("%%%%%%%%%%%%")	
+		
+	#var coord_grid = Array[Array]	
+	#coord_array.resize(rows)
+
+
 	
+	#for tile in tile_nodes:
+		#tile.update(source, destination)
+		#tile.update(destination, source)
+	
+func _print_grid_coords(header: String):
+
+	print(header, "\n")
+	for i in rows:
+		var coordinate_column = tile_nodes[i].map(func (item): return ( str(item.get_grid_index().x) + str(item.get_grid_index().y) )  ) #get first letter		
+		print(coordinate_column)
+	print("\n")		

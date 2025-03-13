@@ -33,12 +33,13 @@ func _process(delta: float) -> void:
 	pass	
 
 
-func update(self_position, destination):
+func update(destination):#self_position, destination):
 	var reverse_destination = MathUtilities.invert_vecotr(destination)
-	if self_position == _grid_index:
-		var target_pixel_position = reverse_destination * (side_length + margin)
-		move(target_pixel_position)
-
+	#if self_position == _grid_index:
+	var target_pixel_position = reverse_destination * (side_length + margin)
+	move(target_pixel_position)
+	set_grid_index(destination.x, destination.y) 
+	
 
 func move(target: Vector2):
 	var delta = target - position
