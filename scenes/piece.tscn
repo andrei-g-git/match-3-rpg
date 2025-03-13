@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://diysapb8m6y4"]
+
+[ext_resource type="Script" uid="uid://dktgytqwlcjiw" path="res://scripts/piece/controller/piece.gd" id="1_gebih"]
+
+[node name="Piece" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_gebih")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

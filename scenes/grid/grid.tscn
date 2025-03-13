@@ -1,0 +1,19 @@
+[gd_scene load_steps=9 format=3 uid="uid://77yyp1337wti"]
+
+[ext_resource type="Script" uid="uid://c2aprjej6j1qg" path="res://scripts/grid/controller/grid.gd" id="1_gu1vn"]
+[ext_resource type="PackedScene" uid="uid://4tth0tdowk1d" path="res://scenes/pieces/amethyst.tscn" id="2_0i434"]
+[ext_resource type="PackedScene" uid="uid://cailn5etax7xo" path="res://scenes/pieces/diamond.tscn" id="3_scovc"]
+[ext_resource type="PackedScene" uid="uid://dasuqdgiwogic" path="res://scenes/pieces/emerald.tscn" id="4_tdvtp"]
+[ext_resource type="PackedScene" uid="uid://dgyy23b4qrtjx" path="res://scenes/pieces/quarz.tscn" id="5_julh8"]
+[ext_resource type="PackedScene" uid="uid://davws0d4wmhxj" path="res://scenes/pieces/ruby.tscn" id="6_n0emo"]
+[ext_resource type="PackedScene" uid="uid://dc5reap4ycv8c" path="res://scenes/pieces/sapphire.tscn" id="7_s2f7s"]
+[ext_resource type="PackedScene" uid="uid://dgl23g4h3spgi" path="res://scenes/pieces/turqoise.tscn" id="8_nl3df"]
+
+[node name="Grid" type="GridContainer"]
+offset_right = 192.0
+offset_bottom = 128.0
+columns = 10
+script = ExtResource("1_gu1vn")
+cols = 10
+rows = 6
+piecessss = Array[Resource]([ExtResource("2_0i434"), ExtResource("3_scovc"), ExtResource("4_tdvtp"), ExtResource("5_julh8"), ExtResource("6_n0emo"), ExtResource("7_s2f7s"), ExtResource("8_nl3df")])

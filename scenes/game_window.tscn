@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b425t5rr0woyx"]
+
+[ext_resource type="Texture2D" uid="uid://c7myg31f1ukcj" path="res://assets/images/background/bg.png" id="1_wyien"]
+[ext_resource type="PackedScene" uid="uid://77yyp1337wti" path="res://scenes/grid/grid.tscn" id="2_5snyb"]
+
+[node name="GameWindow" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1601.0
+offset_bottom = 901.0
+texture = ExtResource("1_wyien")
+stretch_mode = 6
+
+[node name="Grid" parent="." instance=ExtResource("2_5snyb")]
