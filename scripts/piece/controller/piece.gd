@@ -19,6 +19,9 @@ var _total_drag = Vector2.ZERO
 
 var _grid_index = Vector2i.ZERO
 var tween : Tween
+
+signal updated
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.pressed.connect(_on_self_pressed)
@@ -38,17 +41,26 @@ func update(destination):#self_position, destination):
 	#if self_position == _grid_index:
 	var target_pixel_position = reverse_destination * (side_length + margin)
 	move(target_pixel_position)
-	set_grid_index(destination.x, destination.y) 
+	#set_grid_index(destination.x, destination.y) 
 	
 
 func move(target: Vector2):
 	var delta = target - position
-	
-	create_tween() \
+	var time_start = int(Time.get_unix_time_from_system())
+
+	var tile_tween = create_tween() \
 		.set_trans(Tween.TRANS_ELASTIC) \
 		.set_ease(Tween.EASE_OUT) \
 		.tween_property(self, "position", target, 0.5)
+	#await tile_tween.finished
+	#updated.emit()
+	tile_tween.connect("finished", _on_move_finished)
+	var time_end = int(Time.get_unix_time_from_system())
+	print(time_start, "\n", time_end, "\n")
 
+
+func _on_move_finished():
+	updated.emit()
 
 func get_grid_index() -> Vector2i:
 	return _grid_index

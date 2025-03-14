@@ -1,7 +1,7 @@
 class_name GridModel
 
-var last_grid: Array[Array] = []
-var current_grid: Array[Array] = []
+var _current_grid: Array[Array] = [] #these should have _ prefix, they're private
+var _new_grid: Array[Array] = [] #not using anymore
 #var source: Vector2i = Vector2i.ZERO #might not need
 #var destination: Vector2i = Vector2i.ZERO
 #var tile_nodes: Array[Control] = []
@@ -22,11 +22,11 @@ func _init(
 	rows = rows_
 
 func create_grid():
-	current_grid.resize(rows)
+	_current_grid.resize(rows)
 	for a in rows:
-		current_grid[a].resize(columns)
+		_current_grid[a].resize(columns)
 		for b in columns:
-			current_grid[a][b] = ""		
+			_current_grid[a][b] = ""		
 	for x in rows:
 		for y in columns:
 			var loops = 0
@@ -34,14 +34,14 @@ func create_grid():
 				_choose_random_tile(possible_tiles), 
 				x, 
 				y, 
-				current_grid, 
+				_current_grid, 
 				possible_tiles, 
 				loops
 			)
 			#next_tile.replace("&", "")
-			current_grid[x][y] = next_tile
-	last_grid = current_grid.duplicate(true)
-	return current_grid
+			_current_grid[x][y] = next_tile
+	_new_grid = _current_grid.duplicate(true)
+	return _current_grid
 
 func _is_match_at(x: int, y: int, tiles: Array[Array], tile_name: String):
 	if(			
@@ -94,41 +94,36 @@ func notify(x: int, y: int):
 
 
 func swap_2(
-	last_grid: Array[Array],
+	_current_grid: Array[Array],
 	source: Vector2i,
 	direction: Vector2i,
 	source_name: String
 ):
 	var destination : Vector2i = source + direction 	
 	if(destination.x >= 0 and destination.y >= 0):
-		var current_grid: Array[Array] = last_grid.duplicate(true)
-		var tile_to_swap = current_grid[destination.x][destination.y]
-		current_grid[destination.x][destination.y] = source_name
-		current_grid[source.x][source.y] = tile_to_swap	
+		var tile_to_swap = _current_grid[destination.x][destination.y]
+		_current_grid[destination.x][destination.y] = source_name
+		_current_grid[source.x][source.y] = tile_to_swap	
 		
 		#shouldn't be here
 		_swap_tile_nodes(source, destination)
 		
-		return current_grid
+		return _current_grid #won't be using return value, but since I switched to a combo of move tweens followed by re-drawing of the board, I should return the original grid
 	return []	
 	
 func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 	var source_node : Control = tile_nodes[source.x][source.y]
 	var destination_node : Control = tile_nodes[destination.x][destination.y]
-	_print_grid_coords("@@@@@@@@@@@")
+	#_print_grid_coords("@@@@@@@@@@@")
 	source_node.update(destination)
 	destination_node.update(source)
-	_print_grid_coords("%%%%%%%%%%%%")	
-		
-	#var coord_grid = Array[Array]	
-	#coord_array.resize(rows)
+	#_print_grid_coords("%%%%%%%%%%%%")	
 
 
-	
-	#for tile in tile_nodes:
-		#tile.update(source, destination)
-		#tile.update(destination, source)
-	
+func get_grid():
+	return _new_grid
+
+
 func _print_grid_coords(header: String):
 
 	print(header, "\n")
