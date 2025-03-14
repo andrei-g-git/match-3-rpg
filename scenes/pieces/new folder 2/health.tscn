@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://m3ogmjiumpog"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_s7ti1"]
+[ext_resource type="Texture2D" uid="uid://cki0c0hdei5v4" path="res://assets/images/sprites/pieces/new folder/health.png" id="2_wpkbe"]
+
+[node name="Health" instance=ExtResource("1_s7ti1")]
+texture_normal = ExtResource("2_wpkbe")

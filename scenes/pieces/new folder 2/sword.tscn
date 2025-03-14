@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bja8lfxqr7eml"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_8s1xf"]
+[ext_resource type="Texture2D" uid="uid://dfagfj00a7hkq" path="res://assets/images/sprites/pieces/new folder/sword.png" id="2_xjkn4"]
+
+[node name="Sword" instance=ExtResource("1_8s1xf")]
+texture_normal = ExtResource("2_xjkn4")

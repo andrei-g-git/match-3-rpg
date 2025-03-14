@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt2ucmkysnefe"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_j1wwr"]
+[ext_resource type="Texture2D" uid="uid://ba1htyewg4gac" path="res://assets/images/sprites/pieces/new folder/shield.png" id="2_s45j5"]
+
+[node name="Shield" instance=ExtResource("1_j1wwr")]
+texture_normal = ExtResource("2_s45j5")

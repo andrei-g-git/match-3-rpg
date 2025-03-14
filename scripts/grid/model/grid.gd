@@ -108,9 +108,16 @@ func swap_2(
 		#shouldn't be here
 		_swap_tile_nodes(source, destination)
 		
-		return _current_grid #won't be using return value, but since I switched to a combo of move tweens followed by re-drawing of the board, I should return the original grid
+		#this runs after delay from tween animation in the tile
+		_remove_matches(source_name)
+		_remove_matches(tile_to_swap)
+
+		GridUtilities.print_array_initials(_current_grid, "AFTER REMOVEING MATCHES")
+		
+		return _current_grid 
 	return []	
-	
+
+
 func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 	var source_node : Control = tile_nodes[source.x][source.y]
 	var destination_node : Control = tile_nodes[destination.x][destination.y]
@@ -118,6 +125,57 @@ func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 	source_node.update(destination)
 	destination_node.update(source)
 	#_print_grid_coords("%%%%%%%%%%%%")	
+
+
+func _remove_matches(tile_to_match: String): 
+		var horizontal_matches = _find_linear_matches(tile_to_match, true)
+		var vertical_matches = _find_linear_matches(tile_to_match, false)
+		var matches = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
+		
+		for x in matches.size():
+			var vec = matches[x]
+			_current_grid[vec.x][vec.y] = ""
+			
+
+func _find_linear_matches(tile_to_match: String, horizontally: bool):
+	var grid_ = _current_grid
+	var matches: Array[Vector2i] = []
+	var y_offset = int(horizontally) # 1 or 0 to look left or right, but only in 1 dimension
+	var x_offset = int(not horizontally)
+	for x in rows:
+		for y in columns:
+			if(y > 0 and y < (columns -1)):   
+				if(
+					tile_to_match == grid_[x - x_offset][y - y_offset] and 
+					tile_to_match == grid_[x][y] and 
+					tile_to_match == grid_[x + x_offset][y + y_offset] 
+				):
+					#there can't be more columns with matches of the same type, only another row
+					matches.append(Vector2i(x, y - 1))
+					matches.append(Vector2i(x, y))
+					matches.append(Vector2i(x, y + 1))
+	return Collections.remove_array_duplicates(matches)	
+				
+
+
+func _find_matches():
+	pass
+
+
+#will probably use flood fill
+func _remove_matches__nahhhhhh_____(tiles: Array[Array]) -> Array[Array]:
+	var matching_tile_indexes : Array[Vector2i] = []
+	for x in rows:
+		for y in columns:
+			if _is_match_at(x, y, tiles, tiles[x][y]):
+				matching_tile_indexes.append(Vector2i(x, y))   #this only detects the last tile that matches and will only remove that piece and leave the 2 matching tiles 'behind' it alone
+	print("matching tile indexes:  \n", matching_tile_indexes)
+	for a in rows:
+		for b in columns:
+			for c in matching_tile_indexes.size():
+				if(a == matching_tile_indexes[c].x and b == matching_tile_indexes[c].y):
+					tiles[a][b] = "" #this seems to remove too few pieces, maybe fewer by 2
+	return tiles
 
 
 func get_grid():

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnwo55gd54d66"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_pta4e"]
+[ext_resource type="Texture2D" uid="uid://4ryy8vksgv6a" path="res://assets/images/sprites/pieces/new folder/stamina.png" id="2_nuodg"]
+
+[node name="Stamina" instance=ExtResource("1_pta4e")]
+texture_normal = ExtResource("2_nuodg")

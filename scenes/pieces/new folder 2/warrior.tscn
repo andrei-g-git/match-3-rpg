@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://w7733p600n52"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_s8lt7"]
+[ext_resource type="Texture2D" uid="uid://bn5c3l7d6jw6a" path="res://assets/images/sprites/pieces/new folder/warrior.png" id="2_m5k2t"]
+
+[node name="Warrior" instance=ExtResource("1_s8lt7")]
+texture_normal = ExtResource("2_m5k2t")

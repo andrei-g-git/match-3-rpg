@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7ex7m5de0pv8"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_6w2rf"]
+[ext_resource type="Texture2D" uid="uid://ck74hxdueirvf" path="res://assets/images/sprites/pieces/new folder/mana.png" id="2_lnmec"]
+
+[node name="Mana" instance=ExtResource("1_6w2rf")]
+texture_normal = ExtResource("2_lnmec")

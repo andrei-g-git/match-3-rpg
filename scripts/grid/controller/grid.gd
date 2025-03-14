@@ -65,7 +65,7 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 func _populate_grid_with_nodes(grid : Array[Array], possible_pieces : Array[Resource], cols: int, rows: int):
 	var possible_instance_names : Array[String] = []
 	var instance_grid : Array[Array] = []
-	instance_grid = Collections.resize_2d_array(instance_grid, rows, cols, "")
+	instance_grid = Collections.resize_2d_array(instance_grid, rows, cols, null)#"")
 	for tile_resource in possible_pieces:
 		possible_instance_names.append(tile_resource.instantiate().name.replace("&", ""))
 	for N in get_children():
@@ -126,36 +126,12 @@ func _is_match_at(x: int, y: int, pieces_in_grid: Array[Array], piece_name: Stri
 func _handle_possible_swap(tile: BaseButton, tiles: Array[Array], tile_resources: Array[Resource], tile_name: String):
 	var direction : Vector2i = tile.get_drag_direction()
 	var source : Vector2i = tile.get_grid_index()
-	#var destination : Vector2i = source + direction 	
-	#var new_board = _swap_2_tiles(
-		#tiles,
-		#tile,
-		#source,
-		#destination,
-		#direction,
-		#tile_name
-	#)
-	
-	
-	#for N in get_children():
-		#N.queue_free()
-	#var bp = 123
-	
-	#var new_board = model.swap_2(
 	model.swap_2(
 		tiles,
 		source,
 		direction,
 		tile_name
 	)
-	
-	
-	#_remove_matches(new_board)
-	
-	#print_array_initials(tiles, "original")
-	#print_array_initials(new_board, "altered")
-	
-	#_populate_grid(new_board, tile_resources)
 
 
 func _swap_2_tiles(

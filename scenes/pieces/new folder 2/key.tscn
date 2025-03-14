@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnx6nfyurx5pj"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_w6c3j"]
+[ext_resource type="Texture2D" uid="uid://cnpeauay443po" path="res://assets/images/sprites/pieces/new folder/key.png" id="2_hrebu"]
+
+[node name="Key" instance=ExtResource("1_w6c3j")]
+texture_normal = ExtResource("2_hrebu")

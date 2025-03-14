@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4iveyhbsyboa"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_lgnjp"]
+[ext_resource type="Texture2D" uid="uid://dtd0yd28tpbxl" path="res://assets/images/sprites/pieces/new folder/archer.png" id="2_leex6"]
+
+[node name="Archer" instance=ExtResource("1_lgnjp")]
+texture_normal = ExtResource("2_leex6")

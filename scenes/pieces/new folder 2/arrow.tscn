@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://biws01jtkpclm"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_57ku3"]
+[ext_resource type="Texture2D" uid="uid://b7pav7s26p5ro" path="res://assets/images/sprites/pieces/new folder/arrow.png" id="2_rcnci"]
+
+[node name="Arrow" instance=ExtResource("1_57ku3")]
+texture_normal = ExtResource("2_rcnci")
