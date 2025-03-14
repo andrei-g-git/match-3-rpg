@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b425t5rr0woyx"]
+[gd_scene load_steps=11 format=3 uid="uid://b425t5rr0woyx"]
 
 [ext_resource type="Texture2D" uid="uid://c7myg31f1ukcj" path="res://assets/images/background/bg.png" id="1_wyien"]
 [ext_resource type="PackedScene" uid="uid://77yyp1337wti" path="res://scenes/grid/grid.tscn" id="2_5snyb"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://davws0d4wmhxj" path="res://scenes/pieces/ruby.tscn" id="7_2tqr2"]
 [ext_resource type="PackedScene" uid="uid://dc5reap4ycv8c" path="res://scenes/pieces/sapphire.tscn" id="8_tjote"]
 [ext_resource type="PackedScene" uid="uid://dgl23g4h3spgi" path="res://scenes/pieces/turqoise.tscn" id="9_p26jq"]
+[ext_resource type="PackedScene" uid="uid://b0nc7sefbp6pn" path="res://scenes/pieces/zero.tscn" id="10_hif52"]
 
 [node name="GameWindow" type="Node2D"]
 
@@ -23,3 +24,4 @@ columns = 6
 cols = 6
 rows = 10
 piecessss = Array[Resource]([ExtResource("3_bq3us"), ExtResource("4_hif52"), ExtResource("5_rmiy4"), ExtResource("6_j7t4f"), ExtResource("7_2tqr2"), ExtResource("8_tjote"), ExtResource("9_p26jq")])
+empty_tile_scene = ExtResource("10_hif52")

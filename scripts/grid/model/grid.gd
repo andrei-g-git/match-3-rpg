@@ -134,7 +134,7 @@ func _remove_matches(tile_to_match: String):
 		
 		for x in matches.size():
 			var vec = matches[x]
-			_current_grid[vec.x][vec.y] = ""
+			_current_grid[vec.x][vec.y] = "zero"
 			
 
 func _find_linear_matches(tile_to_match: String, horizontally: bool):
