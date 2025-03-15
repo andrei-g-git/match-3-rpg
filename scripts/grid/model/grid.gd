@@ -128,14 +128,62 @@ func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 
 
 func _remove_matches(tile_to_match: String): 
-		var horizontal_matches = _find_linear_matches(tile_to_match, true)
-		var vertical_matches = _find_linear_matches(tile_to_match, false)
+		var horizontal_matches = _find_horizontal_matches(tile_to_match)
+		var vertical_matches = _find_vertical_matches(tile_to_match)
 		var matches = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
 		
 		for x in matches.size():
 			var vec = matches[x]
 			_current_grid[vec.x][vec.y] = "zero"
-			
+
+
+func _find_vertical_matches(tile_to_match: String):
+	var grid_ = _current_grid
+	var matches: Array[Vector2i] = []
+	for x in columns:
+		for y in rows:
+			if(y > 0 and y < (rows -1)):   
+				if(
+					#tile_to_match == grid_[x][y - 1] and 
+					#tile_to_match == grid_[x][y] and 
+					#tile_to_match == grid_[x][y + 1] 
+					tile_to_match == grid_[y - 1][x] and 
+					tile_to_match == grid_[y][x] and 
+					tile_to_match == grid_[y + 1][x] 					
+				):
+					#there can't be more rows with matches of the same type, only another row
+					#matches.append(Vector2i(x, y - 1))
+					#matches.append(Vector2i(x, y))
+					#matches.append(Vector2i(x, y + 1))
+					matches.append(Vector2i(y - 1, x))
+					matches.append(Vector2i(y, x))
+					matches.append(Vector2i(y + 1, x))					
+	return Collections.remove_array_duplicates(matches)	
+
+
+func _find_horizontal_matches(tile_to_match: String):
+	var grid_ = _current_grid
+	var matches: Array[Vector2i] = []
+	for x in rows:
+		for y in columns:
+			if(y > 0 and y < (columns - 1)):   
+				if(
+					#tile_to_match == grid_[y - 1][x] and 
+					#tile_to_match == grid_[y][x] and 
+					#tile_to_match == grid_[y + 1][x] 
+					tile_to_match == grid_[x][y - 1] and 
+					tile_to_match == grid_[x][y] and 
+					tile_to_match == grid_[x][y + 1] 					
+				):
+					#there can't be more rows with matches of the same type, only another row
+					#matches.append(Vector2i(y - 1, x))
+					#matches.append(Vector2i(y, x))
+					#matches.append(Vector2i(y + 1, x))
+					matches.append(Vector2i(x, y - 1))
+					matches.append(Vector2i(x, y))
+					matches.append(Vector2i(x, y + 1))					
+	return Collections.remove_array_duplicates(matches)	
+
 
 func _find_linear_matches(tile_to_match: String, horizontally: bool):
 	var grid_ = _current_grid
