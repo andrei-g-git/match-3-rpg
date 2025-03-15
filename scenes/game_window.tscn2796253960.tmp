@@ -21,7 +21,6 @@ texture = ExtResource("1_wyien")
 stretch_mode = 6
 
 [node name="CompositeGrid" parent="." instance=ExtResource("10_rmiy4")]
-custom_minimum_size = Vector2(64, 64)
 cols = 8
 rows = 12
 piecessss = Array[Resource]([ExtResource("3_bq3us"), ExtResource("4_hif52"), ExtResource("5_rmiy4"), ExtResource("6_j7t4f"), ExtResource("7_2tqr2"), ExtResource("8_tjote"), ExtResource("9_p26jq")])

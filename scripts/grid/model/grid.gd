@@ -22,13 +22,13 @@ func _init(
 	rows = rows_
 
 func create_grid():
-	_current_grid.resize(rows)
-	for a in rows:
-		_current_grid[a].resize(columns)
-		for b in columns:
+	_current_grid.resize(columns)
+	for a in columns:
+		_current_grid[a].resize(rows)
+		for b in rows:
 			_current_grid[a][b] = ""		
-	for x in rows:
-		for y in columns:
+	for x in columns:
+		for y in rows:
 			var loops = 0
 			var next_tile = _generate_non_matching_tile(
 				_choose_random_tile(possible_tiles), 
@@ -72,7 +72,7 @@ func _choose_random_tile(pissible_tiles):
 	return possible_tiles[random]
 
 func _generate_non_matching_tile(default_or_chosen_tile: String, x: int, y: int, grid: Array[Array], possible_tiles: Array[String], loops: int):
-	while(_is_match_at(x, y, grid, default_or_chosen_tile) and loops <= rows * columns):
+	while(_is_match_at(x, y, grid, default_or_chosen_tile) and loops <= columns * rows):
 		var chosen_tile =  _choose_random_tile(possible_tiles)
 		loops += 1
 		_generate_non_matching_tile(chosen_tile, x, y, grid, possible_tiles, loops)
@@ -81,7 +81,7 @@ func _generate_non_matching_tile(default_or_chosen_tile: String, x: int, y: int,
 
 
 func initialize_observers():
-	Collections.resize_2d_array(tile_nodes, rows, columns, null)
+	Collections.resize_2d_array(tile_nodes, columns, rows, null)
 
 func register(tile: Control, x: int, y: int): #should be typed as whatever class the tile is; later I should give the tile node an interface
 	#tile_nodes.append(tile)
@@ -128,29 +128,65 @@ func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 
 
 func _remove_matches(tile_to_match: String): 
-		var horizontal_matches = _find_linear_matches(tile_to_match, true)
-		var vertical_matches = _find_linear_matches(tile_to_match, false)
+		var horizontal_matches = _find_horizontal_matches(tile_to_match)
+		var vertical_matches = _find_vertical_matches(tile_to_match)
 		var matches = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
 		
 		for x in matches.size():
 			var vec = matches[x]
 			_current_grid[vec.x][vec.y] = "zero"
-			
+
+
+func _find_vertical_matches(tile_to_match: String):
+	var grid_ = _current_grid
+	var matches: Array[Vector2i] = []
+	for x in columns:
+		for y in rows:
+			if(y > 0 and y < (rows -1)):   
+				if(
+					tile_to_match == grid_[x][y - 1] and 
+					tile_to_match == grid_[x][y] and 
+					tile_to_match == grid_[x][y + 1] 
+				):
+					#there can't be more rows with matches of the same type, only another row
+					matches.append(Vector2i(x, y - 1))
+					matches.append(Vector2i(x, y))
+					matches.append(Vector2i(x, y + 1))
+	return Collections.remove_array_duplicates(matches)	
+
+
+func _find_horizontal_matches(tile_to_match: String):
+	var grid_ = _current_grid
+	var matches: Array[Vector2i] = []
+	for x in rows:
+		for y in columns:
+			if(y > 0 and y < (columns - 1)):   
+				if(
+					tile_to_match == grid_[y - 1][x] and 
+					tile_to_match == grid_[y][x] and 
+					tile_to_match == grid_[y + 1][x] 
+				):
+					#there can't be more rows with matches of the same type, only another row
+					matches.append(Vector2i(y - 1, x))
+					matches.append(Vector2i(y, x))
+					matches.append(Vector2i(y + 1, x))
+	return Collections.remove_array_duplicates(matches)	
+
 
 func _find_linear_matches(tile_to_match: String, horizontally: bool):
 	var grid_ = _current_grid
 	var matches: Array[Vector2i] = []
-	var y_offset = int(horizontally) # 1 or 0 to look left or right, but only in 1 dimension
-	var x_offset = int(not horizontally)
-	for x in rows:
-		for y in columns:
-			if(y > 0 and y < (columns -1)):   
+	var x_offset = int(horizontally) # 1 or 0 to look left or right, but only in 1 dimension
+	var y_offset = int(not horizontally)
+	for x in columns:
+		for y in rows:
+			if(y > 0 and y < (rows -1)):   
 				if(
 					tile_to_match == grid_[x - x_offset][y - y_offset] and 
 					tile_to_match == grid_[x][y] and 
 					tile_to_match == grid_[x + x_offset][y + y_offset] 
 				):
-					#there can't be more columns with matches of the same type, only another row
+					#there can't be more rows with matches of the same type, only another row
 					matches.append(Vector2i(x, y - 1))
 					matches.append(Vector2i(x, y))
 					matches.append(Vector2i(x, y + 1))
@@ -165,13 +201,13 @@ func _find_matches():
 #will probably use flood fill
 func _remove_matches__nahhhhhh_____(tiles: Array[Array]) -> Array[Array]:
 	var matching_tile_indexes : Array[Vector2i] = []
-	for x in rows:
-		for y in columns:
+	for x in columns:
+		for y in rows:
 			if _is_match_at(x, y, tiles, tiles[x][y]):
 				matching_tile_indexes.append(Vector2i(x, y))   #this only detects the last tile that matches and will only remove that piece and leave the 2 matching tiles 'behind' it alone
 	print("matching tile indexes:  \n", matching_tile_indexes)
-	for a in rows:
-		for b in columns:
+	for a in columns:
+		for b in rows:
 			for c in matching_tile_indexes.size():
 				if(a == matching_tile_indexes[c].x and b == matching_tile_indexes[c].y):
 					tiles[a][b] = "" #this seems to remove too few pieces, maybe fewer by 2
@@ -185,7 +221,7 @@ func get_grid():
 func _print_grid_coords(header: String):
 
 	print(header, "\n")
-	for i in rows:
+	for i in columns:
 		var coordinate_column = tile_nodes[i].map(func (item): return ( str(item.get_grid_index().x) + str(item.get_grid_index().y) )  ) #get first letter		
 		print(coordinate_column)
 	print("\n")		

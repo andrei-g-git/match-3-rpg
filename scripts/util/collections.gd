@@ -1,10 +1,10 @@
 class_name Collections
 
-static func resize_2d_array(grid: Array[Array], rows: int, columns: int, default_value):
-	grid.resize(rows)
-	for x in rows:
-		grid[x].resize(columns)
-		for y in columns:
+static func resize_2d_array(grid: Array[Array], columns: int, rows: int, default_value):
+	grid.resize(columns)
+	for x in columns:
+		grid[x].resize(rows)
+		for y in rows:
 			grid[x][y] = default_value
 	return grid
 
