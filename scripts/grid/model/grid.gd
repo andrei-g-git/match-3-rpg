@@ -1,3 +1,12 @@
+"""
+			row
+	o------------------------------->
+  c |
+  o |  
+  l |
+	v
+"""
+
 class_name GridModel
 
 var _current_grid: Array[Array] = [] #these should have _ prefix, they're private
@@ -112,10 +121,28 @@ func swap_2(
 
 
 func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
+	#not good, this doesn't separate different match groups (there can be 2 if both the swapped pieces result in matches)
 	var source_node : Control = tile_nodes[source.x][source.y]
 	var destination_node : Control = tile_nodes[destination.x][destination.y]
 	source_node.update(destination)
 	destination_node.update(source)
+
+
+func _collapse_columns():
+	for x in rows: #columns:
+		for y in columns: #rows:
+			if _current_grid[x][y] == TileConstants.EMPTY: 
+				for z in range(y + 1, columns):#rows:
+					if _current_grid[x][z] != TileConstants.EMPTY:
+						var node = tile_nodes[x][z] 	
+						node.update(Vector2i(x, y))
+						tile_nodes[x][y] = tile_nodes[x][z] 
+						tile_nodes[x][z] = TileConstants.EMPTY
+						break
+
+
+func test_collapse():
+	_collapse_columns()
 
 
 func _remove_matches(tile_to_match: String): 

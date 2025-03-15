@@ -21,6 +21,7 @@ var _pieces_in_grid : Array[Array] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+
 	pieces = piecessss#.slice(0, 3)	
 	var possible_tile_names : Array[String] = []
 	for tile_resource in pieces:
@@ -62,7 +63,8 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 			(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, piecessss, grid[x][y])) # this is basically observer pattern shit so it can stay...
 			(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, piecessss, cols, rows))			
 	var bp = 123
-	
+	#now check if there are empty spots and collapse tiles above on those spots
+	model.test_collapse()
 
 func _populate_grid_with_nodes(grid : Array[Array], possible_pieces : Array[Resource], empty_node_resource: Resource, cols: int, rows: int):
 	var possible_instance_names : Array[String] = []
