@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjhi5yb5gwlj8"]
-
-[ext_resource type="Script" uid="uid://c2aprjej6j1qg" path="res://scripts/grid/controller/grid.gd" id="1_s18bx"]
-
-[node name="CompositeGrid" type="HBoxContainer"]
-script = ExtResource("1_s18bx")

@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends GridContainer
 
 """
 			row
@@ -12,8 +12,8 @@ extends HBoxContainer
 @export var rows : int
 
 @export var piecessss : Array[Resource] = []
-@export var EmptyTile : Resource
-@export var RowScene: Resource
+@export var empty_tile_scene : Resource
+
 var model : GridModel = null
 var pieces = []
 
@@ -35,7 +35,7 @@ func _ready() -> void:
 		rows
 	)
 	
-	#columns = rows
+	columns = cols
 	_spawn_pieces()#_pieces_in_grid)
 
 
@@ -46,15 +46,15 @@ func _process(delta: float) -> void:
 
 func _spawn_pieces():#pieces_in_grid: Array[Array]):	
 	var pieces_in_grid = model.create_grid()
-	GridUtilities.print_array_initials(pieces_in_grid, "TEST NEW MODEL SPAWN")
+	print_array_initials(pieces_in_grid, "TEST NEW MODEL SPAWN")
 	_populate_and_register_observers(pieces_in_grid, piecessss, cols, rows)
 
 
 func _populate_and_register_observers(grid : Array[Array], possible_pieces : Array[Resource], cols: int, rows: int):
-	var grid_children = await _populate_grid_with_nodes(grid, piecessss, EmptyTile, cols, rows)
+	var grid_children = _populate_grid_with_nodes(grid, piecessss, empty_tile_scene, cols, rows)
 	model.initialize_observers()
-	for x in cols:
-		for y in rows:
+	for x in rows:
+		for y in cols:
 			var tile_node = grid_children[x][y]	
 			#if tile_node != null:
 			tile_node.set_grid_index(x, y)
@@ -67,28 +67,26 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 func _populate_grid_with_nodes(grid : Array[Array], possible_pieces : Array[Resource], empty_node_resource: Resource, cols: int, rows: int):
 	var possible_instance_names : Array[String] = []
 	var instance_grid : Array[Array] = []
-	instance_grid = Collections.resize_2d_array(instance_grid, cols, rows, null)
+	instance_grid = Collections.resize_2d_array(instance_grid, rows, cols, null)
 	for tile_resource in possible_pieces:
 		possible_instance_names.append(tile_resource.instantiate().name.replace("&", ""))
 	for N in get_children():
 		N.queue_free()
-	for x in cols:
-		var row_container := (RowScene.instantiate() as BoxContainer) # specifically a VBoxContainer
-		for y in rows:
+	for x in rows:
+		for y in cols:
 			for z in possible_instance_names.size():
 				var instance_name = possible_instance_names[z]
 				var looped_tile = grid[x][y]
 				if instance_name == grid[x][y]:
 					var instance = possible_pieces[z].instantiate() #
 					instance_grid[x][y] = instance
-					row_container.add_child(instance) 
+					add_child(instance) 
 			
 			if grid[x][y] == "zero": #THE GRID CONTAINER COORDINATES ARE INVERTED COMPARED TO THE MODEL GRID'S, THIS WILL ROTATE THE NODE DELETION 90DEG\
 				var blank_tile = empty_node_resource.instantiate()				
 				instance_grid[x][y] = blank_tile
-				row_container.add_child(blank_tile)
+				add_child(blank_tile)
 		var columnnnnn_ = grid[x]
-		add_child(row_container)
 		var bp = 123
 	return instance_grid
 
@@ -158,15 +156,15 @@ func _swap_2_tiles(
 
 #this only finds 1 matching tile, not 3 or more, because it uses _is_match_at which only registers a match once and so only 1 tile will be stored in the matching tile list even if there are 3+
 func _remove_matches(tiles: Array[Array]) -> Array[Array]:
-	var cols = tiles.size()
-	var rows = tiles[0].size() 
+	var rows = tiles.size()
+	var cols = tiles[0].size() 
 	var matching_tile_indexes : Array[Vector2i] = []
-	for x in cols:
-		for y in rows:
+	for x in rows:
+		for y in cols:
 			if _is_match_at(x, y, tiles, tiles[x][y]):
 				matching_tile_indexes.append(Vector2i(x, y))
-	for a in cols:
-		for b in rows:
+	for a in rows:
+		for b in cols:
 			for c in matching_tile_indexes.size():
 				if(a == matching_tile_indexes[c].x and b == matching_tile_indexes[c].y):
 					tiles[a][b] = ""
@@ -174,21 +172,21 @@ func _remove_matches(tiles: Array[Array]) -> Array[Array]:
 
 #might be better to work with instance array than name arrays? -- at least switch to enums or something...
 func _populate_grid(tiles: Array[Array], tile_resources: Array[Resource]):
-	var cols = tiles.size()
-	var rows = tiles[0].size()
+	var rows = tiles.size()
+	var cols = tiles[0].size()
 	var resources = tile_resources.size()
 	
-	GridUtilities.print_array_initials(tiles, "altered-two")
+	print_array_initials(tiles, "altered-two")
 	
 	print("\n\n######################\n")
 
-	for x in cols: #gotta iterate grid first and resources last otherwise it populates with only 3 pieces
-		for y in rows:
+	for x in rows: #gotta iterate grid first and resources last otherwise it populates with only 3 pieces
+		for y in cols:
 			for z in resources:
 				var instance_ : Control = (tile_resources[z] as Resource).instantiate()
 				var name_ = instance_.name.replace("&", "")
 				if name_ == tiles[x][y]:
-					GridUtilities.print_array_initials(tiles, "x, y    " + str(x) + "  " + str(y))
+					print_array_initials(tiles, "x, y    " + str(x) + "  " + str(y))
 					#await get_tree().create_timer(0.1).timeout
 					add_child(instance_)
 
@@ -198,19 +196,12 @@ func print_array_initials(tiles, header: String):
 
 	var intialsGrid: Array[Array] = []
 
-	intialsGrid.resize(cols)
+	intialsGrid.resize(rows)
 
 	print(header, "\n")
-	#for i in cols:
-		#if tiles[i].size():
-			#intialsGrid[i] = tiles[i].map(func (item): return item[0]) #get first letter		
-			#print(intialsGrid[i])
-	#print("\n")
-	for x in rows:
-		var first_letters_row: Array[String] = []
-		for y in cols:
-			var tile_name = tiles[y][x]
-			first_letters_row.append(tile_name[0])
-		print(first_letters_row)
-	#print("\n")		
+	for i in rows:
+		if tiles[i].size():
+			intialsGrid[i] = tiles[i].map(func (item): return item[0]) #get first letter		
+			print(intialsGrid[i])
+	print("\n")
 		

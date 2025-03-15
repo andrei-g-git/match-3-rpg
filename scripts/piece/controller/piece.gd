@@ -1,7 +1,7 @@
 extends TextureButton
 """
 			row
-	o------------------------>        nope changing back
+	o------------------------>
   c |
   o |  
   l |
@@ -37,10 +37,9 @@ func _process(delta: float) -> void:
 
 
 func update(destination):#self_position, destination):
-	#var reverse_destination = MathUtilities.invert_vecotr(destination)
+	var reverse_destination = MathUtilities.invert_vecotr(destination)
 	#if self_position == _grid_index:
-	#var target_pixel_position = reverse_destination * (side_length + margin)
-	var target_pixel_position = destination * (side_length + margin)
+	var target_pixel_position = reverse_destination * (side_length + margin)
 	move(target_pixel_position)
 	#set_grid_index(destination.x, destination.y) 
 	
@@ -94,30 +93,29 @@ func _input(event: InputEvent) -> void:
 			var drag_this_frame = event.relative
 			_total_drag += drag_this_frame 
 			#GRID NODE IS REVERSED IN GODOT SO I REPLACED X WITH Y IN THIS CHECK
-			#NOT ANYMORE YOU"RE NOT
 			if(
-				_total_drag.x >= -drag_treshold and 
-				_total_drag.x <= drag_treshold
-				#_total_drag.y >= -drag_treshold and 
-				#_total_drag.y <= drag_treshold				
-			):
-				if _total_drag.y >= drag_treshold:
-				#if _total_drag.x >= drag_treshold:
-					drag_direction = Vector2.DOWN
-				if _total_drag.y <= -drag_treshold:
-				#if _total_drag.x <= -drag_treshold:
-					drag_direction = Vector2.UP
-			if(
-				_total_drag.y >= -drag_treshold and 
-				_total_drag.y <= drag_treshold
 				#_total_drag.x >= -drag_treshold and 
 				#_total_drag.x <= drag_treshold
+				_total_drag.y >= -drag_treshold and 
+				_total_drag.y <= drag_treshold				
 			):
-				if _total_drag.x >= drag_treshold:
 				#if _total_drag.y >= drag_treshold:
-					drag_direction = Vector2.RIGHT
-				if _total_drag.x <= -drag_treshold:
+				if _total_drag.x >= drag_treshold:
+					drag_direction = Vector2.DOWN
 				#if _total_drag.y <= -drag_treshold:
+				if _total_drag.x <= -drag_treshold:
+					drag_direction = Vector2.UP
+			if(
+				#_total_drag.y >= -drag_treshold and 
+				#_total_drag.y <= drag_treshold
+				_total_drag.x >= -drag_treshold and 
+				_total_drag.x <= drag_treshold
+			):
+				#if _total_drag.x >= drag_treshold:
+				if _total_drag.y >= drag_treshold:
+					drag_direction = Vector2.RIGHT
+				#if _total_drag.x <= -drag_treshold:
+				if _total_drag.y <= -drag_treshold:
 					drag_direction = Vector2.LEFT
 
 
