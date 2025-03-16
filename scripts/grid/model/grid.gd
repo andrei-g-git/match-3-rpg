@@ -153,15 +153,18 @@ func _collapse_columns():
 						##_current_grid[y][z] = TileConstants.EMPTY		
 						#break
 	for x in columns: 
-		for y in rows: 
+		for y in range(rows - 1, -1, -1):#rows: 
 			if _current_grid[y][x] == TileConstants.EMPTY: 
-				for z in range(y + 1, rows):
-					if _current_grid[z][x] != TileConstants.EMPTY:
-						var node = tile_nodes[z][x] 	
-						node.update(Vector2i(y, z))
-						_current_grid[y][x] = _current_grid[z][x] 
-						_current_grid[z][x] = TileConstants.EMPTY	
-						break
+				if y > 0:
+					#for z in range(0, y - 1):
+					for z in range(y - 1, -1, -1):
+						var bp = 1123
+						if _current_grid[z][x] != TileConstants.EMPTY:
+							var node = tile_nodes[z][x] 	
+							#node.update(Vector2i(y, z))
+							_current_grid[y][x] = _current_grid[z][x] 
+							_current_grid[z][x] = TileConstants.EMPTY	
+							break
 
 
 func test_collapse():
