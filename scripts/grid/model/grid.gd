@@ -33,24 +33,33 @@ func _init(
 func create_grid():
 	_current_grid.resize(rows)
 	for a in rows:
-		_current_grid[a].resize(columns)
+		_current_grid[a].resize(columns) 
 		for b in columns:
-			_current_grid[a][b] = ""		
-	for x in rows:
-		for y in columns:
-			var loops = 0
-			var next_tile = _generate_non_matching_tile(
-				_choose_random_tile(possible_tiles), 
-				x, 
-				y, 
-				_current_grid, 
-				possible_tiles, 
-				loops
-			)
-			#next_tile.replace("&", "")
-			_current_grid[x][y] = next_tile
+			_current_grid[a][b] = TileConstants.EMPTY
+	_fill_empty_cells(_current_grid)
 	_new_grid = _current_grid.duplicate(true)
 	return _current_grid
+
+
+func _fill_empty_cells(grid: Array[Array]):
+	for x in rows:
+		for y in columns:
+			if(grid[x][y] == TileConstants.EMPTY):
+				var loops = 0
+				var next_tile = _generate_non_matching_tile(
+					_choose_random_tile(possible_tiles), 
+					x, 
+					y, 
+					grid, 
+					possible_tiles, 
+					loops
+				)
+				grid[x][y] = next_tile	
+	GridUtilities.print_array_initials(grid, "FILLED EMPTY")
+
+
+func fill_empty_tiles():
+	_fill_empty_cells(_current_grid)
 
 
 func _is_match_at(x: int, y: int, tiles: Array[Array], tile_name: String):

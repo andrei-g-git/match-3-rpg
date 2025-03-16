@@ -70,6 +70,7 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 	print("timed out for 0.5")	
 	
 	model.test_collapse()
+	model.fill_empty_tiles()
 	
 
 
