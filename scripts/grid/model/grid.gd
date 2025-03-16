@@ -31,13 +31,21 @@ func _init(
 	rows = rows_
 
 func create_grid():
-	_current_grid.resize(rows)
-	for a in rows:
-		_current_grid[a].resize(columns) 
-		for b in columns:
-			_current_grid[a][b] = TileConstants.EMPTY
+	var table = FileUtilities.load_csv("C:/Users/me/Documents/j1.csv")
+	var int_table = Collections.change_string_2d_array_to_int(table)
+	print(int_table)		
+	var loaded_grid = GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
+	_current_grid = loaded_grid
+	_new_grid = loaded_grid.duplicate(true)
 	_fill_empty_cells(_current_grid)
-	_new_grid = _current_grid.duplicate(true)
+		
+	#_current_grid.resize(rows)
+	#for a in rows:
+		#_current_grid[a].resize(columns) 
+		#for b in columns:
+			#_current_grid[a][b] = TileConstants.EMPTY
+	#_fill_empty_cells(_current_grid)
+	#_new_grid = _current_grid.duplicate(true)
 	return _current_grid
 
 

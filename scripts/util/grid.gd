@@ -1,4 +1,4 @@
-class_name GridUtilities
+class_name GridUtilities #lol
 
 static func print_array_initials(tiles, header: String):
 	var rows = tiles.size()
@@ -13,3 +13,15 @@ static func print_array_initials(tiles, header: String):
 			intialsGrid[i] = tiles[i].map(func (item): return "" if item == "" else item[0]) #get first letter		
 			print(intialsGrid[i])
 	print("\n")
+
+
+static func convert_int_tile_grid_to_actual_names(int_grid: Array[Array]):
+	var new_board: Array[Array] = []
+	new_board.resize(int_grid.size())
+	for a in int_grid.size():
+		new_board[a].resize(int_grid[a].size())
+		for b in int_grid[a].size():
+			var tile_int = int_grid[a][b]
+			new_board[a][b] = TileConstants.Tiles.keys()[tile_int].to_lower()
+	#GridUtilities.print_array_initials(new_board, "CSV CSV CSV:")	
+	return new_board

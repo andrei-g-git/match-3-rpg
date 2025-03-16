@@ -22,6 +22,12 @@ var _pieces_in_grid : Array[Array] = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 
+	var table = FileUtilities.load_csv("C:/Users/me/Documents/j1.csv")
+	var int_table = Collections.change_string_2d_array_to_int(table)
+	print(int_table)		
+	GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
+	
+
 	pieces = piecessss#.slice(0, 3)	
 	var possible_tile_names : Array[String] = []
 	for tile_resource in pieces:
