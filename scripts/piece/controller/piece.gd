@@ -45,7 +45,7 @@ func update(destination):#self_position, destination):
 	
 
 func move(target: Vector2):
-	var delta = target - position
+	#var delta = target - position
 	var time_start = int(Time.get_unix_time_from_system())
 
 	var tile_tween = create_tween() \
@@ -61,6 +61,7 @@ func move(target: Vector2):
 
 func _on_move_finished():
 	updated.emit()
+	print("UPDATE SIGNALE")
 
 func get_grid_index() -> Vector2i:
 	return _grid_index

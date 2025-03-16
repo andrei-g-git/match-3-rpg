@@ -129,39 +129,17 @@ func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 
 
 func _collapse_columns():
-	#for x in rows: #columns:
-	##for y in rows:
-		#for y in columns: #rows:
-		##for x in columns:
-			#if _current_grid[x][y] == TileConstants.EMPTY: 
-			##if _current_grid[y][x] == TileConstants.EMPTY: 
-				#for z in range(y + 1, columns):#rows:
-				##for z in range(x + 1, columns):#rows:
-					#if _current_grid[x][z] != TileConstants.EMPTY:
-						#var node = tile_nodes[x][z] 	
-						#node.update(Vector2i(x, y))
-						##tile_nodes[x][y] = tile_nodes[x][z] 
-						##tile_nodes[x][z] = TileConstants.EMPTY
-						#_current_grid[x][y] = _current_grid[x][z] 
-						#_current_grid[x][z] = TileConstants.EMPTY							
-					##if _current_grid[y][z] != TileConstants.EMPTY:
-						##var node = tile_nodes[y][z] 	
-						##node.update(Vector2i(y, x))
-						###tile_nodes[y][x] = tile_nodes[y][z] 
-						###tile_nodes[y][z] = TileConstants.EMPTY		
-						##_current_grid[y][x] = _current_grid[y][z] 
-						##_current_grid[y][z] = TileConstants.EMPTY		
-						#break
 	for x in columns: 
-		for y in range(rows - 1, -1, -1):#rows: 
+		for y in range(rows - 1, -1, -1):
 			if _current_grid[y][x] == TileConstants.EMPTY: 
 				if y > 0:
-					#for z in range(0, y - 1):
 					for z in range(y - 1, -1, -1):
-						var bp = 1123
 						if _current_grid[z][x] != TileConstants.EMPTY:
-							var node = tile_nodes[z][x] 	
+							#var node = tile_nodes[y][x]#[z][x] 	
+							var node = tile_nodes[z][x]
 							#node.update(Vector2i(y, z))
+							#node.update(Vector2i(z, x))
+							node.update(Vector2i(y, x))
 							_current_grid[y][x] = _current_grid[z][x] 
 							_current_grid[z][x] = TileConstants.EMPTY	
 							break
