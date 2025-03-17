@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://dagsmf5fgtebb"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_tvbo0"]
+[ext_resource type="Texture2D" uid="uid://v2t1k1u212c2" path="res://assets/images/sprites/pieces/defend.png" id="2_81al7"]
+[ext_resource type="Texture2D" uid="uid://pwanaw0yvutg" path="res://assets/images/sprites/pieces/defend_p.png" id="3_7c4p5"]
+
+[node name="defend" instance=ExtResource("1_tvbo0")]
+texture_normal = ExtResource("2_81al7")
+texture_pressed = ExtResource("3_7c4p5")

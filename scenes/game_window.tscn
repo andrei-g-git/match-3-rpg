@@ -1,15 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://b425t5rr0woyx"]
+[gd_scene load_steps=16 format=3 uid="uid://b425t5rr0woyx"]
 
 [ext_resource type="Texture2D" uid="uid://c7myg31f1ukcj" path="res://assets/images/background/bg.png" id="1_wyien"]
 [ext_resource type="PackedScene" uid="uid://77yyp1337wti" path="res://scenes/grid/grid.tscn" id="2_5snyb"]
-[ext_resource type="PackedScene" uid="uid://4tth0tdowk1d" path="res://scenes/pieces/amethyst.tscn" id="3_bq3us"]
-[ext_resource type="PackedScene" uid="uid://cailn5etax7xo" path="res://scenes/pieces/diamond.tscn" id="4_hif52"]
-[ext_resource type="PackedScene" uid="uid://dasuqdgiwogic" path="res://scenes/pieces/emerald.tscn" id="5_rmiy4"]
-[ext_resource type="PackedScene" uid="uid://dgyy23b4qrtjx" path="res://scenes/pieces/quarz.tscn" id="6_j7t4f"]
-[ext_resource type="PackedScene" uid="uid://davws0d4wmhxj" path="res://scenes/pieces/ruby.tscn" id="7_2tqr2"]
-[ext_resource type="PackedScene" uid="uid://dc5reap4ycv8c" path="res://scenes/pieces/sapphire.tscn" id="8_tjote"]
-[ext_resource type="PackedScene" uid="uid://dgl23g4h3spgi" path="res://scenes/pieces/turqoise.tscn" id="9_p26jq"]
-[ext_resource type="PackedScene" uid="uid://b0nc7sefbp6pn" path="res://scenes/pieces/zero.tscn" id="10_hif52"]
+[ext_resource type="PackedScene" uid="uid://xl864p17nqd3" path="res://scenes/pieces/archer.tscn" id="3_p26jq"]
+[ext_resource type="PackedScene" uid="uid://4y6r0hk0vdaw" path="res://scenes/pieces/chest.tscn" id="4_hnitv"]
+[ext_resource type="PackedScene" uid="uid://dagsmf5fgtebb" path="res://scenes/pieces/defend.tscn" id="5_rbk1g"]
+[ext_resource type="PackedScene" uid="uid://bl25hp8rs0xje" path="res://scenes/pieces/energy.tscn" id="6_2hbnu"]
+[ext_resource type="PackedScene" uid="uid://budbu1ixv5e0" path="res://scenes/pieces/fighter.tscn" id="7_vgije"]
+[ext_resource type="PackedScene" uid="uid://cf1jf7qvgx8qo" path="res://scenes/pieces/health.tscn" id="8_asirt"]
+[ext_resource type="PackedScene" uid="uid://d0xcidxk1m0x4" path="res://scenes/pieces/melee.tscn" id="9_sd2o7"]
+[ext_resource type="PackedScene" uid="uid://b0nc7sefbp6pn" path="res://scenes/pieces/new folder 3/zero.tscn" id="10_hif52"]
+[ext_resource type="PackedScene" uid="uid://b4qdep7c42rso" path="res://scenes/pieces/ranged.tscn" id="11_iw28x"]
+[ext_resource type="PackedScene" uid="uid://86ns100pvdyj" path="res://scenes/pieces/stamina.tscn" id="12_ns8k7"]
+[ext_resource type="PackedScene" uid="uid://c0fiqgoco0se2" path="res://scenes/pieces/unlock.tscn" id="13_5tgvw"]
+[ext_resource type="PackedScene" uid="uid://gk1q7xjx8waf" path="res://scenes/pieces/walk.tscn" id="14_3k3cv"]
+[ext_resource type="PackedScene" uid="uid://c81tigmkf1gwm" path="res://scenes/player/player.tscn" id="15_p26jq"]
 
 [node name="GameWindow" type="BoxContainer"]
 anchors_preset = 15
@@ -29,8 +34,6 @@ stretch_mode = 6
 
 [node name="Grid" parent="Panel" instance=ExtResource("2_5snyb")]
 layout_mode = 2
-columns = 6
-cols = 6
-rows = 10
-piecessss = Array[Resource]([ExtResource("3_bq3us"), ExtResource("4_hif52"), ExtResource("5_rmiy4"), ExtResource("6_j7t4f"), ExtResource("7_2tqr2"), ExtResource("8_tjote"), ExtResource("9_p26jq")])
+piecessss = Array[Resource]([ExtResource("3_p26jq"), ExtResource("4_hnitv"), ExtResource("5_rbk1g"), ExtResource("6_2hbnu"), ExtResource("7_vgije"), ExtResource("8_asirt"), ExtResource("9_sd2o7"), ExtResource("11_iw28x"), ExtResource("12_ns8k7"), ExtResource("13_5tgvw"), ExtResource("14_3k3cv")])
 empty_tile_scene = ExtResource("10_hif52")
+player = ExtResource("15_p26jq")

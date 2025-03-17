@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://gk1q7xjx8waf"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_x8535"]
+[ext_resource type="Texture2D" uid="uid://d3nwudpfh3auf" path="res://assets/images/sprites/pieces/walk.png" id="2_yyu4o"]
+[ext_resource type="Texture2D" uid="uid://c85phtf886hy2" path="res://assets/images/sprites/pieces/walk_p.png" id="3_gl71s"]
+
+[node name="walk" instance=ExtResource("1_x8535")]
+texture_normal = ExtResource("2_yyu4o")
+texture_pressed = ExtResource("3_gl71s")

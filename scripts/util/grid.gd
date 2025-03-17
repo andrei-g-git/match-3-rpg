@@ -24,7 +24,7 @@ static func convert_int_tile_grid_to_actual_names(int_grid: Array[Array]):
 			var tile_int = int_grid[a][b]
 			new_board[a][b] = TileConstants.Tiles \
 				.keys()[tile_int] \
-				.to_lower() \
-				.capitalize()
+				.to_lower() #\
+				#.capitalize()
 	#GridUtilities.print_array_initials(new_board, "CSV CSV CSV:")	
 	return new_board

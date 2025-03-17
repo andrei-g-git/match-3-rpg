@@ -19,19 +19,23 @@ var tile_nodes: Array[Array] = [] #it's not strictly following the observer patt
 var possible_tiles: Array[String] = []
 var columns := 0
 var rows := 0
+var player_model: PlayerModel
+
 
 
 func _init(
 	possible_tiles_: Array[String],
 	columns_: int,
-	rows_: int
+	rows_: int,
+	player_model_: PlayerModel
 ):
 	possible_tiles = possible_tiles_
 	columns = columns_
 	rows = rows_
+	player_model = player_model_
 
 func create_grid():
-	var table = FileUtilities.load_csv("C:/Users/me/Documents/j1.csv")
+	var table = FileUtilities.load_csv("D:\\projects\\match3\\mapping\\New folder\\a-1.csv")
 	var int_table = Collections.change_string_2d_array_to_int(table)
 	print(int_table)		
 	var loaded_grid = GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
@@ -47,6 +51,10 @@ func create_grid():
 			#_current_grid[a][b] = TileConstants.EMPTY
 	#_fill_empty_cells(_current_grid)
 	#_new_grid = _current_grid.duplicate(true)
+	
+	
+
+	
 	return _current_grid
 
 
@@ -167,15 +175,17 @@ func test_collapse():
 	_collapse_columns()
 
 
-func _remove_matches(tile_to_match: String): 
-		var horizontal_matches = _find_horizontal_matches(tile_to_match)
-		var vertical_matches = _find_vertical_matches(tile_to_match)
-		var matches = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
-		
-		for x in matches.size():
-			var vec = matches[x]
-			_current_grid[vec.x][vec.y] = "Zero"
-
+func _remove_matches(tile_to_match: String) -> Array[Vector2i]: 
+	var horizontal_matches = _find_horizontal_matches(tile_to_match)
+	var vertical_matches = _find_vertical_matches(tile_to_match)
+	var result = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
+	var matches: Array[Vector2i] =  []
+	matches.assign(result)
+	
+	for x in matches.size():
+		var vec = matches[x]
+		_current_grid[vec.x][vec.y] = "zero" #Zero"
+	return matches 
 
 func _find_vertical_matches(tile_to_match: String):
 	var grid_ = _current_grid
@@ -184,17 +194,11 @@ func _find_vertical_matches(tile_to_match: String):
 		for y in rows:
 			if(y > 0 and y < (rows -1)):   
 				if(
-					#tile_to_match == grid_[x][y - 1] and 
-					#tile_to_match == grid_[x][y] and 
-					#tile_to_match == grid_[x][y + 1] 
 					tile_to_match == grid_[y - 1][x] and 
 					tile_to_match == grid_[y][x] and 
 					tile_to_match == grid_[y + 1][x] 					
 				):
 					#there can't be more rows with matches of the same type, only another row
-					#matches.append(Vector2i(x, y - 1))
-					#matches.append(Vector2i(x, y))
-					#matches.append(Vector2i(x, y + 1))
 					matches.append(Vector2i(y - 1, x))
 					matches.append(Vector2i(y, x))
 					matches.append(Vector2i(y + 1, x))					
@@ -208,17 +212,10 @@ func _find_horizontal_matches(tile_to_match: String):
 		for y in columns:
 			if(y > 0 and y < (columns - 1)):   
 				if(
-					#tile_to_match == grid_[y - 1][x] and 
-					#tile_to_match == grid_[y][x] and 
-					#tile_to_match == grid_[y + 1][x] 
 					tile_to_match == grid_[x][y - 1] and 
 					tile_to_match == grid_[x][y] and 
 					tile_to_match == grid_[x][y + 1] 					
 				):
-					#there can't be more rows with matches of the same type, only another row
-					#matches.append(Vector2i(y - 1, x))
-					#matches.append(Vector2i(y, x))
-					#matches.append(Vector2i(y + 1, x))
 					matches.append(Vector2i(x, y - 1))
 					matches.append(Vector2i(x, y))
 					matches.append(Vector2i(x, y + 1))					

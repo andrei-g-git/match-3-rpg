@@ -1,9 +1,0 @@
-[gd_scene load_steps=4 format=3 uid="uid://dasuqdgiwogic"]
-
-[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_jowt0"]
-[ext_resource type="Texture2D" uid="uid://bpcupw2wxmcqj" path="res://assets/images/sprites/pieces/emerald.png" id="2_mvqc3"]
-[ext_resource type="Texture2D" uid="uid://d3xyc56pkftbc" path="res://assets/images/sprites/pieces/emerald_pressed.png" id="3_mvqc3"]
-
-[node name="Emerald" instance=ExtResource("1_jowt0")]
-texture_normal = ExtResource("2_mvqc3")
-texture_pressed = ExtResource("3_mvqc3")

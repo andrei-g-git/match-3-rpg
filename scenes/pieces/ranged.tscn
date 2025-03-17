@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4qdep7c42rso"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_37cv7"]
+[ext_resource type="Texture2D" uid="uid://b44ujvdwcdxcq" path="res://assets/images/sprites/pieces/ranged.png" id="2_b6cya"]
+[ext_resource type="Texture2D" uid="uid://fuswg4dr2vwn" path="res://assets/images/sprites/pieces/ranged_p.png" id="3_0y0t2"]
+
+[node name="ranged" instance=ExtResource("1_37cv7")]
+texture_normal = ExtResource("2_b6cya")
+texture_pressed = ExtResource("3_0y0t2")

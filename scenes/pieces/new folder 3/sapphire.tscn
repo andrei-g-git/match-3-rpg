@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc5reap4ycv8c"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_tomgn"]
+[ext_resource type="Texture2D" uid="uid://da82aww6ndq5d" path="res://assets/images/sprites/pieces/new folder 2/sapphire.png" id="2_yg566"]
+[ext_resource type="Texture2D" uid="uid://cie6bi7ls6q53" path="res://assets/images/sprites/pieces/new folder 2/sapphire_pressed.png" id="3_yg566"]
+
+[node name="Sapphire" instance=ExtResource("1_tomgn")]
+texture_normal = ExtResource("2_yg566")
+texture_pressed = ExtResource("3_yg566")

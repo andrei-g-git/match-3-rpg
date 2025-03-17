@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0xcidxk1m0x4"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_scpyj"]
+[ext_resource type="Texture2D" uid="uid://d2b33gj72flqb" path="res://assets/images/sprites/pieces/melee.png" id="2_jph72"]
+[ext_resource type="Texture2D" uid="uid://btfklxfwvc41i" path="res://assets/images/sprites/pieces/melee_p.png" id="3_4wrhi"]
+
+[node name="melee" instance=ExtResource("1_scpyj")]
+texture_normal = ExtResource("2_jph72")
+texture_pressed = ExtResource("3_4wrhi")

@@ -13,9 +13,10 @@ extends GridContainer
 
 @export var piecessss : Array[Resource] = []
 @export var empty_tile_scene : Resource
+@export var player: Resource
 
 var model : GridModel = null
-var pieces = []
+var pieces: Array[Resource] = []
 
 var _pieces_in_grid : Array[Array] = []
 
@@ -26,9 +27,17 @@ func _ready() -> void:
 	var int_table = Collections.change_string_2d_array_to_int(table)
 	print(int_table)		
 	GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
+
+
+	var test_instance = player.instantiate()
+	var test2222 = piecessss[0].instantiate()
+	var bp = 123
+	var name: String = test_instance.name
 	
 
-	pieces = piecessss#.slice(0, 3)	
+	#pieces = piecessss#.slice(0, 3)	
+	pieces.assign(Collections.merge_arrays_shallow(piecessss, [player]))
+
 	var possible_tile_names : Array[String] = []
 	for tile_resource in pieces:
 		var tile_name = (tile_resource as Resource) \
@@ -36,10 +45,21 @@ func _ready() -> void:
 			.name \
 			.replace("&", "")
 		possible_tile_names.append(tile_name)
+		
 	model = GridModel.new(
 		possible_tile_names,
 		cols,
-		rows
+		rows,
+		PlayerModel.new(
+			Buffs.new(
+				Effect.new(),
+				Effect.new(),
+				Effect.new(),
+				Effect.new(),
+			),
+			null,
+			CombatBehavior.Combatability.new()
+		)			
 	)
 	
 	columns = cols
@@ -54,11 +74,11 @@ func _process(delta: float) -> void:
 func _spawn_pieces():#pieces_in_grid: Array[Array]):	
 	var pieces_in_grid = model.create_grid()
 	GridUtilities.print_array_initials(pieces_in_grid, "TEST NEW MODEL SPAWN")
-	_populate_and_register_observers(pieces_in_grid, piecessss, cols, rows)
+	_populate_and_register_observers(pieces_in_grid, pieces, cols, rows)
 
 
 func _populate_and_register_observers(grid : Array[Array], possible_pieces : Array[Resource], cols: int, rows: int):
-	var grid_children = _populate_grid_with_nodes(grid, piecessss, empty_tile_scene, cols, rows)
+	var grid_children = _populate_grid_with_nodes(grid, pieces, empty_tile_scene, cols, rows)
 	model.initialize_observers()
 	for x in rows:
 		for y in cols:
@@ -66,8 +86,8 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 			if tile_node != null:
 				tile_node.set_grid_index(x, y)
 				model.register(tile_node, x, y)	
-				(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, piecessss, grid[x][y])) # this is basically observer pattern shit so it can stay...
-				(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, piecessss, cols, rows))			
+				(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, pieces, grid[x][y])) # this is basically observer pattern shit so it can stay...
+				(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, pieces, cols, rows))			
 	var bp = 123
 	print("POPULATED, NOW COLLAPSING")
 	#now check if there are empty spots and collapse tiles above on those spots

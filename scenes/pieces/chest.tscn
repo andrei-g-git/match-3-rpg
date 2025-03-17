@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://4y6r0hk0vdaw"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_cit2r"]
+[ext_resource type="Texture2D" uid="uid://ckp13cyhwcti4" path="res://assets/images/sprites/pieces/chest.png" id="2_hm0wf"]
+[ext_resource type="Texture2D" uid="uid://t3yuifamtifo" path="res://assets/images/sprites/pieces/chest_p.png" id="3_n5ugr"]
+
+[node name="chest" instance=ExtResource("1_cit2r")]
+texture_normal = ExtResource("2_hm0wf")
+texture_pressed = ExtResource("3_n5ugr")
