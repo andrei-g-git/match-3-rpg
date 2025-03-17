@@ -37,6 +37,7 @@ func create_grid():
 	var loaded_grid = GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
 	_current_grid = loaded_grid
 	_new_grid = loaded_grid.duplicate(true)
+	GridUtilities.print_array_initials(_current_grid, "FROM CSV")
 	_fill_empty_cells(_current_grid)
 		
 	#_current_grid.resize(rows)
@@ -173,7 +174,7 @@ func _remove_matches(tile_to_match: String):
 		
 		for x in matches.size():
 			var vec = matches[x]
-			_current_grid[vec.x][vec.y] = "zero"
+			_current_grid[vec.x][vec.y] = "Zero"
 
 
 func _find_vertical_matches(tile_to_match: String):

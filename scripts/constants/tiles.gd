@@ -1,6 +1,6 @@
 class_name TileConstants
 
-const EMPTY = "zero"
+const EMPTY = "Zero"
 
 enum Tiles{
 	ZERO,

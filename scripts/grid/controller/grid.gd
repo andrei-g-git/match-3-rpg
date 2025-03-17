@@ -63,11 +63,11 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 	for x in rows:
 		for y in cols:
 			var tile_node = grid_children[x][y]	
-			#if tile_node != null:
-			tile_node.set_grid_index(x, y)
-			model.register(tile_node, x, y)	
-			(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, piecessss, grid[x][y])) # this is basically observer pattern shit so it can stay...
-			(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, piecessss, cols, rows))			
+			if tile_node != null:
+				tile_node.set_grid_index(x, y)
+				model.register(tile_node, x, y)	
+				(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, piecessss, grid[x][y])) # this is basically observer pattern shit so it can stay...
+				(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, piecessss, cols, rows))			
 	var bp = 123
 	print("POPULATED, NOW COLLAPSING")
 	#now check if there are empty spots and collapse tiles above on those spots
