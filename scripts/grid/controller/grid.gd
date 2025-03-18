@@ -19,7 +19,7 @@ var model : GridModel = null
 var pieces: Array[Resource] = []
 
 var _pieces_in_grid : Array[Array] = []
-var player_tile: Control
+var player_tile#: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,7 +31,6 @@ func _ready() -> void:
 
 
 	player_tile = player.instantiate()
-
 	
 	pieces = piecessss#.slice(0, 3)	
 	#pieces.assign(Collections.merge_arrays_shallow(piecessss, [player]))

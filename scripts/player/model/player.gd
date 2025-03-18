@@ -27,6 +27,8 @@ var spell_damage: int = 0:
 var defense: int = 0:
 	get: return combat.damage_block + buffs.defense_buff 
 
+var easy_move_tiles: Array[String]:
+	get: return movement.easy_move_tiles 
 
 func _init(buffs_: Buffs, debuffs_, combat_: CombatBehavior.Combatability, movement_: MoveBehavior.Movability):
 	buffs = buffs_
@@ -74,3 +76,4 @@ func buff_defense(amount: int):
 
 func check_move_swap(tile_name: String) -> bool:
 	return movement.check_for_natural_move_swap(tile_name)
+	

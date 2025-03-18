@@ -134,7 +134,7 @@ func swap_2(
 			TileConstants.Tiles,
 			TileConstants.Tiles.PLAYER
 		) and 
-		player_model.check_move_swap(source_name)
+		player_model.check_move_swap(tile_to_swap)#source_name)
 	):
 		if(destination.x >= 0 and destination.y >= 0):
 			
@@ -145,8 +145,8 @@ func swap_2(
 			_swap_tile_nodes(source, destination)
 			
 			#this runs after delay from tween animation in the tile
-			var source_matches = _remove_matches(source_name)
-			var destination_matches = _remove_matches(tile_to_swap)
+			var source_matches = _remove_matches(player_model.easy_move_tiles)#source_name)
+			var destination_matches = _remove_matches([tile_to_swap])
 			
 			#test		
 			var source_match_count = source_matches.size()
@@ -217,9 +217,9 @@ func test_collapse():
 	_collapse_columns()
 
 
-func _remove_matches(tile_to_match: String) -> Array[Vector2i]: 
-	var horizontal_matches = _find_horizontal_matches(tile_to_match)
-	var vertical_matches = _find_vertical_matches(tile_to_match)
+func _remove_matches(tiles_to_match: Array[String]) -> Array[Vector2i]: 
+	var horizontal_matches = _find_horizontal_matches(tiles_to_match)
+	var vertical_matches = _find_vertical_matches(tiles_to_match)
 	var result = Collections.merge_arrays_shallow(horizontal_matches, vertical_matches)
 	var matches: Array[Vector2i] =  []
 	matches.assign(result)
@@ -229,59 +229,68 @@ func _remove_matches(tile_to_match: String) -> Array[Vector2i]:
 		_current_grid[vec.x][vec.y] = "zero" #Zero"
 	return matches 
 
-func _find_vertical_matches(tile_to_match: String):
+func _find_vertical_matches(tiles_to_match: Array[String]):
 	var grid_ = _current_grid
 	var matches: Array[Vector2i] = []
-	for x in columns:
-		for y in rows:
-			if(y > 0 and y < (rows -1)):   
-				if(
-					tile_to_match == grid_[y - 1][x] and 
-					tile_to_match == grid_[y][x] and 
-					tile_to_match == grid_[y + 1][x] 					
-				):
-					#there can't be more rows with matches of the same type, only another row
-					matches.append(Vector2i(y - 1, x))
-					matches.append(Vector2i(y, x))
-					matches.append(Vector2i(y + 1, x))					
+	var i_must_break_you = false
+	for name in tiles_to_match:
+		
+		for x in columns:
+			for y in rows:
+				if(y > 0 and y < (rows -1)):   
+					if(
+						name == grid_[y - 1][x] and 
+						name == grid_[y][x] and 
+						name == grid_[y + 1][x] 					
+					):
+						#there can't be more rows with matches of the same type, only another row
+						matches.append(Vector2i(y - 1, x))
+						matches.append(Vector2i(y, x))
+						matches.append(Vector2i(y + 1, x))		
+						i_must_break_you = true		
+		if i_must_break_you: break	
 	return Collections.remove_array_duplicates(matches)	
 
 
-func _find_horizontal_matches(tile_to_match: String):
+func _find_horizontal_matches(tiles_to_match: Array[String]):
 	var grid_ = _current_grid
 	var matches: Array[Vector2i] = []
-	for x in rows:
-		for y in columns:
-			if(y > 0 and y < (columns - 1)):   
-				if(
-					tile_to_match == grid_[x][y - 1] and 
-					tile_to_match == grid_[x][y] and 
-					tile_to_match == grid_[x][y + 1] 					
-				):
-					matches.append(Vector2i(x, y - 1))
-					matches.append(Vector2i(x, y))
-					matches.append(Vector2i(x, y + 1))					
+	var i_must_break_you = false
+	for name in tiles_to_match:	
+		for x in rows:
+			for y in columns:
+				if(y > 0 and y < (columns - 1)):   
+					if(
+						name == grid_[x][y - 1] and 
+						name == grid_[x][y] and 
+						name == grid_[x][y + 1] 					
+					):
+						matches.append(Vector2i(x, y - 1))
+						matches.append(Vector2i(x, y))
+						matches.append(Vector2i(x, y + 1))	
+						i_must_break_you = true		
+		if i_must_break_you: break											
 	return Collections.remove_array_duplicates(matches)	
 
 
-func _find_linear_matches(tile_to_match: String, horizontally: bool):
-	var grid_ = _current_grid
-	var matches: Array[Vector2i] = []
-	var y_offset = int(horizontally) # 1 or 0 to look left or right, but only in 1 dimension
-	var x_offset = int(not horizontally)
-	for x in rows:
-		for y in columns:
-			if(y > 0 and y < (columns -1)):   
-				if(
-					tile_to_match == grid_[x - x_offset][y - y_offset] and 
-					tile_to_match == grid_[x][y] and 
-					tile_to_match == grid_[x + x_offset][y + y_offset] 
-				):
-					#there can't be more columns with matches of the same type, only another row
-					matches.append(Vector2i(x, y - 1))
-					matches.append(Vector2i(x, y))
-					matches.append(Vector2i(x, y + 1))
-	return Collections.remove_array_duplicates(matches)	
+#func _find_linear_matches(tile_to_match: String, horizontally: bool):
+	#var grid_ = _current_grid
+	#var matches: Array[Vector2i] = []
+	#var y_offset = int(horizontally) # 1 or 0 to look left or right, but only in 1 dimension
+	#var x_offset = int(not horizontally)
+	#for x in rows:
+		#for y in columns:
+			#if(y > 0 and y < (columns -1)):   
+				#if(
+					#tile_to_match == grid_[x - x_offset][y - y_offset] and 
+					#tile_to_match == grid_[x][y] and 
+					#tile_to_match == grid_[x + x_offset][y + y_offset] 
+				#):
+					##there can't be more columns with matches of the same type, only another row
+					#matches.append(Vector2i(x, y - 1))
+					#matches.append(Vector2i(x, y))
+					#matches.append(Vector2i(x, y + 1))
+	#return Collections.remove_array_duplicates(matches)	
 
 
 func get_grid():

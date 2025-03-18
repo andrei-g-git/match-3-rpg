@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://clhjxwnlpnkhd"]
+
+[ext_resource type="PackedScene" uid="uid://diysapb8m6y4" path="res://scenes/piece.tscn" id="1_22uif"]
+[ext_resource type="Script" uid="uid://cvrru2qontipe" path="res://scripts/player/controller/player_old.gd" id="1_x6lmx"]
+[ext_resource type="Texture2D" uid="uid://bu5q01j0u0q8f" path="res://assets/images/sprites/pieces/protag.png" id="2_x6lmx"]
+[ext_resource type="Texture2D" uid="uid://crrfqlgl64j5j" path="res://assets/images/sprites/pieces/protag_p.png" id="3_48w40"]
+
+[node name="test_player" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_x6lmx")
+
+[node name="Piece" parent="." instance=ExtResource("1_22uif")]
+texture_normal = ExtResource("2_x6lmx")
+texture_pressed = ExtResource("3_48w40")

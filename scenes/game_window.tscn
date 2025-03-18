@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://86ns100pvdyj" path="res://scenes/pieces/stamina.tscn" id="12_ns8k7"]
 [ext_resource type="PackedScene" uid="uid://c0fiqgoco0se2" path="res://scenes/pieces/unlock.tscn" id="13_5tgvw"]
 [ext_resource type="PackedScene" uid="uid://gk1q7xjx8waf" path="res://scenes/pieces/walk.tscn" id="14_3k3cv"]
-[ext_resource type="PackedScene" uid="uid://c81tigmkf1gwm" path="res://scenes/player/player.tscn" id="15_p26jq"]
+[ext_resource type="PackedScene" uid="uid://dop8867htsy44" path="res://scenes/pieces/player.tscn" id="15_p26jq"]
 
 [node name="GameWindow" type="BoxContainer"]
 anchors_preset = 15
