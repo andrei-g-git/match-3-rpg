@@ -1,6 +1,7 @@
 class_name TileConstants
 
 const EMPTY = "zero"
+#const PLAYER = "player"
 
 enum Tiles{
 	ZERO,

@@ -19,6 +19,7 @@ var model : GridModel = null
 var pieces: Array[Resource] = []
 
 var _pieces_in_grid : Array[Array] = []
+var player_tile: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,14 +30,11 @@ func _ready() -> void:
 	GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
 
 
-	var test_instance = player.instantiate()
-	var test2222 = piecessss[0].instantiate()
-	var bp = 123
-	var name: String = test_instance.name
-	
+	player_tile = player.instantiate()
 
-	#pieces = piecessss#.slice(0, 3)	
-	pieces.assign(Collections.merge_arrays_shallow(piecessss, [player]))
+	
+	pieces = piecessss#.slice(0, 3)	
+	#pieces.assign(Collections.merge_arrays_shallow(piecessss, [player]))
 
 	var possible_tile_names : Array[String] = []
 	for tile_resource in pieces:
@@ -58,7 +56,15 @@ func _ready() -> void:
 				Effect.new(),
 			),
 			null,
-			CombatBehavior.Combatability.new()
+			CombatBehavior.Combatability.new(),
+			MoveBehavior.Movability.new(
+				player_tile,
+				[
+					TileConstants.Tiles.keys()[TileConstants.Tiles.WALK].to_lower(),
+					TileConstants.Tiles.keys()[TileConstants.Tiles.UNLOCK].to_lower()					
+				]
+
+			)
 		)			
 	)
 	
@@ -122,6 +128,13 @@ func _populate_grid_with_nodes(grid : Array[Array], possible_pieces : Array[Reso
 				var blank_tile = empty_node_resource.instantiate()				
 				instance_grid[x][y] = blank_tile
 				add_child(blank_tile)
+			if grid[x][y] == GridUtilities.convert_enum_key_to_lower_string(
+				TileConstants.Tiles,
+				TileConstants.Tiles.PLAYER
+			):#TileConstants.Tiles.keys()[TileConstants.Tiles.PLAYER].to_lower():
+				instance_grid[x][y] = player_tile
+				add_child(player_tile)
+				
 		var columnnnnn_ = grid[x]
 		var bp = 123
 	return instance_grid

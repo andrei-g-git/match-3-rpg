@@ -35,7 +35,7 @@ func _init(
 	player_model = player_model_
 
 func create_grid():
-	var table = FileUtilities.load_csv("D:\\projects\\match3\\mapping\\New folder\\a-1.csv")
+	var table = FileUtilities.load_csv("D:\\projects\\match3\\mapping\\New folder\\a-2.csv")
 	var int_table = Collections.change_string_2d_array_to_int(table)
 	print(int_table)		
 	var loaded_grid = GridUtilities.convert_int_tile_grid_to_actual_names(int_table)
@@ -128,38 +128,46 @@ func swap_2(
 	source_name: String
 ):
 	var destination : Vector2i = source + direction 	
-	if(destination.x >= 0 and destination.y >= 0):
-		var tile_to_swap = _current_grid[destination.x][destination.y]
-		_current_grid[destination.x][destination.y] = source_name
-		_current_grid[source.x][source.y] = tile_to_swap	
-		
-		#shouldn't be here
-		_swap_tile_nodes(source, destination)
-		
-		#this runs after delay from tween animation in the tile
-		var source_matches = _remove_matches(source_name)
-		var destination_matches = _remove_matches(tile_to_swap)
-		
-		#test		
-		var source_match_count = source_matches.size()
-		var destination_match_count = destination_matches.size()
-		
-		_buff_player(source_match_count, source_name)
-		_buff_player(destination_match_count, tile_to_swap)
-		var _m_d = player_model.melee_damage
-		var _r_d = player_model.ranged_damage
-		var _d = player_model.defense
-		
-		print("\nmelee damage", _m_d)
-		print("ranged damage", _r_d)
-		print("defense", _d)
-		print(source_name, " count: ", source_match_count)
-		print(tile_to_swap, " count: ", destination_match_count, "\n")
-		
-		
-		GridUtilities.print_array_initials(_current_grid, "AFTER REMOVEING MATCHES")
-		return _current_grid 
-	return []	
+	var tile_to_swap = _current_grid[destination.x][destination.y]
+	if(
+		source_name == GridUtilities.convert_enum_key_to_lower_string(
+			TileConstants.Tiles,
+			TileConstants.Tiles.PLAYER
+		) and 
+		player_model.check_move_swap(source_name)
+	):
+		if(destination.x >= 0 and destination.y >= 0):
+			
+			_current_grid[destination.x][destination.y] = source_name
+			_current_grid[source.x][source.y] = tile_to_swap	
+			
+			#shouldn't be here
+			_swap_tile_nodes(source, destination)
+			
+			#this runs after delay from tween animation in the tile
+			var source_matches = _remove_matches(source_name)
+			var destination_matches = _remove_matches(tile_to_swap)
+			
+			#test		
+			var source_match_count = source_matches.size()
+			var destination_match_count = destination_matches.size()
+			
+			_buff_player(source_match_count, source_name)
+			_buff_player(destination_match_count, tile_to_swap)
+			var _m_d = player_model.melee_damage
+			var _r_d = player_model.ranged_damage
+			var _d = player_model.defense
+			
+			print("\nmelee damage", _m_d)
+			print("ranged damage", _r_d)
+			print("defense", _d)
+			print(source_name, " count: ", source_match_count)
+			print(tile_to_swap, " count: ", destination_match_count, "\n")
+			
+			
+			GridUtilities.print_array_initials(_current_grid, "AFTER REMOVEING MATCHES")
+			return _current_grid 
+		return []	
 
 
 func _swap_tile_nodes(source: Vector2i, destination: Vector2i):

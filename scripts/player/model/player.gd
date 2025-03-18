@@ -13,6 +13,7 @@ class_name PlayerModel
 var buffs: Buffs
 var debuffs
 var combat: CombatBehavior.Combatability
+var movement: MoveBehavior.Movability
 
 var melee_damage: int = 0:
 	get: return combat.melee_damage + buffs.melee_buff 
@@ -27,10 +28,11 @@ var defense: int = 0:
 	get: return combat.damage_block + buffs.defense_buff 
 
 
-func _init(buffs_: Buffs, debuffs_, combat_: CombatBehavior.Combatability):
+func _init(buffs_: Buffs, debuffs_, combat_: CombatBehavior.Combatability, movement_: MoveBehavior.Movability):
 	buffs = buffs_
 	debuffs = debuffs_
 	combat = combat_
+	movement = movement_
 	var abc = 123
 
 
@@ -68,3 +70,7 @@ func buff_spell(amount: int):
 
 func buff_defense(amount: int):
 	buffs.replace_defense_buff(amount)
+
+
+func check_move_swap(tile_name: String) -> bool:
+	return movement.check_for_natural_move_swap(tile_name)
