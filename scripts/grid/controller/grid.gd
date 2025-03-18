@@ -89,7 +89,7 @@ func _populate_and_register_observers(grid : Array[Array], possible_pieces : Arr
 				(tile_node as BaseButton).pressed.connect(_handle_possible_swap.bind(tile_node, grid, pieces, grid[x][y])) # this is basically observer pattern shit so it can stay...
 				(tile_node as BaseButton).updated.connect(_populate_and_register_observers.bind(grid, pieces, cols, rows))			
 	var bp = 123
-	print("POPULATED, NOW COLLAPSING")
+	#print("POPULATED, NOW COLLAPSING")
 	#now check if there are empty spots and collapse tiles above on those spots
 	
 	await get_tree().create_timer(0.5).timeout #obviously this is a very bad patch work, need to allow for collapse movement through proper signaling, not this timeout crap

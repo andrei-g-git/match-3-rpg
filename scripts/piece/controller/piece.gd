@@ -58,12 +58,12 @@ func move(target: Vector2):
 	#updated.emit()
 	tile_tween.connect("finished", _on_move_finished)
 	var time_end = int(Time.get_unix_time_from_system())
-	print(time_start, "\n", time_end, "\n")
+	#print(time_start, "\n", time_end, "\n")
 
 
 func _on_move_finished():
 	updated.emit()
-	print("UPDATE SIGNALE")
+	#print("UPDATE SIGNALE")
 
 func get_grid_index() -> Vector2i:
 	return _grid_index

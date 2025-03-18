@@ -72,7 +72,7 @@ func _fill_empty_cells(grid: Array[Array]):
 					loops
 				)
 				grid[x][y] = next_tile	
-	GridUtilities.print_array_initials(grid, "FILLED EMPTY")
+	#GridUtilities.print_array_initials(grid, "FILLED EMPTY")
 
 
 func fill_empty_tiles():
@@ -137,11 +137,27 @@ func swap_2(
 		_swap_tile_nodes(source, destination)
 		
 		#this runs after delay from tween animation in the tile
-		_remove_matches(source_name)
-		_remove_matches(tile_to_swap)
-
-		GridUtilities.print_array_initials(_current_grid, "AFTER REMOVEING MATCHES")
+		var source_matches = _remove_matches(source_name)
+		var destination_matches = _remove_matches(tile_to_swap)
 		
+		#test		
+		var source_match_count = source_matches.size()
+		var destination_match_count = destination_matches.size()
+		
+		_buff_player(source_match_count, source_name)
+		_buff_player(destination_match_count, tile_to_swap)
+		var _m_d = player_model.melee_damage
+		var _r_d = player_model.ranged_damage
+		var _d = player_model.defense
+		
+		print("\nmelee damage", _m_d)
+		print("ranged damage", _r_d)
+		print("defense", _d)
+		print(source_name, " count: ", source_match_count)
+		print(tile_to_swap, " count: ", destination_match_count, "\n")
+		
+		
+		GridUtilities.print_array_initials(_current_grid, "AFTER REMOVEING MATCHES")
 		return _current_grid 
 	return []	
 
@@ -152,6 +168,24 @@ func _swap_tile_nodes(source: Vector2i, destination: Vector2i):
 	var destination_node : Control = tile_nodes[destination.x][destination.y]
 	source_node.update(destination)
 	destination_node.update(source)
+
+
+func _buff_player(match_count: int, type: String):
+	if match_count >= 3: 
+		var _melee = TileConstants.Tiles.keys()[TileConstants.Tiles.MELEE].to_lower()
+		var _ranged = TileConstants.Tiles.keys()[TileConstants.Tiles.RANGED].to_lower()
+		var _defense = TileConstants.Tiles.keys()[TileConstants.Tiles.DEFEND].to_lower()
+		match type:
+			_melee:
+				player_model.buff_melee(_derive_buff_from_match_size(match_count))
+			_ranged:
+				player_model.buff_ranged(_derive_buff_from_match_size(match_count))
+			_defense:
+				player_model.buff_defense(_derive_buff_from_match_size(match_count))
+
+
+func _derive_buff_from_match_size(match_count: int) -> int:
+	return match_count - 2
 
 
 func _collapse_columns():
