@@ -1,0 +1,13 @@
+public abstract class Tile{
+
+    private Vector2 postion;
+    //private bool swapable;
+    public Vector2 Postion {
+        get => postion; 
+        set {postion = value};
+    }
+    // public bool Swapable{
+    //     get => swapable;
+    //     set {swapable = value}
+    // }
+}

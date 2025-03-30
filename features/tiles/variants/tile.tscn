@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://m6hy0ahrcgg0"]
+
+[node name="Tile" type="TextureButton"]
+custom_minimum_size = Vector2(64, 64)

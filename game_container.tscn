@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bksxfk4wrqqho"]
+
+[ext_resource type="Texture2D" uid="uid://cmy5w5gf0asrn" path="res://bg-square.png" id="1_73w1c"]
+[ext_resource type="PackedScene" uid="uid://b62yrohccjj0" path="res://features/tactical grid/tactical_grid.tscn" id="2_ge4kj"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_73w1c")
+
+[node name="TacticalGrid" parent="Panel" instance=ExtResource("2_ge4kj")]
+layout_mode = 0

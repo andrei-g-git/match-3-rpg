@@ -1,0 +1,165 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\work\\godot\\match-rpg\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\Ztest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Ztest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\utils\\Objects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\Objects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Swapable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\tiles\\Swapable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Movable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\tiles\\Movable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Effectful.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\tiles\\Effectful.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Combatable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\tiles\\Combatable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\Tiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\Tiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Offensive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\tiles\\Offensive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\work\\godot\\match-rpg\\features\\tactical grid\\Controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:features\\tactical grid\\Controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Objects.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\utils\\Objects.cs",
+              "RelativeDocumentMoniker": "utils\\Objects.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\utils\\Objects.cs",
+              "RelativeToolTip": "utils\\Objects.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:14:36.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Swapable.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Swapable.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\tiles\\Swapable.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Swapable.cs",
+              "RelativeToolTip": "features\\tactical grid\\tiles\\Swapable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:14:11.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Movable.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Movable.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\tiles\\Movable.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Movable.cs",
+              "RelativeToolTip": "features\\tactical grid\\tiles\\Movable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:13:38.589Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Effectful.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Effectful.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\tiles\\Effectful.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Effectful.cs",
+              "RelativeToolTip": "features\\tactical grid\\tiles\\Effectful.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:13:36.59Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Combatable.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Combatable.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\tiles\\Combatable.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Combatable.cs",
+              "RelativeToolTip": "features\\tactical grid\\tiles\\Combatable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:13:20.411Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Tiles.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\Tiles.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\Tiles.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\Tiles.cs",
+              "RelativeToolTip": "features\\tactical grid\\Tiles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:08:46.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Ztest.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\Ztest.cs",
+              "RelativeDocumentMoniker": "Ztest.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\Ztest.cs",
+              "RelativeToolTip": "Ztest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:07:54.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Offensive.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Offensive.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\tiles\\Offensive.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\tiles\\Offensive.cs",
+              "RelativeToolTip": "features\\tactical grid\\tiles\\Offensive.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:07:32.948Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Controller.cs",
+              "DocumentMoniker": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\Controller.cs",
+              "RelativeDocumentMoniker": "features\\tactical grid\\Controller.cs",
+              "ToolTip": "F:\\work\\godot\\match-rpg\\features\\tactical grid\\Controller.cs",
+              "RelativeToolTip": "features\\tactical grid\\Controller.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T10:48:47.873Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

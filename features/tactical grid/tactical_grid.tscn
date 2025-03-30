@@ -1,0 +1,22 @@
+[gd_scene load_steps=14 format=3 uid="uid://b62yrohccjj0"]
+
+[ext_resource type="Script" uid="uid://cvsnbmnlb3mi5" path="res://features/tactical grid/TacticalGrid.cs" id="1_87tcp"]
+[ext_resource type="PackedScene" uid="uid://biktknumwu2py" path="res://features/tiles/variants/archer.tscn" id="2_jy8lv"]
+[ext_resource type="PackedScene" uid="uid://ddmhkmi84mjie" path="res://features/tiles/variants/chest.tscn" id="3_7lt7l"]
+[ext_resource type="PackedScene" uid="uid://b2v860hcpvhjf" path="res://features/tiles/variants/defend.tscn" id="4_75oix"]
+[ext_resource type="PackedScene" uid="uid://bipiv0umwglc1" path="res://features/tiles/variants/energy.tscn" id="5_7yft3"]
+[ext_resource type="PackedScene" uid="uid://fy0q6ryr2dfd" path="res://features/tiles/variants/fighter.tscn" id="6_huj1k"]
+[ext_resource type="PackedScene" uid="uid://b65diw677el5w" path="res://features/tiles/variants/health.tscn" id="7_h1y1s"]
+[ext_resource type="PackedScene" uid="uid://ctgm67cwn6xip" path="res://features/tiles/variants/melee.tscn" id="8_2pw4f"]
+[ext_resource type="PackedScene" uid="uid://c2bbcbjgw186g" path="res://features/tiles/variants/player.tscn" id="9_fl1yl"]
+[ext_resource type="PackedScene" uid="uid://b1bq2ke6ygc1g" path="res://features/tiles/variants/ranged.tscn" id="10_rakhb"]
+[ext_resource type="PackedScene" uid="uid://nsgudna3nkel" path="res://features/tiles/variants/stamina.tscn" id="11_88srg"]
+[ext_resource type="PackedScene" uid="uid://iarf1kc6h53k" path="res://features/tiles/variants/unlock.tscn" id="12_fbasj"]
+[ext_resource type="PackedScene" uid="uid://bfq5oc6q021h6" path="res://features/tiles/variants/walk.tscn" id="13_pphs5"]
+
+[node name="TacticalGrid" type="GridContainer"]
+columns = 8
+script = ExtResource("1_87tcp")
+tileScenes = Array[PackedScene]([ExtResource("2_jy8lv"), ExtResource("3_7lt7l"), ExtResource("4_75oix"), ExtResource("5_7yft3"), ExtResource("6_huj1k"), ExtResource("7_h1y1s"), ExtResource("8_2pw4f"), ExtResource("9_fl1yl"), ExtResource("10_rakhb"), ExtResource("11_88srg"), ExtResource("12_fbasj"), ExtResource("13_pphs5")])
+cols = 8
+rows = 12
