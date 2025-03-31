@@ -1,3 +1,5 @@
+using System;
+using Abstractions;
 using Godot;
 using Godot.Collections;
 using Tiles;
@@ -55,11 +57,23 @@ namespace Grid {
         }
 
         public void Register(Control tileNode_, int x_, int y_) {
-            observers[x_][y_] = tileNode_;
+            var observer = observers[x_][y_] = tileNode_;
+            var tileModel = ((Modelable) observer).Model;
+            //((Tiles.Model)tileModel).Connect()
+            //this.Connect(Tiles.Model.SignalName.TriedSwapping, Callable.From(Swap2)); //this isn't great...
+            //Tiles.Model.SignalName.TriedSwapping += (Vector2I source, Vector2I direction) => {Swap2(source, direction);};
+            //this.Connect("TriedSwapping", this)
+            //((Tiles.Model)tileModel).Connect(Tiles.Model.SignalName.TriedSwapping, Callable.From())
+            //tileModel.Connect(Tiles.Model.SignalName.TriedSwapping, )
+            ((Tiles.Model)tileModel).TriedSwapping += (Vector2I source, Vector2I direction) => Swap2(source, direction); //Jesus Christ what an ordeal
         }
 
 
-
+        private void Swap2(Vector2I source, Vector2I direction){
+            Console.WriteLine("source and direction below \n");
+            Console.WriteLine("source:  ", source.X, "   ", source.Y);
+            Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
+        }
     }
 
 }
