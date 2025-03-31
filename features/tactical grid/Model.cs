@@ -15,7 +15,7 @@ namespace Grid {
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
         //private List<List<Control>> observers;
-        private Array<Array<Control>> observers;  
+        private Array<Array<Control>> observers = new Array<Array<Control>>();  
         //public List<List<Tile>> Grid { get; }
         public Array<Array<Tile>> Grid { get => grid; }
         public Model(
@@ -35,9 +35,16 @@ namespace Grid {
             tileFactory = tileFactory_;
             //Console.WriteLine("tile resources:  ", tileResources_);
         }
-        public void CreateGrid() {
+        public void Initialize(){
             rows = tileNameMatrix.Count;
             columns = tileNameMatrix[0].Count;
+            observers.Resize(rows);
+            foreach(Array<Control> observer in observers){
+                observer.Resize(columns);
+            }
+        }
+        public void CreateGrid() {
+
             grid.Resize(rows);
             for (int x = 0; x < rows; x++) {
                 grid[x].Resize(columns);

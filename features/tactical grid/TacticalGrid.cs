@@ -28,6 +28,7 @@ public partial class TacticalGrid : GridContainer
 			tileNameGrid,
 			new Tiles.Factory()
 		);
+		model.Initialize();
 		var controller = new Controller(
 			model,
 			this,
