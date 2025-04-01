@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Abstractions;
 using Godot;
 using Godot.Collections;
@@ -69,18 +70,78 @@ namespace Grid {
             Console.WriteLine("source and direction below \n");
             Console.WriteLine("source:  ", source.X, "   ", source.Y);
             Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
+
+            FindMatchGroups(source, direction);
         }
 
-        private Array<Vector2I> FindMatchGroup(Vector2I source, Vector2I direction){
+        private Array<Vector2I> FindMatchGroups(Vector2I source, Vector2I direction){
             var destination = source + direction;
 
             if(destination.X >= 0 && destination.Y >= 0){
                 var newGrid = grid.Duplicate();
+                var sourceTile = newGrid[source.X][source.Y];
+                var destinationTile = newGrid[destination.X][destination.Y];
 
+                newGrid[source.X][source.Y] = destinationTile;
+                newGrid[destination.X][destination.Y] = sourceTile;
+
+                var horizontalMatches = FindHorizontal(sourceTile, newGrid);
+                var verticalMatches = FindVertical(sourceTile, newGrid);
+                var bp = 123;
 
             }
+
             return [];
         }
+
+        private Array<Vector2I> FindMatchesWith(Tile tile_, Array<Array<Tile>> grid_){
+
+            return [];
+        }
+
+        private Array<Vector2I> FindHorizontal(Tile tile_, Array<Array<Tile>> grid_){
+            var name = tile_.Name;
+            var matches = new Array<Vector2I>();
+
+            for(int x = 0; x < rows; x++){
+                for(int y = 0; y < columns; y++){
+                    if(y > 0 && y < (columns - 1)){
+                        if(
+                            name == grid_[x][y - 1].Name && 
+                            name == grid_[x][y].Name && 
+                            name == grid_[x][y + 1].Name 					
+                        ){
+                            matches.Add(new Vector2I(x, y - 1));
+                            matches.Add(new Vector2I(x, y));
+                            matches.Add(new Vector2I(x, y + 1));                              
+                        }       
+                    }  
+                }                    
+            }						
+            return Collections.RemoveDuplicates(matches);	
+        }
+
+        private Array<Vector2I> FindVertical(Tile tile_, Array<Array<Tile>> grid_){
+            var name = tile_.Name;
+            var matches = new Array<Vector2I>();
+
+            for(int x = 0; x < columns; x++){
+                for(int y = 0; y < rows; y++){
+                    if(y > 0 && y < (rows - 1)){
+                        if(
+                            name == grid_[y - 1][x].Name && 
+                            name == grid_[y][x].Name && 
+                            name == grid_[y + 1][x].Name 					
+                        ){
+                            matches.Add(new Vector2I(y - 1, x));
+                            matches.Add(new Vector2I(y, x));
+                            matches.Add(new Vector2I(y + 1, x));                              
+                        }       
+                    }  
+                }                    
+            }						
+            return Collections.RemoveDuplicates(matches);	
+        }        
     }
 
 }
