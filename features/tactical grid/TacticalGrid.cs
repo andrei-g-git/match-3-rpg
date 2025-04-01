@@ -32,7 +32,7 @@ public partial class TacticalGrid : GridContainer
 		var controller = new Controller(
 			model,
 			this,
-			new Grid.Factory(tileScenes)
+			new Grid.Factory(tileScenes/* , new Tiles.Factory() */)
 		);
 		controller.Initialize();
 	}

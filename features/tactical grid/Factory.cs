@@ -1,3 +1,4 @@
+using Abstractions;
 using Godot;
 using Godot.Collections;
 using System;
@@ -10,8 +11,10 @@ namespace Grid {
         private Dictionary<string, PackedScene> preInstantiatedTiles = new Dictionary<string, PackedScene>();
         private Array<string> tileNames = new Array<string>();//private List<string> tileNames;
         private Array<PackedScene> tileScenes;//private List<PackedScene> tileScenes;
-        public Factory(Array<PackedScene> tileScenes_) {
+        //private Tiles.Factory tileFactory = null;
+        public Factory(Array<PackedScene> tileScenes_/* , Tiles.Factory tileFactory_ */) {
             tileScenes = tileScenes_;
+            //tileFactory = tileFactory_;
             var bp = 123;
         }
 
@@ -35,8 +38,10 @@ namespace Grid {
             var bp = 123;
         }
 
-        public Control Create(string tileName) {
-            return (Control) preInstantiatedTiles[tileName].Instantiate();
+        public Control Create(string tileName, Tile model, Vector2I position) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
+            var tileNode =  (Control) preInstantiatedTiles[tileName].Instantiate();
+            ((Modelable) tileNode).Model = model;//tileFactory.Create(tileName, position);
+            return tileNode;
         }
     }
 }

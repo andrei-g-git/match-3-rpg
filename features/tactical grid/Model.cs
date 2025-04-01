@@ -53,19 +53,15 @@ namespace Grid {
                 for(int y = 0; y < columns; y++) {
                     grid[x][y] = tileFactory.Create(tileNameMatrix[x][y], new Vector2I(x, y));
                 }
-            }
+            }  
         }
 
         public void Register(Control tileNode_, int x_, int y_) {
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((Modelable) observer).Model;
-            //((Tiles.Model)tileModel).Connect()
-            //this.Connect(Tiles.Model.SignalName.TriedSwapping, Callable.From(Swap2)); //this isn't great...
-            //Tiles.Model.SignalName.TriedSwapping += (Vector2I source, Vector2I direction) => {Swap2(source, direction);};
-            //this.Connect("TriedSwapping", this)
-            //((Tiles.Model)tileModel).Connect(Tiles.Model.SignalName.TriedSwapping, Callable.From())
-            //tileModel.Connect(Tiles.Model.SignalName.TriedSwapping, )
-            ((Tiles.Model)tileModel).TriedSwapping += (Vector2I source, Vector2I direction) => Swap2(source, direction); //Jesus Christ what an ordeal
+
+            //((Tiles.Model)tileModel).TriedSwapping += (Vector2I source, Vector2I direction) => Swap2(source, direction); //Jesus Christ what an ordeal
+            ((Swapable)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
         }
 
 
@@ -73,6 +69,17 @@ namespace Grid {
             Console.WriteLine("source and direction below \n");
             Console.WriteLine("source:  ", source.X, "   ", source.Y);
             Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
+        }
+
+        private Array<Vector2I> FindMatchGroup(Vector2I source, Vector2I direction){
+            var destination = source + direction;
+
+            if(destination.X >= 0 && destination.Y >= 0){
+                var newGrid = grid.Duplicate();
+
+
+            }
+            return [];
         }
     }
 

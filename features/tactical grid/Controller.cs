@@ -4,6 +4,7 @@ using System;
 using Godot.Collections;
 using Grid;
 using Tiles;
+using Abstractions;
 //			row
 //	  o------------------------------->
 //  c |
@@ -43,7 +44,8 @@ namespace Grid {
 			for(int x = 0; x < rows_; x++) {
 				tileNodes_[x].Resize(columns_);
 				for(int y = 0; y < columns_; y++) {
-					Control instance = tileNodes_[x][y] = factory.Create(modelTiles_[x][y].Name);
+					Control instance = tileNodes_[x][y] = factory.Create(modelTiles_[x][y].Name, modelTiles_[x][y], new Vector2I(x, y));
+					//((Modelable) instance).Model = modelTiles_[x][y]; //this is a different responsability...
 					parent_.AddChild(instance);
 				}
 			}

@@ -6,7 +6,7 @@ namespace Abstractions{
 		public Node Controller{get; /* set; */}
 	}
 	public interface Modelable{
-		public Node Model{get; /* set; */}
+		public Node Model{get;  set;}
 	}	
 }
 
