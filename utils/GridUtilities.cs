@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Godot;
 using Godot.Collections;
 
 
@@ -37,6 +38,12 @@ public partial class GridUtilities {
 	}
 
 
+	public static bool CheckIfDirectionExists(Vector2I original, Vector2I direction){
+		var _position = original + direction;
+		return _position.X >= 0 && _position.Y >= 0;
+	}
+
+	//public static bool CheckIfSurroundingsExist
 }
 
 
