@@ -9,34 +9,20 @@ namespace Grid {
     public partial class Model : Node {
         private int columns = 0;
         private int rows = 0;
-        //private List<List<string>> tileNameMatrix = new List<List<string>>();
         private Array<Array<string>> tileNameMatrix = new Array<Array<string>>();
-        //private List<List<Tile>> grid = new List<List<Tile>>();
         private Array<Array<Tile>> grid = new Array<Array<Tile>>();
-        //private List<PackedScene> tileResources;
-        //private PackedScene[] tileResources;
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
-        //private List<List<Control>> observers;
         private Array<Array<Control>> observers = new Array<Array<Control>>();  
-        //public List<List<Tile>> Grid { get; }
         public Array<Array<Tile>> Grid { get => grid; }
         public Model(
-            //int columns_,
-            //int rows_, 
-            //List<PackedScene> tileResources_, 
             Array<PackedScene> tileResources_, //HUHH???? Ce fac cu astea??
-            //List<List<string>> tileNameMatrix_,
             Array<Array<string>> tileNameMatrix_,
             Tiles.Factory tileFactory_
         ){
-            //columns = columns_;
-            //rows = rows_;
-
             tileResources = tileResources_;//.ToArray().Select(item => (PackedScene) item).ToArray();
             tileNameMatrix = tileNameMatrix_;
             tileFactory = tileFactory_;
-            //Console.WriteLine("tile resources:  ", tileResources_);
         }
         public void Initialize(){
             rows = tileNameMatrix.Count;
@@ -45,6 +31,7 @@ namespace Grid {
             foreach(Array<Control> observer in observers){
                 observer.Resize(columns);
             }
+            //Console.WriteLine("GRID MODEL INITIALIZED");
         }
         public void CreateGrid() {
 
@@ -76,6 +63,7 @@ namespace Grid {
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
             var destination = source + direction;
+            GD.Print("dir   " + direction);
             Array<Vector2I> sourceMatches = [];
             Array<Vector2I> destinationMatches = [];
             if(destination.X >= 0 && destination.Y >= 0){
@@ -86,21 +74,30 @@ namespace Grid {
                 newGrid[source.X][source.Y] = destinationTile;
                 newGrid[destination.X][destination.Y] = sourceTile;
 
+                GridUtilities.PrintGridInitials(
+                    GridUtilities.GetNamesGridFromTileGrid(newGrid),
+                    "SWAPPED GRID"
+                );
+
                 var threeTileSourceMatches = FindMatchesWith(sourceTile, newGrid);
                 var threeTileDestinationMatches = FindMatchesWith(destinationTile, newGrid);
-                if(threeTileSourceMatches.Count > 0){ 
+                if(threeTileSourceMatches.Count > 0){ //this does not allow L combinations where a 90deg L is matched at the origin, where the actor sits at the shorter side and can short match
+                    //check if anyy adjacent to actor
                     sourceMatches = threeTileSourceMatches;
                 } else {
-                    var twoTileSourceMatches = FindTwoTileMatch(sourceTile, newGrid); //this isn't great since path size can be > 2 even though it's not in any one direction
+                    //check if any actor short matches are compatible
+                    var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
                     if(twoTileSourceMatches.Count > 0){ 
                         sourceMatches = twoTileSourceMatches;    
                     }                
                 }
 
                 if(threeTileDestinationMatches.Count > 0){
+                    //check if anyy adjacent to actor
                     destinationMatches = threeTileDestinationMatches;
                 } else {
-                    var twoTileDestinationMatches = FindTwoTileMatch(destinationTile, newGrid);
+                    //check if any actor short matches are compatible
+                    var twoTileDestinationMatches = GridUtilities.FindAllMatchingAdjacentTiles(destinationTile, newGrid);
                     if(twoTileDestinationMatches.Count > 0){ 
                         destinationMatches = twoTileDestinationMatches;    
                     }                
@@ -162,26 +159,27 @@ namespace Grid {
             return Collections.RemoveDuplicates(matches);	
         }  
 
-        private Array<Vector2I> FindTwoTileMatch(Tile tile_, Array<Array<Tile>> grid_){
-            Array<Vector2I> matches = [];
-            matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
-            matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 
-            matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Down)); 
-            matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Left)); 
+        // private Array<Vector2I> FindTwoTileMatch(Tile tile_, Array<Array<Tile>> grid_){
+        //     Array<Vector2I> matches = [];
+        //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
+        //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 
+        //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Down)); 
+        //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Left)); 
             
-            var cSharpValidMatches = matches.Where(match => match.X >= 0 && match.Y >= 0);
-            return new Array<Vector2I>(cSharpValidMatches);
-        }   
+        //     var cSharpValidMatches = matches.Where(match => match.X >= 0 && match.Y >= 0);
+        //     return new Array<Vector2I>(cSharpValidMatches);
+        // }   
 
-        private Vector2I FindMatchWithAdjacentTile(Tile tile_, Array<Array<Tile>> grid_, Vector2I direction){
-            if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
-                var neighboringPosition = tile_.Position + direction;
-                if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
-                    return neighboringPosition;
-                }
-            } 
-            return new Vector2I(-1, -1);
-        }   
+        // private Vector2I FindMatchWithAdjacentTile(Tile tile_, Array<Array<Tile>> grid_, Vector2I direction){
+        //     if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
+        //         var neighboringPosition = tile_.Position + direction;
+        //         if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
+        //             return neighboringPosition;
+        //         }
+        //     } 
+        //     return new Vector2I(-1, -1);
+        // }   
+       
     }
 
 }

@@ -11,6 +11,7 @@ namespace Tiles {
         public Swapable SwapBehavior{get => swapBehavior; set => swapBehavior = value;}
 
         public bool IsSwapable {get => swapBehavior.IsSwapable; set => swapBehavior.IsSwapable = value;}
+        public bool CanSwap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public Tile(Vector2I position_) {
             position = position_;

@@ -1,6 +1,7 @@
 using Abstractions;
 using Godot;
 using Godot.Collections;
+using Tiles;
 
 namespace Grid{
 	public partial class Commands{
@@ -14,6 +15,15 @@ namespace Grid{
             public void Execute(){}
         }
 
-		//public class 
-	}
+        public partial class CheckingActorConnectivity : Commandable{
+
+			public CheckingActorConnectivity(Array<Vector2I> matches_, Array<Array<Tile>> grid_, Tile actor_){ //the actor is just the swapee
+
+
+			}
+            public void Execute(){
+                
+            }
+        }
+    }
 }

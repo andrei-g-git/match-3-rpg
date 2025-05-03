@@ -23,5 +23,12 @@ public partial class Collections {
 		return new Array<T>(cSharpArray);
 	}
 
-
+	public static Array<Array<T>> Create2DArray<[MustBeVariant]T>(int width, int height){
+		Array<Array<T>> newArray = new Array<Array<T>>();
+		newArray.Resize(width);
+		for(int x = 0; x < width; x++){
+			newArray[x].Resize(height);
+		}
+		return newArray;
+	}
 }

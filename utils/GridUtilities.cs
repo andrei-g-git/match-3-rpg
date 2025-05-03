@@ -2,9 +2,10 @@ using System;
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using Tiles;
 
 
-public partial class GridUtilities {
+public static partial class GridUtilities { //these shouldn't be utilities, they should be in 'commmon'
 	public static void PrintGridInitials(Array<Array<string>> tiles, string header){
 		int rows = tiles.Count;
 		int cols = tiles[0].Count;
@@ -16,7 +17,8 @@ public partial class GridUtilities {
 			if(cols != 0){
 				var cSharpArray = tiles[i].Select(item => item[..1]);
 				initialsGrid[i] = [.. cSharpArray]; //new Array<string>(cSharpArray);
-				Console.WriteLine(initialsGrid[i]);				
+				//Console.WriteLine(initialsGrid[i]);		
+				GD.Print(initialsGrid[i]);		
 			}
 
 		}
@@ -43,7 +45,38 @@ public partial class GridUtilities {
 		return _position.X >= 0 && _position.Y >= 0;
 	}
 
-	//public static bool CheckIfSurroundingsExist
+	private static Vector2I FindMatchWithAdjacentTile(Tile tile_, Array<Array<Tile>> grid_, Vector2I direction){
+		if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
+			var neighboringPosition = tile_.Position + direction;
+			if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
+				return neighboringPosition;
+			}
+		} 
+		return new Vector2I(-1, -1);
+	} 
+	public static Array<Vector2I> FindAllMatchingAdjacentTiles(Tile tile_, Array<Array<Tile>> grid_){
+		Array<Vector2I> matches = [];
+		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
+		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 
+		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Down)); 
+		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Left)); 
+		
+		var cSharpValidMatches = matches.Where(match => match.X >= 0 && match.Y >= 0);
+		return new Array<Vector2I>(cSharpValidMatches);
+	}  
+
+	public static Array<Array<string>> GetNamesGridFromTileGrid(Array<Array<Tile>> TileGrid){
+		//return TileGrid.Select(tile => tile.Name)
+		int width = TileGrid.Count;
+		int height = TileGrid[0].Count;
+		Array<Array<string>> NamesGrid = Collections.Create2DArray<string>(width, height);
+		for(int x = 0; x < width; x++){
+			for(int y = 0; y < height; y++){
+				NamesGrid[x][y] = TileGrid[x][y].Name;
+			}
+		}
+		return NamesGrid;
+	}		
 }
 
 

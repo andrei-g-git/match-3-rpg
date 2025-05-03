@@ -4,4 +4,5 @@ public interface Swapable{
     public void NotifySwap(Vector2I direction);
     public bool IsSwapable {get; set;}
     public void ConnectWithSwapSignal(Swapping.TriedSwappingEventHandler callback);
+    public bool CanSwap {get; set;}
 }

@@ -6,7 +6,10 @@ public partial class Swapping : Node, Swapable{
 	private Tile tile = null;
 	private bool isSwapable;
 	public bool IsSwapable {get => isSwapable; set => isSwapable = value;}
-	public Swapping(Tile tile_){
+	private bool canSwap = false;
+    public bool CanSwap {get => canSwap; set => canSwap = value;}
+
+    public Swapping(Tile tile_){
 		tile = tile_;
 	}
 

@@ -80,7 +80,7 @@ public partial class ViewAndController : Node{
                 }
 				var yy = dragDirection.Y;
                 //Console.WriteLine("drag direction y:  ", yy);
-				((Swapable)model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
+				//((Swapable)model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
             }
 		}
     }
@@ -90,19 +90,25 @@ public partial class ViewAndController : Node{
 		pressed = true;
 		totalDrag = Vector2I.Zero;
 		Console.WriteLine("PRESSED");
+		GD.Print("+");
 	}
 
 	private void OnReleased(){
 		pressing = false;
 		pressed = false;
 		totalDrag = Vector2I.Zero;
+
+		((Swapable)model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
+		
 		dragDirection = Vector2I.Zero;
 		Console.WriteLine("RELEASED");
 	}
 
 	private void OnPressing(){
 		pressing = true;
+		//pressed = false; //NEW
 		Console.WriteLine("DURRRR");
+		GD.Print("DURRRR");
 	}
 
 }

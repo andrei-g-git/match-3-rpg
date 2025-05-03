@@ -15,6 +15,8 @@ public partial class TacticalGrid : GridContainer
 		var tileNameGrid = GridUtilities.AssignTileNamesToIntGrid(intTable);	
 		GridUtilities.PrintGridInitials(tileNameGrid, "GRID INITIALS");
 
+		Console.WriteLine("TACTICAL GRID READY EVENT");
+
 		// var Model = GD.Load("res://features/tactical grid/Model.cs");
 		// var Controller = GD.Load("res://features/tactical grid/Controller.cs");
 		// var TileFactory = GD.Load("res://features/tiles/variants/Factory.cs");
