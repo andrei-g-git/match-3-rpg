@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Abstractions;
+using Constants;
 using Godot;
 using Godot.Collections;
 using Tiles;
@@ -59,6 +60,8 @@ namespace Grid {
             Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
 
             (var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
+            GD.Print("source matches \n" + sourceMatches );
+            GD.Print("destination matches \n" + destinationMatches );
         }
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
@@ -84,12 +87,17 @@ namespace Grid {
                 if(threeTileSourceMatches.Count > 0){ //this does not allow L combinations where a 90deg L is matched at the origin, where the actor sits at the shorter side and can short match
                     //check if anyy adjacent to actor
                     sourceMatches = threeTileSourceMatches;
+                    GD.Print("match 3");
                 } else {
-                    //check if any actor short matches are compatible
-                    var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
-                    if(twoTileSourceMatches.Count > 0){ 
-                        sourceMatches = twoTileSourceMatches;    
-                    }                
+                    if(CheckIfSwappingActor(source, destination)){
+                        GD.Print("player is part of swap");
+                        //check if any actor short matches are compatible
+                        var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
+                        if(twoTileSourceMatches.Count > 0){ 
+                            sourceMatches = twoTileSourceMatches;    
+                        }                          
+                    }
+              
                 }
 
                 if(threeTileDestinationMatches.Count > 0){
@@ -107,6 +115,13 @@ namespace Grid {
             return (sourceMatches: sourceMatches, destinationMatches: destinationMatches);
         }
 
+        private bool CheckIfSwappingActor(Vector2I source, Vector2I destination){
+            Tile sourceTile = grid[source.X][source.Y];
+            Tile destinationTile = grid[destination.X][destination.Y];
+            string player = TileNames.Player.ToString().ToLower();
+            GD.Print("source: " + sourceTile.Name + "  dest:  " + destinationTile.Name);
+            return (sourceTile.Name == player || destinationTile.Name == player);
+        }
 
         private Array<Vector2I> FindMatchesWith(Tile tile_, Array<Array<Tile>> grid_){
             var horizontalMatches = FindHorizontal(tile_, grid_);
