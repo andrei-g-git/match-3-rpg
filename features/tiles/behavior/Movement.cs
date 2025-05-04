@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Linq;
 
 public partial class Movement : Node, Movable{
 	private Array<string> shortMoveTiles = [];
@@ -9,7 +10,9 @@ public partial class Movement : Node, Movable{
     public void AddTile(string tileName){
         shortMoveTiles.Add(tileName);
     }
-
+    public void AddTiles(string[] tiles){
+        shortMoveTiles.Concat(tiles).ToArray();
+    }
     public void RemoveTile(string tileName){
 		shortMoveTiles.Remove(tileName);
     }

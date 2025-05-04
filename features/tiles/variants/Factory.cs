@@ -1,3 +1,4 @@
+using Constants;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,13 @@ namespace Tiles {
         private Tile CreatePlayer(Vector2I position){
             var tile = new Player(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.MoveBehavior = new Movement();
+            tile.AddTiles([
+                TileNames.Defend.ToString().ToLower(),
+                TileNames.Melee.ToString().ToLower(),
+                TileNames.Ranged.ToString().ToLower(),
+                TileNames.Walk.ToString().ToLower(),
+            ]);
             return tile;
         }
         private Tile CreateRanged(Vector2I position){
