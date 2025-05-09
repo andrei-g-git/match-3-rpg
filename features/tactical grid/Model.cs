@@ -59,9 +59,15 @@ namespace Grid {
             Console.WriteLine("source:  ", source.X, "   ", source.Y);
             Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
 
+            Vector2I destination = source + direction;
             (var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
             GD.Print("source matches \n" + sourceMatches );
             GD.Print("destination matches \n" + destinationMatches );
+            Control sourceNode = observers[source.X][source.Y];
+            Control destinationNode = observers[destination.X][destination.Y];
+            ((Viewable) sourceNode).Update(destination); //test
+            ((Viewable) destinationNode).Update(source);
+
         }
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
@@ -71,7 +77,7 @@ namespace Grid {
             Array<Vector2I> destinationMatches = [];
             if(destination.X >= 0 && destination.Y >= 0){
                 var newGrid = grid.Duplicate();
-                var sourceTile = newGrid[source.X][source.Y];
+                var sourceTile = newGrid[source.X][source.Y]; //these shouldn't be here...
                 var destinationTile = newGrid[destination.X][destination.Y];
 
                 newGrid[source.X][source.Y] = destinationTile;

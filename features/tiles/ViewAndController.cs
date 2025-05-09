@@ -1,11 +1,12 @@
 using Godot;
 using Tiles;
 using System;
+using Abstractions;
 
-public partial class ViewAndController : Node{
+public partial class ViewAndController : Node, Viewable{
 	private Node model;
 	private int dragTreshold;
-	private int sideLengt;
+	private int sideLength;
 	private int margin;
 	private BaseButton tileNode;
 	private bool pressing = false;
@@ -15,16 +16,19 @@ public partial class ViewAndController : Node{
 	private Vector2 lastMousePostion = new Vector2();//Vector2.Zero;
 	public Vector2 DragDirection{get => dragDirection;}
 
+	[Signal]
+	public delegate void UpdatedEventHandler();
+
 	public ViewAndController(
 		Node model_,	
 		BaseButton tileNode_,
 		int dragTreshold_,
-		int sideLengt_,
+		int sideLength_,
 		int margin_
 	){
 		model = model_;
 		dragTreshold = dragTreshold_;
-		sideLengt = sideLengt_;
+		sideLength = sideLength_;
 		margin = margin_;	
 		tileNode = tileNode_;	
 	}
@@ -35,10 +39,6 @@ public partial class ViewAndController : Node{
 		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta){
-		
-	}
 
     public override void _Input(InputEvent event_)
     {
@@ -85,6 +85,25 @@ public partial class ViewAndController : Node{
 		}
     }
 
+	public void Update(Vector2I destination){
+		//prob need reverse destination
+		Vector2 reverseDestination = MathUtilities.InvertVector(destination);
+		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength * margin);
+		MoveTo(target_pixel_position);
+	}
+
+	private void MoveTo(Vector2 target){
+		Tween tween = CreateTween()
+			.SetTrans(Tween.TransitionType.Elastic)
+			.SetEase(Tween.EaseType.Out);
+		tween.TweenProperty(tileNode, "position", target, 0.5);
+		tween.Finished += OnMoveFinished;
+		GD.Print("MOVED");
+	}
+
+	private void OnMoveFinished(){
+		EmitSignal(SignalName.Updated);
+	}
 
 	private void OnPressed(){
 		pressed = true;

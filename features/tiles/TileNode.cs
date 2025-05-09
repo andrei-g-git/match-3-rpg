@@ -2,7 +2,7 @@ using Abstractions;
 using Godot;
 using Tiles;
 
-public partial class TileNode : TextureButton, Controllable, Modelable
+public partial class TileNode : TextureButton, Controllable, Modelable, Viewable
 {
 	[Export] int dragTreshold = 16;
 	[Export] int sideLength = 64;
@@ -23,11 +23,9 @@ public partial class TileNode : TextureButton, Controllable, Modelable
 			margin
 		);
 		AddChild(controller);
-
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+	public void Update(Vector2I destination){
+		((Viewable) controller).Update(destination);
 	}
 }

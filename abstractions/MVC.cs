@@ -8,5 +8,9 @@ namespace Abstractions{
 	public interface Modelable{
 		public Node Model{get;  set;}
 	}	
+
+	public interface Viewable{
+		public void Update(Vector2I destination);
+	}
 }
 
