@@ -61,13 +61,26 @@ namespace Grid {
 
             Vector2I destination = source + direction;
             (var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
-            GD.Print("source matches \n" + sourceMatches );
-            GD.Print("destination matches \n" + destinationMatches );
+
             Control sourceNode = observers[source.X][source.Y];
             Control destinationNode = observers[destination.X][destination.Y];
-            ((Viewable) sourceNode).Update(destination); //test
-            ((Viewable) destinationNode).Update(source);
+            if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e
+                ((Viewable) sourceNode).Update(destination); //test
+                ((Viewable) destinationNode).Update(source);                
+            }
 
+            var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+            var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+
+            GD.Print("source matches \n" + sourceMatches);
+            GD.Print("destination matches \n" + destinationMatches);
+
+            GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
+            GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
+
+            var playerPosition = FindTilesByName(TileNames.Player)[0];
+            var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
+            GD.Print("Path:  \n" + sourceMatchColumn);
         }
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
@@ -117,8 +130,9 @@ namespace Grid {
                     }                
                 }
             }
-
-            return (sourceMatches: sourceMatches, destinationMatches: destinationMatches);
+            var sourceMatchesWithoutDupes = Collections.RemoveDuplicates(sourceMatches);
+            var destinationMatchesWithoutDupes = Collections.RemoveDuplicates(destinationMatches);
+            return (sourceMatchesWithoutDupes, destinationMatchesWithoutDupes);
         }
 
         private bool CheckIfSwappingActor(Vector2I source, Vector2I destination){
@@ -127,6 +141,19 @@ namespace Grid {
             string player = TileNames.Player.ToString().ToLower();
             GD.Print("source: " + sourceTile.Name + "  dest:  " + destinationTile.Name);
             return (sourceTile.Name == player || destinationTile.Name == player);
+        }
+
+        private Array<Vector2I> FindTilesByName(TileNames tile){
+            string tileName = tile.ToString().ToLower();
+            Array<Vector2I> tilePositions = [];
+            for(int x = 0; x < grid.Count; x++){
+                for(int y = 0; y < grid[x].Count; y++){
+                    if(grid[x][y].Name == tileName){
+                        tilePositions.Add(grid[x][y].Position);
+                    }
+                }
+            }
+            return tilePositions;
         }
 
         private Array<Vector2I> FindMatchesWith(Tile tile_, Array<Array<Tile>> grid_){
@@ -179,6 +206,63 @@ namespace Grid {
             }						
             return Collections.RemoveDuplicates(matches);	
         }  
+
+        private (Array<Vector2I>, Array<Vector2I>) FindLines(Array<Vector2I> matchGroup){
+            Array<Vector2I> column = [];
+            for(int a = 0; a < matchGroup.Count; a++){
+                Array<Vector2I> line = [matchGroup[a]];
+                for(int b = a + 1; b < matchGroup.Count; b++){
+                    if(matchGroup[a].X == matchGroup[b].X){
+                        line.Add(matchGroup[b]);
+                    }
+                }
+                //if(line.Except(column).Any()){ //nope this can replace a large column with one tile outside the column
+                if(line.Count > column.Count){
+                    column = line; //assume there can be only one column
+                }
+            }
+
+            Array<Vector2I> row = [];
+            for(int a = 0; a < matchGroup.Count; a++){
+                Array<Vector2I> line = [matchGroup[a]];
+                for(int b = a + 1; b < matchGroup.Count; b++){
+                    if(matchGroup[a].Y == matchGroup[b].Y){
+                        line.Add(matchGroup[b]);
+                    }
+                }
+                if(line.Count > row.Count){
+                    row = line; //assume there can be only one row
+                }
+            }  
+            var columnOrdered = column.OrderBy(v => v.Y);
+            var rowOrdered = row.OrderBy(v => v.X);
+            return (
+                new Array<Vector2I>(columnOrdered),
+                new Array<Vector2I>(rowOrdered)
+            );          
+        }
+
+
+        Array<Vector2I> MakeCollapsePath(Array<Vector2I> line, Vector2I playerPosition){//there are a bajillion scenarios and permutations and I'll have to make cases for all of them...
+            //right now it will only have the simplest path type so I can go on with tile iteration 
+            var path = line;
+            for(int i = 0; i < line.Count; i++){
+                if(
+                    line[i] + Vector2I.Up == playerPosition ||
+                    line[i] + Vector2I.Right == playerPosition ||
+                    line[i] + Vector2I.Down == playerPosition ||
+                    line[i] + Vector2I.Left == playerPosition 
+                ){
+                    if(i > line.Count - 1 - i){
+                        path.Reverse();
+                        break;
+                    }
+                }
+            }
+            return path;
+        }
+
+
 
         // private Array<Vector2I> FindTwoTileMatch(Tile tile_, Array<Array<Tile>> grid_){
         //     Array<Vector2I> matches = [];
