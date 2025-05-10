@@ -88,7 +88,7 @@ public partial class ViewAndController : Node, Viewable{
 	public void Update(Vector2I destination){
 		//prob need reverse destination
 		Vector2 reverseDestination = MathUtilities.InvertVector(destination);
-		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength * margin);
+		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength + margin);
 		MoveTo(target_pixel_position);
 	}
 
