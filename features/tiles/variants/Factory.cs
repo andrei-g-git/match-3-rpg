@@ -38,6 +38,8 @@ namespace Tiles {
         private Tile CreateArcher(Vector2I position){
             var tile = new Archer(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateChest(Vector2I position){
@@ -48,11 +50,15 @@ namespace Tiles {
         private Tile CreateDefend(Vector2I position){
             var tile = new Defend(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateEnergy(Vector2I position){
             var tile = new Energy(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateFighter(Vector2I position){
@@ -63,11 +69,15 @@ namespace Tiles {
         private Tile CreateHealth(Vector2I position){
             var tile = new Health(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateMelee(Vector2I position){
             var tile = new Melee(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreatePlayer(Vector2I position){
@@ -90,16 +100,22 @@ namespace Tiles {
         private Tile CreateStamina(Vector2I position){
             var tile = new Stamina(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateUnlock(Vector2I position){
             var tile = new Unlock(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }
         private Tile CreateWalk(Vector2I position){
             var tile = new Walk(position);
             tile.SwapBehavior = new Swapping(tile);
+            tile.CollapseBehavior = new Collapse();
+            tile.AddTransportable(TileNames.Player);
             return tile;
         }                                                                                        
 	}

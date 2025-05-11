@@ -1,5 +1,5 @@
 namespace Constants{
-    enum TileNames{
+    public enum TileNames{
         Archer , //"archer" ,
         Chest, //"chest",
         Defend, //"defend" ,

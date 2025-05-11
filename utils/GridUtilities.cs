@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Constants;
 using Godot;
 using Godot.Collections;
 using Tiles;
@@ -33,7 +34,7 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 			newBoard[a].Resize(intGrid[a].Count);
 			for(int b = 0; b < newBoard[a].Count; b++){
 				var tileInt = intGrid[a][b];
-				newBoard[a][b] = Enum.GetName(typeof(Tiles.Constants.TileNames), tileInt).ToLower();
+				newBoard[a][b] = Enum.GetName(typeof(/* Tiles.Constants. */TileNames), tileInt).ToLower();
 			}
 		}
 		return newBoard;		

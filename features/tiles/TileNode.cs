@@ -2,7 +2,7 @@ using Abstractions;
 using Godot;
 using Tiles;
 
-public partial class TileNode : TextureButton, Controllable, Modelable, Viewable
+public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Viewable
 {
 	[Export] int dragTreshold = 16;
 	[Export] int sideLength = 64;

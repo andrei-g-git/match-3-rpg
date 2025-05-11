@@ -47,7 +47,7 @@ namespace Grid {
 
         public void Register(Control tileNode_, int x_, int y_) {
             var observer = observers[x_][y_] = tileNode_;
-            var tileModel = ((Modelable) observer).Model;
+            var tileModel = ((/* Modelable */Controllable) observer).Model;
 
             //((Tiles.Model)tileModel).TriedSwapping += (Vector2I source, Vector2I direction) => Swap2(source, direction); //Jesus Christ what an ordeal
             ((Swapable)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
@@ -62,7 +62,7 @@ namespace Grid {
             Vector2I destination = source + direction;
             (var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
 
-            Control sourceNode = observers[source.X][source.Y];
+            Control sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
             Control destinationNode = observers[destination.X][destination.Y];
             if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e
                 ((Viewable) sourceNode).Update(destination); //test
@@ -80,7 +80,7 @@ namespace Grid {
 
             var playerPosition = FindTilesByName(TileNames.Player)[0];
             var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
-            GD.Print("Path:  \n" + sourceMatchColumn);
+            GD.Print("Path:  \n" + collapsePath);
         }
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
@@ -262,7 +262,39 @@ namespace Grid {
             return path;
         }
 
+        private void DestroyMatches(Array<Tile> allMatches){
+            var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
+            var player = grid[playerPosition.X][playerPosition.Y];
+            var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
+            for(int i = 0; i < allMatches.Count; i++){
+                var tile = allMatches[i];
+                if(playerIsAdjacent){
 
+                }
+            }
+        }
+
+        private void ReplaceCollapsingTileWithActor(Tile tile){ //hmm helper function inside a helper function I dunno about this..
+            var transportables = tile.Transportables;
+            if(transportables.Contains(TileNames.Player)){
+                
+
+            }
+        }
+
+        private bool CheckIfTileIsNextToPath(Array<Tile> tileLine, Vector2I tilePosition){
+            for(int i = 0; i < tileLine.Count; i++){
+                if(
+                    tileLine[i].Position + Vector2I.Up == tilePosition ||
+                    tileLine[i].Position + Vector2I.Right == tilePosition ||
+                    tileLine[i].Position + Vector2I.Down == tilePosition ||
+                    tileLine[i].Position + Vector2I.Left == tilePosition 
+                ){ 
+                    return true;
+                }               
+            }
+            return false;
+        }
 
         // private Array<Vector2I> FindTwoTileMatch(Tile tile_, Array<Array<Tile>> grid_){
         //     Array<Vector2I> matches = [];

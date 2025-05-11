@@ -40,7 +40,7 @@ namespace Grid {
 
         public Control Create(string tileName, Tile model, Vector2I position) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
             var tileNode =  (Control) preInstantiatedTiles[tileName].Instantiate();
-            ((Modelable) tileNode).Model = model;//tileFactory.Create(tileName, position);
+            ((/* Modelable */Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
             return tileNode;
         }
     }
