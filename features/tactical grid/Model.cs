@@ -268,8 +268,23 @@ namespace Grid {
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
             for(int i = 0; i < allMatches.Count; i++){
                 var tile = allMatches[i];
-                if(playerIsAdjacent){
+                var xx = tile.Position.X;
+                var yy = tile.Position.Y;
+                if(i > 0){
+                    var previous = allMatches[i-1];
+                    if(tile is Combatable){
+                        ((Combatable) tile).IncreaseDamageOfMelee(((Combatable) previous).MeleeBuff);
+                        ((Combatable) tile).IncreaseDamageOfRanged(((Combatable) previous).RangedBuff);
+                        ((Combatable) tile).IncreaseDamageOfSpell(((Combatable) previous).SpellBuff);
+                    }                    
+                }
 
+
+
+                if(playerIsAdjacent){
+                    playerPosition = FindTilesByName(TileNames.Player)[0];
+                    grid[xx][yy] = player;
+                    grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
                 }
             }
         }

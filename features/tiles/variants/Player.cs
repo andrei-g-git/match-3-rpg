@@ -2,11 +2,13 @@ using Godot;
 using Godot.Collections;
 
 namespace Tiles {
-    public partial class Player : Tile, Movable {
+    public partial class Player : Tile, Movable, Transportable{
         private Vector2I position;
         public override string Name => "player";
         private Movable moveBehavior = null;
         public Movable MoveBehavior {get => moveBehavior; set => moveBehavior = value;}
+        private Transportable transportBehavior = null;
+        public Transportable TransportBehavior{get => transportBehavior; set => transportBehavior = value;}
         private Array<string> shortMoveTiles = [];
         public Array<string> ShortMoveTiles {get => shortMoveTiles;}
 
@@ -28,6 +30,11 @@ namespace Tiles {
         public void RemoveTile(string tileName){
             moveBehavior.RemoveTile(tileName);
         }
+
+        public void NotifyTransport(Vector2I target){
+            transportBehavior.NotifyTransport(target);
+        }
+
     }
 }
 
