@@ -90,6 +90,7 @@ namespace Tiles {
                 TileNames.Ranged.ToString().ToLower(),
                 TileNames.Walk.ToString().ToLower(),
             ]);
+            tile.TransportBehavior = new Transport();
             return tile;
         }
         private Tile CreateRanged(Vector2I position){

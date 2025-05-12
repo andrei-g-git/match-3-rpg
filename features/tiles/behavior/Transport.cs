@@ -1,13 +1,16 @@
 using Abstractions;
 using Godot;
 
-public class Transport : Transportable
+public partial class Transport : Node, Transportable
 {
-    Viewable observer;
-    public Transport(Viewable observer){
-        this.observer = observer;
-    }
+    [Signal]
+    public delegate void JumpToEventHandler(Vector2I target);
+    //Viewable observer;
+    // public Transport(Viewable observer){
+    //     this.observer = observer;
+    // }
     public void NotifyTransport(Vector2I target){
-        observer.Update(target);
+        //observer.Update(target);
+        EmitSignal(SignalName.JumpTo, target);
     }
 }

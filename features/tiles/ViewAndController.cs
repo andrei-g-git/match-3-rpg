@@ -15,6 +15,8 @@ public partial class ViewAndController : Node, Viewable{
 	private Vector2 totalDrag = Vector2.Zero;
 	private Vector2 lastMousePostion = new Vector2();//Vector2.Zero;
 	public Vector2 DragDirection{get => dragDirection;}
+	private Node signalEmitter = null;
+	public Node SignalEmitter{set => signalEmitter = value;} //signal emitter is the model, but I don't want the view (which this will be when I separate it from the controller, to access the model's implementations, that's not mvc ... come to think of ti neither is the view listening for events but screw it...)
 
 	[Signal]
 	public delegate void UpdatedEventHandler();
@@ -36,9 +38,15 @@ public partial class ViewAndController : Node, Viewable{
 		tileNode.Connect(BaseButton.SignalName.Pressed, Callable.From(OnPressed));
 		tileNode.Connect(BaseButton.SignalName.ButtonUp, Callable.From(OnReleased));
 		tileNode.Connect(BaseButton.SignalName.ButtonDown, Callable.From(OnPressing));
+
+		signalEmitter.Connect("JumpTo", Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
 		
 	}
 
+    // private void OnJumpTo()
+    // {
+    //     throw new NotImplementedException();
+    // }
 
     public override void _Input(InputEvent event_)
     {
@@ -89,16 +97,22 @@ public partial class ViewAndController : Node, Viewable{
 		//prob need reverse destination
 		Vector2 reverseDestination = MathUtilities.InvertVector(destination);
 		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength + margin);
-		MoveTo(target_pixel_position);
+		MoveTo(target_pixel_position, 0.5f);
 	}
 
-	private void MoveTo(Vector2 target){
+	private void MoveTo(Vector2 target, float duration){
 		Tween tween = CreateTween()
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
-		tween.TweenProperty(tileNode, "position", target, 0.5);
+		tween.TweenProperty(tileNode, "position", target, duration);
 		tween.Finished += OnMoveFinished;
 		GD.Print("MOVED");
+	}
+
+	private void JumpTo(Vector2I target){
+		Vector2 reverseDestination = MathUtilities.InvertVector(target); //should be in moveto function, dry
+		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength + margin);	
+		MoveTo(target_pixel_position, 0.2f);
 	}
 
 	private void OnMoveFinished(){

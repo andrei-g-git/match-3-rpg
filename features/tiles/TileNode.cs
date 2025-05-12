@@ -11,8 +11,10 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 	private Node model = null;
 	public Node Controller{get => controller; /* set => controller = value; */}
 	public Node Model{get => model; set => model = value;}
+    public Node SignalEmitter { set => throw new System.NotImplementedException(); }
 
     // Called when the node enters the scene tree for the first time.
+
     public override void _Ready(){
         //model = new Model();
 		controller = new ViewAndController(

@@ -81,6 +81,7 @@ namespace Grid {
             var playerPosition = FindTilesByName(TileNames.Player)[0];
             var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
             GD.Print("Path:  \n" + collapsePath);
+            DestroyMatches(collapsePath);
         }
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
@@ -262,20 +263,23 @@ namespace Grid {
             return path;
         }
 
-        private void DestroyMatches(Array<Tile> allMatches){
+        private void DestroyMatches(/* Array<Tile> allMatches */Array<Vector2I> allMatches){
             var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
             var player = grid[playerPosition.X][playerPosition.Y];
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
             for(int i = 0; i < allMatches.Count; i++){
-                var tile = allMatches[i];
-                var xx = tile.Position.X;
-                var yy = tile.Position.Y;
+                //var tile = allMatches[i];
+                var pos = allMatches[i];
+                // var xx = tile.Position.X;
+                // var yy = tile.Position.Y;
+                var tile = grid[pos.X][pos.Y];
                 if(i > 0){
                     var previous = allMatches[i-1];
+                    var previousTile = grid[previous.X][previous.Y];
                     if(tile is Combatable){
-                        ((Combatable) tile).IncreaseDamageOfMelee(((Combatable) previous).MeleeBuff);
-                        ((Combatable) tile).IncreaseDamageOfRanged(((Combatable) previous).RangedBuff);
-                        ((Combatable) tile).IncreaseDamageOfSpell(((Combatable) previous).SpellBuff);
+                        ((Combatable) tile).IncreaseDamageOfMelee(((Combatable) previousTile).MeleeBuff);
+                        ((Combatable) tile).IncreaseDamageOfRanged(((Combatable) previousTile).RangedBuff);
+                        ((Combatable) tile).IncreaseDamageOfSpell(((Combatable) previousTile).SpellBuff);
                     }                    
                 }
 
@@ -283,7 +287,9 @@ namespace Grid {
 
                 if(playerIsAdjacent){
                     playerPosition = FindTilesByName(TileNames.Player)[0];
-                    grid[xx][yy] = player;
+                    grid[/* xx */pos.X][/* yy */pos.Y] = player; //but then player.Position will remain unchanged...
+                    
+                    ((Transportable) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
                     grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
                 }
             }
@@ -297,13 +303,13 @@ namespace Grid {
             }
         }
 
-        private bool CheckIfTileIsNextToPath(Array<Tile> tileLine, Vector2I tilePosition){
+        private bool CheckIfTileIsNextToPath(/* Array<Tile> */ Array<Vector2I> tileLine, Vector2I tilePosition){
             for(int i = 0; i < tileLine.Count; i++){
                 if(
-                    tileLine[i].Position + Vector2I.Up == tilePosition ||
-                    tileLine[i].Position + Vector2I.Right == tilePosition ||
-                    tileLine[i].Position + Vector2I.Down == tilePosition ||
-                    tileLine[i].Position + Vector2I.Left == tilePosition 
+                    tileLine[i]/* .Position */ + Vector2I.Up == tilePosition ||
+                    tileLine[i]/* .Position */ + Vector2I.Right == tilePosition ||
+                    tileLine[i]/* .Position */ + Vector2I.Down == tilePosition ||
+                    tileLine[i]/* .Position */ + Vector2I.Left == tilePosition 
                 ){ 
                     return true;
                 }               

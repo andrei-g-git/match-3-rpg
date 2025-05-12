@@ -13,6 +13,7 @@ namespace Abstractions{
 
 	public interface Viewable{
 		public void Update(Vector2I destination);
+		public Node SignalEmitter {set;}
 	}
 }
 
