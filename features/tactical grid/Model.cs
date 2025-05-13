@@ -45,9 +45,10 @@ namespace Grid {
             }  
         }
 
-        public void Register(Control tileNode_, int x_, int y_) {
+        public void Register(Control tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((/* Modelable */Controllable) observer).Model;
+            //((Viewable) observer).SignalEmitter = tileModel;   in node factory
 
             //((Tiles.Model)tileModel).TriedSwapping += (Vector2I source, Vector2I direction) => Swap2(source, direction); //Jesus Christ what an ordeal
             ((Swapable)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
@@ -149,8 +150,10 @@ namespace Grid {
             Array<Vector2I> tilePositions = [];
             for(int x = 0; x < grid.Count; x++){
                 for(int y = 0; y < grid[x].Count; y++){
-                    if(grid[x][y].Name == tileName){
-                        tilePositions.Add(grid[x][y].Position);
+                    if((grid[x][y] is null) && (grid[x][y].Name == tileName)){
+                        //tilePositions.Add(grid[x][y].Position);
+                        tilePositions.Add(new Vector2I(x, y));
+                        var bp = 1123;
                     }
                 }
             }
@@ -289,7 +292,7 @@ namespace Grid {
                     playerPosition = FindTilesByName(TileNames.Player)[0];
                     grid[/* xx */pos.X][/* yy */pos.Y] = player; //but then player.Position will remain unchanged...
                     
-                    ((Transportable) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
+                    ((Transportable.Model) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
                     grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
                 }
             }

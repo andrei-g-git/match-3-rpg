@@ -11,7 +11,9 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 	private Node model = null;
 	public Node Controller{get => controller; /* set => controller = value; */}
 	public Node Model{get => model; set => model = value;}
-    public Node SignalEmitter { set => throw new System.NotImplementedException(); }
+	private Node signalEmiter = null;
+    //public Node SignalEmitter { set => ((Viewable) controller).SignalEmitter = value; }
+	public Node SignalEmitter { set => signalEmiter = value; }
 
     // Called when the node enters the scene tree for the first time.
 
@@ -24,6 +26,7 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 			sideLength,
 			margin
 		);
+		((Viewable) controller).SignalEmitter = signalEmiter;
 		AddChild(controller);
 	}
 

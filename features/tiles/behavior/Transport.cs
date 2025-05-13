@@ -1,8 +1,10 @@
 using Abstractions;
 using Godot;
 
-public partial class Transport : Node, Transportable
+public partial class Transport : Node, Transportable.Model, Signalable
 {
+    public StringName Signal {get => SignalName.JumpTo;}
+
     [Signal]
     public delegate void JumpToEventHandler(Vector2I target);
     //Viewable observer;

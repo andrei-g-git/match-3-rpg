@@ -39,7 +39,7 @@ public partial class ViewAndController : Node, Viewable{
 		tileNode.Connect(BaseButton.SignalName.ButtonUp, Callable.From(OnReleased));
 		tileNode.Connect(BaseButton.SignalName.ButtonDown, Callable.From(OnPressing));
 
-		signalEmitter.Connect("JumpTo", Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
+		//signalEmitter.Connect("JumpTo", Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
 		
 	}
 
