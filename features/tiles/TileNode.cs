@@ -9,7 +9,7 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 	[Export] int margin = 3;
 	private Node controller = null;
 	private Node model = null;
-	public Node Controller{get => controller; /* set => controller = value; */}
+	public Node Controller{get => controller; set => controller = value;}
 	public Node Model{get => model; set => model = value;}
 	private Node signalEmiter = null;
     public Node SignalEmitter { get => ((Listenable) controller).SignalEmitter; set => ((Listenable) controller).SignalEmitter = value; }
@@ -23,18 +23,31 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 
     public override void _Ready(){
         //model = new Model();
-		controller = new ViewAndController(
-			model,
-			this,
-			dragTreshold,
-			sideLength,
-			margin
-		);
+		// controller = new ViewAndController(
+		// 	model,
+		// 	this,
+		// 	dragTreshold,
+		// 	sideLength,
+		// 	margin
+		// );
 		//((Viewable) controller).SignalEmitter = signalEmiter;
-		AddChild(controller);
+		//AddChild(controller);
+	}
+
+	public void SetController(Node controller){
+		this.controller = controller;
+		((ViewAndController) controller).Margin = margin;
+		((ViewAndController) controller).DragThreshold = dragTreshold;
+		((ViewAndController) controller).SideLength = sideLength;
+		AddChild(this.controller);
 	}
 
 	public void Update(Vector2I destination){
 		((Viewable) controller).Update(destination);
 	}
+
+    public void Connect(){
+        ((Listenable) controller).Connect();
+    }
+
 }

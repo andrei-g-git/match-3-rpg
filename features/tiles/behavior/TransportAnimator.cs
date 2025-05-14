@@ -2,7 +2,7 @@ using Godot;
 using Tiles;
 
 public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Transportable.View{
-    private Tile tileNode;
+    private Node tileNode;
     private int sideLength;
     private int margin;
     private Node signalEmitter = null;
@@ -10,14 +10,19 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     private StringName signal;
     public StringName Signal { get => signal; set => signal = value; }
 
-    public TransportAnimator(Tile tileNode, int sideLength, int margin){
+    public TransportAnimator(Node tileNode, int sideLength, int margin){
         this.tileNode = tileNode;
         this.sideLength = sideLength;
         this.margin = margin;
     }
 
-    public override void _Ready(){
-        signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
+    public override void _Ready(){ //hasn't been added as child, won't run
+        var abc = 123;
+        //signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
+    }
+
+    public void Connect(){
+        signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target)));
     }
 
     private void JumpTo(Vector2I target){
@@ -33,6 +38,8 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 		tween.TweenProperty(tileNode, "position", target, duration);
 		//tween.Finished += OnMoveFinished;
 	}
+
+
 
     // public void Animate()
     // {

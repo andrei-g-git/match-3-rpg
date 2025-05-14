@@ -80,17 +80,34 @@ namespace Grid {
         private void InitHealth(Node tileNode){
 
         }
-        private void InitMelee(Node tileNode){
-
+        private void InitMelee(Node tileNode, Tile model){
+            ((Controllable) tileNode).SetController(new MeleeView(
+                model,
+                (BaseButton) tileNode,
+                0,
+                0,
+                0
+            ));
         }
         private void InitPlayer(Node tileNode, Tile model){
-
+            ((Controllable) tileNode).SetController(new PlayerView(
+                model,
+                (BaseButton) tileNode,
+                0,
+                0,
+                0
+            ));
                                     //player is an implementation, gotta cast to interface...
-            var transportBehavior = ((Player) model).TransportBehavior;                                                        
-            ((Listenable) tileNode).SignalEmitter = (Node) transportBehavior;
-            ((Listenable) tileNode).Signal = ((Signalable) transportBehavior).Signal;
-
-
+            var transportBehavior = ((Player) model).TransportBehavior;    
+            //var transportAnimator = ((PlayerView)((Controllable) tileNode).Controller).TransportAnimator;   
+            var transportAnimator = new TransportAnimator(
+                tileNode, 
+                ((ViewAndController) ((Controllable) tileNode).Controller).SideLength,
+                ((ViewAndController) ((Controllable) tileNode).Controller).Margin
+            );                                    
+            ((Listenable) transportAnimator).SignalEmitter = (Node) transportBehavior;
+            ((Listenable) transportAnimator).Signal = ((Signalable) transportBehavior).Signal;
+            ((Listenable) transportAnimator).Connect(); //might not need this
         }
         private void InitRanged(Node tileNode){
 
@@ -101,8 +118,14 @@ namespace Grid {
         private void InitUnlock(Node tileNode){
 
         }
-        private void InitWalk(Node tileNode){
-
+        private void InitWalk(Node tileNode, Tile model){
+            ((Controllable) tileNode).SetController(new WalkView(
+                model,
+                (BaseButton) tileNode,
+                0,
+                0,
+                0
+            ));
         } 
     }
 }

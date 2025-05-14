@@ -3,11 +3,14 @@ using Tiles;
 using System;
 using Abstractions;
 
-public partial class ViewAndController : Node, Viewable, Listenable{
+public abstract partial class ViewAndController : Node, Viewable, Listenable{//I don't think I need Listenable...
 	private Node model;
 	private int dragTreshold;
+	public int DragThreshold {get => dragTreshold; set => dragTreshold = value; }
 	private int sideLength;
+	public int SideLength {get => sideLength; set => sideLength = value;}
 	private int margin;
+	public int Margin {get => margin; set => margin = value;}
 	private BaseButton tileNode;
 	private bool pressing = false;
 	private bool pressed = false;
@@ -111,11 +114,11 @@ public partial class ViewAndController : Node, Viewable, Listenable{
 		GD.Print("MOVED");
 	}
 
-	private void JumpTo(Vector2I target){
-		Vector2 reverseDestination = MathUtilities.InvertVector(target); //should be in moveto function, dry
-		Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength + margin);	
-		MoveTo(target_pixel_position, 0.2f);
-	}
+	// private void JumpTo(Vector2I target){
+	// 	Vector2 reverseDestination = MathUtilities.InvertVector(target); //should be in moveto function, dry
+	// 	Vector2I target_pixel_position = (Vector2I) reverseDestination * (sideLength + margin);	
+	// 	MoveTo(target_pixel_position, 0.2f);
+	// }
 
 	private void OnMoveFinished(){
 		EmitSignal(SignalName.Updated);
@@ -146,6 +149,10 @@ public partial class ViewAndController : Node, Viewable, Listenable{
 		GD.Print("DURRRR");
 	}
 
+    public void Connect()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
