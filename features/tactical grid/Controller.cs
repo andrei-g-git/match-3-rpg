@@ -5,6 +5,7 @@ using Godot.Collections;
 using Grid;
 using Tiles;
 using Abstractions;
+using Constants;
 //			row
 //	  o------------------------------->
 //  c |
@@ -45,9 +46,12 @@ namespace Grid {
 			for(int x = 0; x < rows_; x++) {
 				tileNodes_[x].Resize(columns_);
 				for(int y = 0; y < columns_; y++) {
-					Control instance = tileNodes_[x][y] = factory.Create(modelTiles_[x][y].Name, modelTiles_[x][y], new Vector2I(x, y));
+					var nameToCompare = char.ToUpper(modelTiles_[x][y].Name[0]) + modelTiles_[x][y].Name.Substring(1);
+					var enumName = (TileNames) Enum.Parse(typeof(TileNames), nameToCompare);
+					Control instance = tileNodes_[x][y] = factory.Create(enumName, modelTiles_[x][y] /* , new Vector2I(x, y) */, parent_);
 					//((Modelable) instance).Model = modelTiles_[x][y]; //this is a different responsability...
-					parent_.AddChild(instance);
+
+					//parent_.AddChild(instance);   //need to initialize some stuff and I can't do it in it's ready() method
 				}
 			}
 		}
@@ -62,7 +66,7 @@ namespace Grid {
 
 		private void RegisterEachObserverToEachTileModel(Array<Array<Tile>> tileModels, Array<Array<Control>> tileNodes){
 			for(int x = 0; x < tileModels.Count; x++){
-				for(int y = 0; y < tileModels.Count; y++){
+				for(int y = 0; y < tileModels[0].Count; y++){
 					((Modelable) tileModels[x][y]).Register(tileNodes[x][y]); //ERROR out of range
 				}				
 			}

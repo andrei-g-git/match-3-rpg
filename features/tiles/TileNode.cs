@@ -2,7 +2,7 @@ using Abstractions;
 using Godot;
 using Tiles;
 
-public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Viewable
+public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Viewable, Listenable
 {
 	[Export] int dragTreshold = 16;
 	[Export] int sideLength = 64;
@@ -12,10 +12,14 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 	public Node Controller{get => controller; /* set => controller = value; */}
 	public Node Model{get => model; set => model = value;}
 	private Node signalEmiter = null;
-    //public Node SignalEmitter { set => ((Viewable) controller).SignalEmitter = value; }
-	public Node SignalEmitter { set => signalEmiter = value; }
+    public Node SignalEmitter { get => ((Listenable) controller).SignalEmitter; set => ((Listenable) controller).SignalEmitter = value; }
+
+    public StringName Signal { get => ((Listenable) controller).Signal; set => ((Listenable) controller).Signal = value; }
 
     // Called when the node enters the scene tree for the first time.
+
+	//these are temporary until I can figure out how to pass them before _ready() ---NOPE
+
 
     public override void _Ready(){
         //model = new Model();
@@ -26,7 +30,7 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 			sideLength,
 			margin
 		);
-		((Viewable) controller).SignalEmitter = signalEmiter;
+		//((Viewable) controller).SignalEmitter = signalEmiter;
 		AddChild(controller);
 	}
 

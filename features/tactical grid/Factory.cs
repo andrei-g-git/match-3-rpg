@@ -42,72 +42,49 @@ namespace Grid {
         //I should create each tile node with it's specifics like I create the tile models
         //each tile piece should have it's own animation behavior that connects to it's model behavior through signals
         //for example in the behavior folder I could have an Animation script eg. TransportAnimation.cs3q or SwappingAnimation.cs
-        public Control Create(string tileName, Tile model, ) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
-            var tileNode =  (Control) preInstantiatedTiles[tileName].Instantiate();
-            ((Viewable) tileNode).SignalEmitter = model; 
+        public Control Create(TileNames tileName, Tile model, Node parent) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
+            var tileNode =  (Control) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
             ((/* Modelable */Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
+            parent.AddChild(tileNode);
+
+            InitializeNode(tileName, tileNode, model);
             return tileNode;
         }
 
-        private void InitializeNode(TileNames name, Node tileNode){
-            name switch{
-                TileNames.Archer => InitArcher(tileNode),
+        private void InitializeNode(TileNames name, Node tileNode, Tile model){
+
+            switch(name){
+                case TileNames.Player: InitPlayer(tileNode, model); break;
+                default: Foo(); break;
             }
         }
 
+        private void Foo(){
+
+        }
         private void InitArcher(Node tileNode){
 
         }
         private void InitChest(Node tileNode){
-            var tile = new Chest(position);
-            tile.SwapBehavior = new Swapping(tile);
-            return tile;
+
         }
         private void InitDefend(Node tileNode){
-            var tile = new Defend(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitEnergy(Node tileNode){
-            var tile = new Energy(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitFighter(Node tileNode){
-            var tile = new Fighter(position);
-            tile.SwapBehavior = new Swapping(tile);
-            return tile;
+
         }
         private void InitHealth(Node tileNode){
-            var tile = new Health(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitMelee(Node tileNode){
-            var tile = new Melee(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitPlayer(Node tileNode, Tile model){
-            // var tile = new Player(position);
-            // tile.SwapBehavior = new Swapping(tile);
-            // tile.MoveBehavior = new Movement();
-            // tile.AddTiles([
-            //     TileNames.Defend.ToString().ToLower(),
-            //     TileNames.Melee.ToString().ToLower(),
-            //     TileNames.Ranged.ToString().ToLower(),
-            //     TileNames.Walk.ToString().ToLower(),
-            // ]);
-            // tile.TransportBehavior = new Transport();
-            // return tile;
+
                                     //player is an implementation, gotta cast to interface...
             var transportBehavior = ((Player) model).TransportBehavior;                                                        
             ((Listenable) tileNode).SignalEmitter = (Node) transportBehavior;
@@ -116,30 +93,16 @@ namespace Grid {
 
         }
         private void InitRanged(Node tileNode){
-            var tile = new Ranged(position);
-            tile.SwapBehavior = new Swapping(tile);
-            return tile;
+
         }
         private void InitStamina(Node tileNode){
-            var tile = new Stamina(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitUnlock(Node tileNode){
-            var tile = new Unlock(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         }
         private void InitWalk(Node tileNode){
-            var tile = new Walk(position);
-            tile.SwapBehavior = new Swapping(tile);
-            tile.CollapseBehavior = new Collapse();
-            tile.AddTransportable(TileNames.Player);
-            return tile;
+
         } 
     }
 }

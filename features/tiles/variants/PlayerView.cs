@@ -7,7 +7,7 @@ public class PlayerView : Listenable
     public Transportable.View TransportAnimator { get => transportAnimator; set => transportAnimator = value; }
     public StringName Signal { get => ((Listenable) transportAnimator).Signal; set => ((Listenable) transportAnimator).Signal = value; }
 
-    public void ConnectWithTransportSignal(Node signalEmitter){
-        ((Listenable )transportAnimator).SignalEmitter = signalEmitter;
-    }
+    // public void ConnectWithTransportSignal(Node signalEmitter){
+    //     ((Listenable )transportAnimator).SignalEmitter = signalEmitter;
+    // }
 }

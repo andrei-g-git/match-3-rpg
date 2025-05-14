@@ -3,7 +3,7 @@ using Tiles;
 using System;
 using Abstractions;
 
-public partial class ViewAndController : Node, Viewable{
+public partial class ViewAndController : Node, Viewable, Listenable{
 	private Node model;
 	private int dragTreshold;
 	private int sideLength;
@@ -16,9 +16,11 @@ public partial class ViewAndController : Node, Viewable{
 	private Vector2 lastMousePostion = new Vector2();//Vector2.Zero;
 	public Vector2 DragDirection{get => dragDirection;}
 	private Node signalEmitter = null;
-	public Node SignalEmitter{set => signalEmitter = value;} //signal emitter is the model, but I don't want the view (which this will be when I separate it from the controller, to access the model's implementations, that's not mvc ... come to think of ti neither is the view listening for events but screw it...)
+	public Node SignalEmitter{get => signalEmitter; set => signalEmitter = value;} //signal emitter is the model, but I don't want the view (which this will be when I separate it from the controller, to access the model's implementations, that's not mvc ... come to think of ti neither is the view listening for events but screw it...)
+	private StringName signal;
+    public StringName Signal { get => signal; set => signal = value; }
 
-	[Signal]
+    [Signal]
 	public delegate void UpdatedEventHandler();
 
 	public ViewAndController(
