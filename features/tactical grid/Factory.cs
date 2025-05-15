@@ -106,7 +106,8 @@ namespace Grid {
                 tileNode, 
                 ((ViewAndController) ((Controllable) tileNode).Controller).SideLength,
                 ((ViewAndController) ((Controllable) tileNode).Controller).Margin
-            );                                    
+            );    
+            ((Parentable) transportAnimator).ParentNode = tileNode;                                
             ((Listenable) transportAnimator).SignalEmitter = (Node) transportBehavior;
             ((Listenable) transportAnimator).Signal = ((Signalable) transportBehavior).Signal;
             ((Listenable) transportAnimator).Connect(); //might not need this

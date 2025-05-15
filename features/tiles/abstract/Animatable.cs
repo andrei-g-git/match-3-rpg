@@ -1,3 +1,4 @@
 public interface Animatable{
-    public void Animate();
+    //public void Animate();
+    
 }

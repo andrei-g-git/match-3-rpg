@@ -290,19 +290,18 @@ namespace Grid {
                     }   
 
 
-
-
                     grid[/* xx */pos.X][/* yy */pos.Y] = player; //but then player.Position will remain unchanged...
                     
                     ((Transportable.Model) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
-                    grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
+                    //grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
+                    grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(
+                        TileNames.Stamina.ToString().ToLower(), 
+                        new Vector2I(69, 420)
+                    ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
                 }
                  
-
-
-
-
             }
+            var bp2 = 123;
         }
 
         private void ReplaceCollapsingTileWithActor(Tile tile){ //hmm helper function inside a helper function I dunno about this..

@@ -22,6 +22,7 @@ public partial class PlayerView : ViewAndController, Listenable
             margin_
         ){
             var abc = 1123;
+            //((Parentable) transportAnimator).ParentNode = tileNode_;
         }
 
     public void Connect(){

@@ -1,7 +1,7 @@
 using Godot;
 using Tiles;
 
-public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Transportable.View{
+public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Transportable.View, Parentable{
     private Node tileNode;
     private int sideLength;
     private int margin;
@@ -9,7 +9,8 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     public Node SignalEmitter { get => signalEmitter; set => signalEmitter = value; }
     private StringName signal;
     public StringName Signal { get => signal; set => signal = value; }
-
+    private Node parentNode = null; //this is tileNode, the hell is this here?...
+    public Node ParentNode {get => parentNode; set => parentNode = value;}
     public TransportAnimator(Node tileNode, int sideLength, int margin){
         this.tileNode = tileNode;
         this.sideLength = sideLength;
@@ -35,6 +36,9 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 		Tween tween = CreateTween()
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
+        tween.TweenCallback(Callable.From(tileNode.QueueFree));
+        //parentNode.AddChild((Node) tween);
+        
 		tween.TweenProperty(tileNode, "position", target, duration);
 		//tween.Finished += OnMoveFinished;
 	}
