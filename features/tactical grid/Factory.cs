@@ -55,6 +55,8 @@ namespace Grid {
 
             switch(name){
                 case TileNames.Player: InitPlayer(tileNode, model); break;
+                case TileNames.Melee: InitMelee(tileNode, model); break;
+                case TileNames.Walk: InitWalk(tileNode, model); break;
                 default: Foo(); break;
             }
         }

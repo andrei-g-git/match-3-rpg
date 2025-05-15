@@ -22,6 +22,7 @@ public partial class TileNode : TextureButton, Controllable, /* Modelable, */ Vi
 
 
     public override void _Ready(){
+		var abc = 123;
         //model = new Model();
 		// controller = new ViewAndController(
 		// 	model,
