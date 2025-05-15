@@ -91,6 +91,7 @@ namespace Tiles {
                 TileNames.Walk.ToString().ToLower(),
             ]);
             tile.TransportBehavior = new Transport();
+            tile.DamageBuffBehavior = new DamageBuff();
             return tile;
         }
         private Tile CreateRanged(Vector2I position){

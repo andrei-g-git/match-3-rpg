@@ -276,25 +276,32 @@ namespace Grid {
                 // var xx = tile.Position.X;
                 // var yy = tile.Position.Y;
                 var tile = grid[pos.X][pos.Y];
-                if(i > 0){
-                    var previous = allMatches[i-1];
-                    var previousTile = grid[previous.X][previous.Y];
-                    if(tile is Combatable){
-                        ((Combatable) tile).IncreaseDamageOfMelee(((Combatable) previousTile).MeleeBuff);
-                        ((Combatable) tile).IncreaseDamageOfRanged(((Combatable) previousTile).RangedBuff);
-                        ((Combatable) tile).IncreaseDamageOfSpell(((Combatable) previousTile).SpellBuff);
-                    }                    
-                }
+
+                if(playerIsAdjacent){ //this forwards the position of the player before the above first combatable buff at i = 1, which will attempt to cast the player as melee
+                    playerPosition = FindTilesByName(TileNames.Player)[0];                
+                    player = grid[playerPosition.X][playerPosition.Y];
+                    //Combatable.Model combatTile = tile as Combatable.Model;
+                    if(tile is BuffableDamage.Model){
+                    //if(combatTile != null){
+                        ((BuffableDamage.Model) player).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
+                        ((BuffableDamage.Model) player).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
+                        ((BuffableDamage.Model) player).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
+                        var bp = 123;
+                    }   
 
 
 
-                if(playerIsAdjacent){
-                    playerPosition = FindTilesByName(TileNames.Player)[0];
+
                     grid[/* xx */pos.X][/* yy */pos.Y] = player; //but then player.Position will remain unchanged...
                     
                     ((Transportable.Model) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
                     grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
                 }
+                 
+
+
+
+
             }
         }
 
