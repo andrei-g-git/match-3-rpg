@@ -150,7 +150,7 @@ namespace Grid {
             Array<Vector2I> tilePositions = [];
             for(int x = 0; x < grid.Count; x++){
                 for(int y = 0; y < grid[x].Count; y++){
-                    if((grid[x][y] is null) && (grid[x][y].Name == tileName)){
+                    if((grid[x][y] is not null) && (grid[x][y].Name == tileName)){
                         //tilePositions.Add(grid[x][y].Position);
                         tilePositions.Add(new Vector2I(x, y));
                         var bp = 1123;
