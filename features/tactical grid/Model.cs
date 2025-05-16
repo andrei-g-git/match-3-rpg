@@ -271,18 +271,14 @@ namespace Grid {
             var player = grid[playerPosition.X][playerPosition.Y];
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
             for(int i = 0; i < allMatches.Count; i++){
-                //var tile = allMatches[i];
                 var pos = allMatches[i];
-                // var xx = tile.Position.X;
-                // var yy = tile.Position.Y;
                 var tile = grid[pos.X][pos.Y];
 
-                if(playerIsAdjacent){ //this forwards the position of the player before the above first combatable buff at i = 1, which will attempt to cast the player as melee
+                if(playerIsAdjacent){ 
                     playerPosition = FindTilesByName(TileNames.Player)[0];                
                     player = grid[playerPosition.X][playerPosition.Y];
-                    //Combatable.Model combatTile = tile as Combatable.Model;
+
                     if(tile is BuffableDamage.Model){
-                    //if(combatTile != null){
                         ((BuffableDamage.Model) player).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
                         ((BuffableDamage.Model) player).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
                         ((BuffableDamage.Model) player).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
@@ -290,10 +286,9 @@ namespace Grid {
                     }   
 
 
-                    grid[/* xx */pos.X][/* yy */pos.Y] = player; //but then player.Position will remain unchanged...
+                    grid[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
                     
-                    ((Transportable.Model) player).NotifyTransport(new Vector2I(/* xx */pos.X, /* yy */pos.Y));
-                    //grid[playerPosition.X][playerPosition.Y] = null; //maybe going with null values isn't such a hot idea...
+                    ((Transportable.Model) player).NotifyTransport(new Vector2I(pos.X, pos.Y));
                     grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(
                         TileNames.Stamina.ToString().ToLower(), 
                         new Vector2I(69, 420)

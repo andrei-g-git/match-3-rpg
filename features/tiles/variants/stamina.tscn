@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://nsgudna3nkel"]
 
-[ext_resource type="PackedScene" uid="uid://m6hy0ahrcgg0" path="res://features/tiles/variants/tile.tscn" id="1_mve0d"]
+[ext_resource type="PackedScene" uid="uid://m6hy0ahrcgg0" path="res://features/tiles/variants/tile_old.tscn" id="1_mve0d"]
 [ext_resource type="Texture2D" uid="uid://dbtk74evnamab" path="res://assets/images/tiles/stamina.png" id="2_m7i5u"]
 [ext_resource type="Texture2D" uid="uid://b1h4gwnx45las" path="res://assets/images/tiles/stamina_p.png" id="3_eujxx"]
 

@@ -110,7 +110,7 @@ public abstract partial class ViewAndController : Node, Viewable, Listenable{//I
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
 		tween.TweenProperty(tileNode, "position", target, duration);
-		tween.TweenCallback(Callable.From(tileNode.QueueFree));
+		//queue free deletes the whole node including the Control, not just the tween
 		tween.Finished += OnMoveFinished;
 		GD.Print("MOVED");
 	}

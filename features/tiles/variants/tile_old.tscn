@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://m6hy0ahrcgg0"]
+
+[ext_resource type="Script" uid="uid://xgvu10ajop3l" path="res://features/tiles/TileNode.cs" id="1_pnepx"]
+
+[node name="Tile" type="TextureButton"]
+custom_minimum_size = Vector2(64, 64)
+script = ExtResource("1_pnepx")

@@ -11,6 +11,10 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     public StringName Signal { get => signal; set => signal = value; }
     private Node parentNode = null; //this is tileNode, the hell is this here?...
     public Node ParentNode {get => parentNode; set => parentNode = value;}
+
+    [Signal]
+    public delegate void UpdatedEventHandler();
+
     public TransportAnimator(Node tileNode, int sideLength, int margin){
         this.tileNode = tileNode;
         this.sideLength = sideLength;
@@ -20,6 +24,7 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     public override void _Ready(){ //hasn't been added as child, won't run
         var abc = 123;
         //signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
+        tileNode.AddChild(this);
     }
 
     public void Connect(){
@@ -36,21 +41,16 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 		Tween tween = CreateTween()
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
-        tween.TweenCallback(Callable.From(tileNode.QueueFree));
+        //queue free deletes the whole node including the Control, not just the tween
         //parentNode.AddChild((Node) tween);
         
 		tween.TweenProperty(tileNode, "position", target, duration);
+        tween.Finished += OnMoveFinished;
 		//tween.Finished += OnMoveFinished;
 	}
 
 
-
-    // public void Animate()
-    // {
-    //     throw new System.NotImplementedException();
-    // }
-
-    // private void OnMoveFinished(){
-    // 	EmitSignal(SignalName.Updated);
-    // }
+    private void OnMoveFinished(){
+    	EmitSignal(SignalName.Updated);
+    }
 }
