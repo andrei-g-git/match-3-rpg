@@ -299,13 +299,13 @@ namespace Grid {
             var bp2 = 123;
         }
 
-        private void ReplaceCollapsingTileWithActor(Tiles.Model tile){ //hmm helper function inside a helper function I dunno about this..
-            var transportables = tile.Transportables;
-            if(transportables.Contains(TileNames.Player)){
+        // private void ReplaceCollapsingTileWithActor(Tiles.Model tile){ //hmm helper function inside a helper function I dunno about this..
+        //     var transportables = tile.Transportables;
+        //     if(transportables.Contains(TileNames.Player)){
                 
 
-            }
-        }
+        //     }
+        // }
 
         private bool CheckIfTileIsNextToPath(/* Array<Tiles.Model> */ Array<Vector2I> tileLine, Vector2I tilePosition){
             for(int i = 0; i < tileLine.Count; i++){

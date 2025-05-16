@@ -38,7 +38,7 @@ namespace Grid {
 			columns = model.Grid[0].Count;
 			PopulateGrid(columns, rows, model.Grid, parent, tileNodes);
 			RegisterObservers(columns, rows, model, tileNodes);
-			RegisterEachObserverToEachTileModel(model.Grid, tileNodes);
+			//RegisterEachObserverToEachTileModel(model.Grid, tileNodes);
 		}
 
 		private void PopulateGrid(int columns_, int rows_, /* List<List<Tile>> modelTiles, */ Array<Array<Tiles.Model>> modelTiles_, Node parent_, /* List<List<Control>> tileNodes_ */Array<Array<Control>> tileNodes_) {
@@ -64,13 +64,13 @@ namespace Grid {
             }
         }
 
-		private void RegisterEachObserverToEachTileModel(Array<Array<Tiles.Model>> tileModels, Array<Array<Control>> tileNodes){
-			for(int x = 0; x < tileModels.Count; x++){
-				for(int y = 0; y < tileModels[0].Count; y++){
-					((Modelable) tileModels[x][y]).Register(tileNodes[x][y]); //ERROR out of range
-				}				
-			}
-		}
+		// private void RegisterEachObserverToEachTileModel(Array<Array<Tiles.Model>> tileModels, Array<Array<Control>> tileNodes){
+		// 	for(int x = 0; x < tileModels.Count; x++){
+		// 		for(int y = 0; y < tileModels[0].Count; y++){
+		// 			((Modelable) tileModels[x][y]).Register(tileNodes[x][y]); //ERROR out of range
+		// 		}				
+		// 	}
+		// }
 
 	}
 

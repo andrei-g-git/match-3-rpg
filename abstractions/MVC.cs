@@ -16,5 +16,9 @@ namespace Abstractions{
 		public void Update(Vector2I destination);
 		//public Node SignalEmitter {set;}
 	}
+
+	public interface Animatable{
+		public Node Animators {get; set;}
+	}
 }
 

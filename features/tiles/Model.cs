@@ -19,26 +19,24 @@ namespace Tiles{
         private Collapsable collapseBehavior = null;
         public Collapsable CollapseBehavior{get => collapseBehavior; set => collapseBehavior = value;}
 
-        public Array<TileNames> Transportables => throw new NotImplementedException();
+        //public Array<TileNames> Transportables => throw new NotImplementedException();
 
         public Model(Vector2I position_) {
             position = position_;
         }
 
-        public void AddTransportable(TileNames tile)
-        {
-            throw new NotImplementedException();
+        // public void AddTransportable(TileNames tile)
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+
+        public void ConnectWithSwapSignal(Swapping.TriedSwappingEventHandler callback){
+            swapBehavior.ConnectWithSwapSignal(callback);
         }
 
-
-        public void ConnectWithSwapSignal(Swapping.TriedSwappingEventHandler callback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void NotifySwap(Vector2I direction)
-        {
-            throw new NotImplementedException();
+        public void NotifySwap(Vector2I direction){
+            swapBehavior.NotifySwap(direction);
         }
     }
 

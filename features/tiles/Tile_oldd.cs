@@ -18,7 +18,7 @@ namespace Tiles {
 
         private Collapsable collapseBehavior = null;
         public Collapsable CollapseBehavior{get => collapseBehavior; set => collapseBehavior = value;}
-        public Array<TileNames> Transportables {get => collapseBehavior.Transportables;}
+        //public Array<TileNames> Transportables {get => collapseBehavior.Transportables;}
         private Control tileNode = null;
 
 
@@ -34,9 +34,9 @@ namespace Tiles {
             swapBehavior.ConnectWithSwapSignal(callback);
         }
 
-        public void AddTransportable(TileNames tile){
-            collapseBehavior.AddTransportable(tile);
-        }
+        // public void AddTransportable(TileNames tile){
+        //     collapseBehavior.AddTransportable(tile);
+        // }
 
         public void Register(Control tileNode){
             this.tileNode = tileNode;

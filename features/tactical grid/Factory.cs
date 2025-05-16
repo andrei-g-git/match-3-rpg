@@ -83,34 +83,34 @@ namespace Grid {
 
         }
         private void InitMelee(Node tileNode, Tiles.Model model){
-            ((Controllable) tileNode).SetController(new MeleeView(
-                model,
-                (BaseButton) tileNode,
-                0,
-                0,
-                0
-            ));
+            // ((Controllable) tileNode).SetController(new MeleeView(
+            //     model,
+            //     (BaseButton) tileNode,
+            //     0,
+            //     0,
+            //     0
+            // ));
         }
         private void InitPlayer(Node tileNode, Tiles.Model model){
-            ((Controllable) tileNode).SetController(new PlayerView(
-                model,
-                (BaseButton) tileNode,
-                0,
-                0,
-                0
-            ));
-                                    //player is an implementation, gotta cast to interface...
-            var transportBehavior = ((Player) model).TransportBehavior;    
-            //var transportAnimator = ((PlayerView)((Controllable) tileNode).Controller).TransportAnimator;   
-            var transportAnimator = new TransportAnimator(
-                tileNode, 
-                ((ViewAndController) ((Controllable) tileNode).Controller).SideLength,
-                ((ViewAndController) ((Controllable) tileNode).Controller).Margin
-            );    
-            ((Parentable) transportAnimator).ParentNode = tileNode;                                
-            ((Listenable) transportAnimator).SignalEmitter = (Node) transportBehavior;
-            ((Listenable) transportAnimator).Signal = ((Signalable) transportBehavior).Signal;
-            ((Listenable) transportAnimator).Connect(); //might not need this
+            // ((Controllable) tileNode).SetController(new PlayerView(
+            //     model,
+            //     (BaseButton) tileNode,
+            //     0,
+            //     0,
+            //     0
+            // ));
+            //                         //player is an implementation, gotta cast to interface...
+            // var transportBehavior = ((Player) model).TransportBehavior;    
+            // //var transportAnimator = ((PlayerView)((Controllable) tileNode).Controller).TransportAnimator;   
+            // var transportAnimator = new TransportAnimator(
+            //     tileNode, 
+            //     ((ViewAndController) ((Controllable) tileNode).Controller).SideLength,
+            //     ((ViewAndController) ((Controllable) tileNode).Controller).Margin
+            // );    
+            // ((Parentable) transportAnimator).ParentNode = tileNode;                                
+            // ((Listenable) transportAnimator).SignalEmitter = (Node) transportBehavior;
+            // ((Listenable) transportAnimator).Signal = ((Signalable) transportBehavior).Signal;
+            // ((Listenable) transportAnimator).Connect(); //might not need this
         }
         private void InitRanged(Node tileNode){
 
@@ -122,13 +122,13 @@ namespace Grid {
 
         }
         private void InitWalk(Node tileNode, Tiles.Model model){
-            ((Controllable) tileNode).SetController(new WalkView(
-                model,
-                (BaseButton) tileNode,
-                0,
-                0,
-                0
-            ));
+            // ((Controllable) tileNode).SetController(new WalkView(
+            //     model,
+            //     (BaseButton) tileNode,
+            //     0,
+            //     0,
+            //     0
+            // ));
         } 
     }
 }

@@ -1,0 +1,15 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2v860hcpvhjf"]
+
+[ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_matyx"]
+[ext_resource type="Texture2D" uid="uid://cithl2vlmqtph" path="res://assets/images/tiles/defend.png" id="2_31caa"]
+[ext_resource type="Texture2D" uid="uid://d00fbxcq72ya6" path="res://assets/images/tiles/defend_p.png" id="3_5axg1"]
+[ext_resource type="Script" uid="uid://bg6tkjcyrjl3q" path="res://features/tiles/variants/Defend.cs" id="4_fdh0p"]
+[ext_resource type="Script" uid="uid://gja508h7enqw" path="res://features/tiles/variants/defend/Model.cs" id="5_23v20"]
+
+[node name="Defend" instance=ExtResource("1_matyx")]
+texture_normal = ExtResource("2_31caa")
+texture_pressed = ExtResource("3_5axg1")
+script = ExtResource("4_fdh0p")
+
+[node name="Model" parent="." index="2"]
+script = ExtResource("5_23v20")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1bq2ke6ygc1g"]
+
+[ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_ojkvj"]
+[ext_resource type="Texture2D" uid="uid://la6icrm5e7xq" path="res://assets/images/tiles/ranged.png" id="2_ramps"]
+[ext_resource type="Texture2D" uid="uid://c886i4pm32om1" path="res://assets/images/tiles/ranged_p.png" id="3_t4vlf"]
+[ext_resource type="Script" uid="uid://dnetog2nqyg2o" path="res://features/tiles/variants/Ranged.cs" id="4_ggcxc"]
+[ext_resource type="Script" uid="uid://cmg20c158reap" path="res://features/tiles/variants/ranged/Model.cs" id="5_w26nu"]
+
+[node name="Ranged" instance=ExtResource("1_ojkvj")]
+texture_normal = ExtResource("2_ramps")
+texture_pressed = ExtResource("3_t4vlf")
+script = ExtResource("4_ggcxc")
+
+[node name="Model" parent="." index="2"]
+script = ExtResource("5_w26nu")
