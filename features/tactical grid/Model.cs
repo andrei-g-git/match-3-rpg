@@ -40,7 +40,7 @@ namespace Grid {
             for (int x = 0; x < rows; x++) {
                 grid[x].Resize(columns);
                 for(int y = 0; y < columns; y++) {
-                    grid[x][y] = tileFactory.Create(tileNameMatrix[x][y], new Vector2I(x, y));
+                    //grid[x][y] = tileFactory.Create(tileNameMatrix[x][y], new Vector2I(x, y));    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
             }  
         }
@@ -289,10 +289,10 @@ namespace Grid {
                     grid[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
                     
                     ((Transportable.Model) player).NotifyTransport(new Vector2I(pos.X, pos.Y));
-                    grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(
-                        TileNames.Stamina.ToString().ToLower(), 
-                        new Vector2I(69, 420)
-                    ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
+                    // grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //     TileNames.Stamina.ToString().ToLower(), 
+                    //     new Vector2I(69, 420)
+                    // ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
                 }
                  
             }

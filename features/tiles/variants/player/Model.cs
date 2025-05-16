@@ -21,9 +21,9 @@ namespace Tiles {
             private int spellBuff = 0;        
             public int SpellBuff { get => damageBuffBehavior.SpellBuff; set => damageBuffBehavior.SpellBuff = value; }
 
-            public Model(Vector2I position) : base(position) {
+            // public Model(Vector2I position) : base(position) {
 
-            }
+            // }
 
             public bool VerifyShortMoveEligibility(string tileName){
                 return moveBehavior.VerifyShortMoveEligibility(tileName);

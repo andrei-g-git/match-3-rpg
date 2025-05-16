@@ -3,8 +3,8 @@ using Godot;
 
 public partial class TileNode : TextureButton, Controllable, Modelable, Animatable
 {
-    [Export] int sideLength = 64;
-    [Export] int margin = 3;
+    [Export] public int SideLength {get; set;} = 64;
+    [Export] public int Margin {get; set;}= 3;
     private Node controller = null;
     public Node Controller { get => controller; set => controller = value; }
     private Node model = null;
@@ -13,7 +13,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
     public Node Animators { get => animators; set => animators = value; }
 
     public override void _Ready(){
-        //base._Ready();
+        //children will call this before overriding ... so it's not really being overriden
         controller = GetNode<Node>("%Controller"); 
         animators = GetNode<Node>("%Animators"); 
         model = GetNode<Node>("%Model"); 

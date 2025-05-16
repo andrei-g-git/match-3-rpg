@@ -5,9 +5,6 @@ namespace Tiles {
         public partial class Model : Tiles.Model {
             private Vector2I position;
             public override string Name => "health";
-            public Model(Vector2I position) : base(position) {
-
-            }
 
         }        
     }

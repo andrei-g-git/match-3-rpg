@@ -1,4 +1,6 @@
-public class DamageBuff : BuffableDamage.Model{
+using Godot;
+
+public partial class DamageBuff : Node, BuffableDamage.Model{   
     private int meleeBuff = 0;
     public int MeleeBuff {get => meleeBuff; set => meleeBuff = value;}
     private int rangedBuff = 0;

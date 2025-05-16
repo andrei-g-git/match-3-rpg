@@ -25,6 +25,8 @@ namespace Grid {
 		private Array<Array<Control>> tileNodes = new Array<Array<Control>>();
 		private Grid.Factory factory;
 
+		public Array<Array<string>> TemporaryTileNameGrid {get; set;} //delete
+
         public Controller(Model model_, Node parent_, Grid.Factory factory_) {
 			model = model_;
 			parent = parent_;
@@ -41,14 +43,32 @@ namespace Grid {
 			//RegisterEachObserverToEachTileModel(model.Grid, tileNodes);
 		}
 
-		private void PopulateGrid(int columns_, int rows_, /* List<List<Tile>> modelTiles, */ Array<Array<Tiles.Model>> modelTiles_, Node parent_, /* List<List<Control>> tileNodes_ */Array<Array<Control>> tileNodes_) {
+
+		private void PopulateGrid(int columns_, int rows_, Array<Array<Tiles.Model>> modelTiles_, Node parent_, Array<Array<Control>> tileNodes_) {
+			tileNodes_.Resize(rows_);			
+			for(int x = 0; x < rows_; x++) {
+				tileNodes_[x].Resize(columns_);
+				for(int y = 0; y < columns_; y++) {
+					//var nameToCompare = char.ToUpper(modelTiles_[x][y].Name[0]) + modelTiles_[x][y].Name.Substring(1);
+					var nameGrid = TemporaryTileNameGrid;
+					var name = nameGrid[x][y];
+					var nameToCompare = char.ToUpper(/* nameGrid[x][y] */name[0]) + /* nameGrid[x][y] */name.Substring(1);
+					var enumName = (TileNames) Enum.Parse(typeof(TileNames), nameToCompare);
+					Control instance = tileNodes_[x][y] = factory.Create(enumName, modelTiles_[x][y] , parent_, new Vector2I(x, y));
+					//((Modelable) instance).Model = modelTiles_[x][y]; //this is a different responsability...
+
+					//parent_.AddChild(instance);   //need to initialize some stuff and I can't do it in it's ready() method
+				}
+			}
+		}
+		private void PopulateGrid_old(int columns_, int rows_, /* List<List<Tile>> modelTiles, */ Array<Array<Tiles.Model>> modelTiles_, Node parent_, /* List<List<Control>> tileNodes_ */Array<Array<Control>> tileNodes_) {
 			tileNodes_.Resize(rows_);			
 			for(int x = 0; x < rows_; x++) {
 				tileNodes_[x].Resize(columns_);
 				for(int y = 0; y < columns_; y++) {
 					var nameToCompare = char.ToUpper(modelTiles_[x][y].Name[0]) + modelTiles_[x][y].Name.Substring(1);
 					var enumName = (TileNames) Enum.Parse(typeof(TileNames), nameToCompare);
-					Control instance = tileNodes_[x][y] = factory.Create(enumName, modelTiles_[x][y] /* , new Vector2I(x, y) */, parent_);
+					Control instance = tileNodes_[x][y] = factory.Create(enumName, modelTiles_[x][y] , parent_, new Vector2I(x, y));
 					//((Modelable) instance).Model = modelTiles_[x][y]; //this is a different responsability...
 
 					//parent_.AddChild(instance);   //need to initialize some stuff and I can't do it in it's ready() method

@@ -36,7 +36,13 @@ public partial class TacticalGrid : GridContainer
 			this,
 			new Grid.Factory(tileScenes/* , new Tiles.Factory() */)
 		);
+
+		//delete, temporary
+		controller.TemporaryTileNameGrid = tileNameGrid;	
+		
+			
 		controller.Initialize();
+
 	}
 
 	public override void _Process(double delta)

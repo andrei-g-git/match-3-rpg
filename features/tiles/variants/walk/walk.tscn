@@ -1,15 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfq5oc6q021h6"]
+[gd_scene load_steps=5 format=3 uid="uid://bfq5oc6q021h6"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_2vxwd"]
 [ext_resource type="Texture2D" uid="uid://o1ujk2ulrwxl" path="res://assets/images/tiles/walk.png" id="2_r8c4e"]
 [ext_resource type="Texture2D" uid="uid://16u4uwpfl121" path="res://assets/images/tiles/walk_p.png" id="3_djg6i"]
-[ext_resource type="Script" uid="uid://c7lmduwutaw0" path="res://features/tiles/variants/Walk.cs" id="4_dqv4x"]
 [ext_resource type="Script" uid="uid://cqa18112cq2wc" path="res://features/tiles/variants/walk/Model.cs" id="5_khh45"]
 
 [node name="Walk" instance=ExtResource("1_2vxwd")]
 texture_normal = ExtResource("2_r8c4e")
 texture_pressed = ExtResource("3_djg6i")
-script = ExtResource("4_dqv4x")
 
 [node name="Model" parent="." index="2"]
 script = ExtResource("5_khh45")

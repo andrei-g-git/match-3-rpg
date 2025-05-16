@@ -13,9 +13,9 @@ namespace Tiles {
             public int SpellBuff { get => spellBuff; set => spellBuff = value; }
 
 
-            public Model(Vector2I position) : base(position) {
+            // public Model(Vector2I position) : base(position) {
 
-            }
+            // }
 
             public void IncreaseDamageOfMelee(int damageIncrement){
                 meleeBuff += damageIncrement;

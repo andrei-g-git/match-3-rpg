@@ -3,13 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_607em"]
 [ext_resource type="Texture2D" uid="uid://dn7esmukmetkm" path="res://assets/images/tiles/energy.png" id="2_m17w4"]
 [ext_resource type="Texture2D" uid="uid://biqfidjci2d6t" path="res://assets/images/tiles/energy_p.png" id="3_4c6f3"]
-[ext_resource type="Script" uid="uid://dedm2jijgyu3t" path="res://features/tiles/variants/Energy.cs" id="4_8qqob"]
+[ext_resource type="Script" uid="uid://87hmaglidkmw" path="res://features/tiles/TileNode_old.cs" id="4_mkm5h"]
 [ext_resource type="Script" uid="uid://8u34n3vbeuuf" path="res://features/tiles/variants/energy/Model.cs" id="5_mkm5h"]
 
 [node name="Energy" instance=ExtResource("1_607em")]
 texture_normal = ExtResource("2_m17w4")
 texture_pressed = ExtResource("3_4c6f3")
-script = ExtResource("4_8qqob")
+script = ExtResource("4_mkm5h")
+dragTreshold = 16
 
 [node name="Model" parent="." index="2"]
 script = ExtResource("5_mkm5h")
