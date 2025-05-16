@@ -46,7 +46,7 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		return _position.X >= 0 && _position.Y >= 0;
 	}
 
-	private static Vector2I FindMatchWithAdjacentTile(Tile tile_, Array<Array<Tile>> grid_, Vector2I direction){
+	private static Vector2I FindMatchWithAdjacentTile(Tile_old tile_, Array<Array<Tile_old>> grid_, Vector2I direction){
 		if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
 			var neighboringPosition = tile_.Position + direction;
 			if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
@@ -55,7 +55,7 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		} 
 		return new Vector2I(-1, -1);
 	} 
-	public static Array<Vector2I> FindAllMatchingAdjacentTiles(Tile tile_, Array<Array<Tile>> grid_){
+	public static Array<Vector2I> FindAllMatchingAdjacentTiles(Tile_old tile_, Array<Array<Tile_old>> grid_){
 		Array<Vector2I> matches = [];
 		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
 		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 
@@ -66,7 +66,7 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		return new Array<Vector2I>(cSharpValidMatches);
 	}  
 
-	public static Array<Array<string>> GetNamesGridFromTileGrid(Array<Array<Tile>> TileGrid){
+	public static Array<Array<string>> GetNamesGridFromTileGrid(Array<Array<Tile_old>> TileGrid){
 		//return TileGrid.Select(tile => tile.Name)
 		int width = TileGrid.Count;
 		int height = TileGrid[0].Count;

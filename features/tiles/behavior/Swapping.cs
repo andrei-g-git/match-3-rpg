@@ -1,15 +1,15 @@
 using Godot;
 using System;
 using Tiles;
-public partial class Swapping : Node, Swapable{
+public partial class Swapping : Node, Swapable.Model{
 	[Signal] public delegate void TriedSwappingEventHandler(Vector2I source, Vector2I direction);
-	private Tile tile = null;
+	private Tile_old tile = null;
 	private bool isSwapable;
 	public bool IsSwapable {get => isSwapable; set => isSwapable = value;}
 	private bool canSwap = false;
     public bool CanSwap {get => canSwap; set => canSwap = value;}
 
-    public Swapping(Tile tile_){
+    public Swapping(Tile_old tile_){
 		tile = tile_;
 	}
 

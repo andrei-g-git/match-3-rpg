@@ -17,7 +17,7 @@ namespace Grid{
 
         public partial class CheckingActorConnectivity : Commandable{
 
-			public CheckingActorConnectivity(Array<Vector2I> matches_, Array<Array<Tile>> grid_, Tile actor_){ //the actor is just the swapee
+			public CheckingActorConnectivity(Array<Vector2I> matches_, Array<Array<Tile_old>> grid_, Tile_old actor_){ //the actor is just the swapee
 
 
 			}

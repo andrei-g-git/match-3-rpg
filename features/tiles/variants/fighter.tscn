@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://fy0q6ryr2dfd"]
 
-[ext_resource type="PackedScene" uid="uid://m6hy0ahrcgg0" path="res://features/tiles/variants/tile_old.tscn" id="1_jhh66"]
+[ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_jhh66"]
 [ext_resource type="Texture2D" uid="uid://dag143mrosf0o" path="res://assets/images/tiles/fighter.png" id="2_shuo2"]
 [ext_resource type="Texture2D" uid="uid://bdqsx6nwlrb06" path="res://assets/images/tiles/fighter_p.png" id="3_f8sl8"]
 

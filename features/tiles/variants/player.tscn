@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c2bbcbjgw186g"]
 
-[ext_resource type="PackedScene" uid="uid://m6hy0ahrcgg0" path="res://features/tiles/variants/tile_old.tscn" id="1_7yhcl"]
+[ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
 
 [node name="Player" instance=ExtResource("1_7yhcl")]

@@ -1,15 +1,28 @@
-[gd_scene format=3 uid="uid://u4ulndp0wa6k"]
+[gd_scene load_steps=3 format=3 uid="uid://u4ulndp0wa6k"]
+
+[ext_resource type="Script" uid="uid://sol1h4j8gs60" path="res://features/tiles/Controller.cs" id="1_pnepx"]
+[ext_resource type="Script" path="res://features/tiles/behavior/SwapAnimator.cs" id="2_5gocy"]
 
 [node name="Tile" type="TextureButton"]
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Controller" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_pnepx")
 
-[node name="Animator" type="Node" parent="."]
+[node name="Animators" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Swap" type="Node" parent="Animators"]
+unique_name_in_owner = true
+script = ExtResource("2_5gocy")
 
 [node name="Model" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="Swapper" type="Node" parent="Model"]
+unique_name_in_owner = true
 
 [node name="Collapser" type="Node" parent="Model"]
+unique_name_in_owner = true

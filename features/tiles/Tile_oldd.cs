@@ -5,13 +5,13 @@ using Godot.Collections;
 
 
 namespace Tiles {
-    public abstract partial class Tile: Node, Modelable, Swapable, Collapsable { //probably shouldn't be a Node but I have some functionality elswere that depends on it...
+    public abstract partial class Tile_old: Node, Modelable, Swapable.Model, Collapsable { //probably shouldn't be a Node but I have some functionality elswere that depends on it...
         private Vector2I position;
         public Vector2I Position{get => position;}
         private string name;
         public abstract string Name { get; }
-        private Swapable swapBehavior = null;
-        public Swapable SwapBehavior{get => swapBehavior; set => swapBehavior = value;}
+        private Swapable.Model swapBehavior = null;
+        public Swapable.Model SwapBehavior{get => swapBehavior; set => swapBehavior = value;}
 
         public bool IsSwapable {get => swapBehavior.IsSwapable; set => swapBehavior.IsSwapable = value;}
         public bool CanSwap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -22,7 +22,7 @@ namespace Tiles {
         private Control tileNode = null;
 
 
-        public Tile(Vector2I position_) {
+        public Tile_old(Vector2I position_) {
             position = position_;
         }
 
