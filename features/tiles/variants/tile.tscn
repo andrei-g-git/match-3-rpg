@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://u4ulndp0wa6k"]
+[gd_scene load_steps=7 format=3 uid="uid://u4ulndp0wa6k"]
 
 [ext_resource type="Script" uid="uid://sol1h4j8gs60" path="res://features/tiles/Controller.cs" id="1_pnepx"]
-[ext_resource type="Script" path="res://features/tiles/behavior/SwapAnimator.cs" id="2_5gocy"]
+[ext_resource type="Script" uid="uid://xgvu10ajop3l" path="res://features/tiles/TileNode.cs" id="1_sr53p"]
+[ext_resource type="Script" uid="uid://c0nmjt2ujgv4o" path="res://features/tiles/Model.cs" id="1_tw5be"]
+[ext_resource type="Script" uid="uid://3rt0ds7sntmp" path="res://features/tiles/behavior/SwapAnimator.cs" id="2_5gocy"]
+[ext_resource type="Script" uid="uid://ctdxf5ajlt1bn" path="res://features/tiles/behavior/Swapping.cs" id="4_w3q71"]
+[ext_resource type="Script" uid="uid://b1hdqclnw3wgv" path="res://features/tiles/behavior/Collapse.cs" id="5_sr53p"]
 
 [node name="Tile" type="TextureButton"]
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_sr53p")
 
 [node name="Controller" type="Node" parent="."]
 unique_name_in_owner = true
@@ -20,9 +25,12 @@ script = ExtResource("2_5gocy")
 
 [node name="Model" type="Node" parent="."]
 unique_name_in_owner = true
+script = ExtResource("1_tw5be")
 
 [node name="Swapper" type="Node" parent="Model"]
 unique_name_in_owner = true
+script = ExtResource("4_w3q71")
 
 [node name="Collapser" type="Node" parent="Model"]
 unique_name_in_owner = true
+script = ExtResource("5_sr53p")

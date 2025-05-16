@@ -42,7 +42,7 @@ namespace Grid {
         //I should create each tile node with it's specifics like I create the tile models
         //each tile piece should have it's own animation behavior that connects to it's model behavior through signals
         //for example in the behavior folder I could have an Animation script eg. TransportAnimation.cs3q or SwappingAnimation.cs
-        public Control Create(TileNames tileName, Tile_old model, Node parent) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
+        public Control Create(TileNames tileName, Tiles.Model model, Node parent) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
             var tileNode =  (Control) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
             ((/* Modelable */Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
             parent.AddChild(tileNode);
@@ -51,7 +51,7 @@ namespace Grid {
             return tileNode;
         }
 
-        private void InitializeNode(TileNames name, Node tileNode, Tile_old model){
+        private void InitializeNode(TileNames name, Node tileNode, Tiles.Model model){
 
             switch(name){
                 case TileNames.Player: InitPlayer(tileNode, model); break;
@@ -82,7 +82,7 @@ namespace Grid {
         private void InitHealth(Node tileNode){
 
         }
-        private void InitMelee(Node tileNode, Tile_old model){
+        private void InitMelee(Node tileNode, Tiles.Model model){
             ((Controllable) tileNode).SetController(new MeleeView(
                 model,
                 (BaseButton) tileNode,
@@ -91,7 +91,7 @@ namespace Grid {
                 0
             ));
         }
-        private void InitPlayer(Node tileNode, Tile_old model){
+        private void InitPlayer(Node tileNode, Tiles.Model model){
             ((Controllable) tileNode).SetController(new PlayerView(
                 model,
                 (BaseButton) tileNode,
@@ -121,7 +121,7 @@ namespace Grid {
         private void InitUnlock(Node tileNode){
 
         }
-        private void InitWalk(Node tileNode, Tile_old model){
+        private void InitWalk(Node tileNode, Tiles.Model model){
             ((Controllable) tileNode).SetController(new WalkView(
                 model,
                 (BaseButton) tileNode,

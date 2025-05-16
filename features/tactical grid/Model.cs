@@ -11,11 +11,11 @@ namespace Grid {
         private int columns = 0;
         private int rows = 0;
         private Array<Array<string>> tileNameMatrix = new Array<Array<string>>();
-        private Array<Array<Tile_old>> grid = new Array<Array<Tile_old>>();
+        private Array<Array<Tiles.Model>> grid = new Array<Array<Tiles.Model>>();
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
         private Array<Array<Control>> observers = new Array<Array<Control>>();  
-        public Array<Array<Tile_old>> Grid { get => grid; }
+        public Array<Array<Tiles.Model>> Grid { get => grid; }
         public Model(
             Array<PackedScene> tileResources_, //HUHH???? Ce fac cu astea??
             Array<Array<string>> tileNameMatrix_,
@@ -138,8 +138,8 @@ namespace Grid {
         }
 
         private bool CheckIfSwappingActor(Vector2I source, Vector2I destination){
-            Tile_old sourceTile = grid[source.X][source.Y];
-            Tile_old destinationTile = grid[destination.X][destination.Y];
+            Tiles.Model sourceTile = grid[source.X][source.Y];
+            Tiles.Model destinationTile = grid[destination.X][destination.Y];
             string player = TileNames.Player.ToString().ToLower();
             GD.Print("source: " + sourceTile.Name + "  dest:  " + destinationTile.Name);
             return (sourceTile.Name == player || destinationTile.Name == player);
@@ -160,14 +160,14 @@ namespace Grid {
             return tilePositions;
         }
 
-        private Array<Vector2I> FindMatchesWith(Tile_old tile_, Array<Array<Tile_old>> grid_){
+        private Array<Vector2I> FindMatchesWith(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
             var horizontalMatches = FindHorizontal(tile_, grid_);
             var verticalMatches = FindVertical(tile_, grid_);
             var mergedCsharpArray = horizontalMatches.Concat(verticalMatches).ToArray();            
             return new Array<Vector2I>(mergedCsharpArray);
         }
 
-        private Array<Vector2I> FindHorizontal(Tile_old tile_, Array<Array<Tile_old>> grid_){
+        private Array<Vector2I> FindHorizontal(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
             var name = tile_.Name;
             var matches = new Array<Vector2I>();
 
@@ -189,7 +189,7 @@ namespace Grid {
             return Collections.RemoveDuplicates(matches);	
         }
 
-        private Array<Vector2I> FindVertical(Tile_old tile_, Array<Array<Tile_old>> grid_){
+        private Array<Vector2I> FindVertical(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
             var name = tile_.Name;
             var matches = new Array<Vector2I>();
 
@@ -266,7 +266,7 @@ namespace Grid {
             return path;
         }
 
-        private void DestroyMatches(/* Array<Tile_old> allMatches */Array<Vector2I> allMatches){
+        private void DestroyMatches(/* Array<Tiles.Model> allMatches */Array<Vector2I> allMatches){
             var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
             var player = grid[playerPosition.X][playerPosition.Y];
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
@@ -299,7 +299,7 @@ namespace Grid {
             var bp2 = 123;
         }
 
-        private void ReplaceCollapsingTileWithActor(Tile_old tile){ //hmm helper function inside a helper function I dunno about this..
+        private void ReplaceCollapsingTileWithActor(Tiles.Model tile){ //hmm helper function inside a helper function I dunno about this..
             var transportables = tile.Transportables;
             if(transportables.Contains(TileNames.Player)){
                 
@@ -307,7 +307,7 @@ namespace Grid {
             }
         }
 
-        private bool CheckIfTileIsNextToPath(/* Array<Tile_old> */ Array<Vector2I> tileLine, Vector2I tilePosition){
+        private bool CheckIfTileIsNextToPath(/* Array<Tiles.Model> */ Array<Vector2I> tileLine, Vector2I tilePosition){
             for(int i = 0; i < tileLine.Count; i++){
                 if(
                     tileLine[i]/* .Position */ + Vector2I.Up == tilePosition ||
@@ -321,7 +321,7 @@ namespace Grid {
             return false;
         }
 
-        // private Array<Vector2I> FindTwoTileMatch(Tile_old tile_, Array<Array<Tile_old>> grid_){
+        // private Array<Vector2I> FindTwoTileMatch(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
         //     Array<Vector2I> matches = [];
         //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
         //     matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 
@@ -332,7 +332,7 @@ namespace Grid {
         //     return new Array<Vector2I>(cSharpValidMatches);
         // }   
 
-        // private Vector2I FindMatchWithAdjacentTile(Tile_old tile_, Array<Array<Tile_old>> grid_, Vector2I direction){
+        // private Vector2I FindMatchWithAdjacentTile(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_, Vector2I direction){
         //     if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
         //         var neighboringPosition = tile_.Position + direction;
         //         if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){

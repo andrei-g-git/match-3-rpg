@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 
 namespace Tiles {
-    public partial class Player : Tile_old, Movable, Transportable.Model, BuffableDamage.Model{
+    public partial class Player : Tiles.Model, Movable, Transportable.Model, BuffableDamage.Model{
         private Vector2I position;
         public override string Name => "player";
         private Movable moveBehavior = null;

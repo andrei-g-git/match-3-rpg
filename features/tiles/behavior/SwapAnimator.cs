@@ -39,6 +39,6 @@ public partial class SwapAnimator : Node, Swapable.View, Box, BoardRefreshing{
 	// }
 
     public void OnTileActionFinished(){
-        EmitSignal(SignalName.RefreshBoard);throw new System.NotImplementedException();
+        EmitSignal(SignalName.RefreshBoard);
     }
 }

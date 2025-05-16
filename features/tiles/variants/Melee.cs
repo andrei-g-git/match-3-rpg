@@ -1,7 +1,7 @@
 using Godot;
 
 namespace Tiles {
-    public partial class Melee : Tile_old, BuffableDamage.Model { 
+    public partial class Melee : Tiles.Model, BuffableDamage.Model { 
         private Vector2I position;
         public override string Name => "melee";
         private int meleeBuff = 3;
