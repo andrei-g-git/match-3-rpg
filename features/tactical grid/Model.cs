@@ -86,13 +86,14 @@ namespace Grid {
                 GD.Print("source matches \n" + sourceMatches);
                 GD.Print("destination matches \n" + destinationMatches);
 
-                // GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
-                // GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
+                GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
+                GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
 
-                // var playerPosition = FindTilesByName(TileNames.Player)[0];
-                // var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
-                // GD.Print("Path:  \n" + collapsePath);
-                // DestroyMatches(collapsePath);                
+                var playerPosition = FindTilesByName(TileNames.Player)[0];
+                var bp2 = 123;
+                var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
+                GD.Print("Path:  \n" + collapsePath);
+                DestroyMatches(collapsePath);                
             }
 
         }
@@ -226,9 +227,9 @@ namespace Grid {
         private Array<Vector2I> FindTilesByName(TileNames tile){
             string tileName = tile.ToString().ToLower();
             Array<Vector2I> tilePositions = [];
-            for(int x = 0; x < grid.Count; x++){
-                for(int y = 0; y < grid[x].Count; y++){
-                    if((grid[x][y] is not null) && (grid[x][y].Name == tileName)){
+            for(int x = 0; x < /* grid */observers.Count; x++){
+                for(int y = 0; y < /* grid */observers[0].Count; y++){
+                    if((/* grid */observers[x][y] is not null) && ((/* grid */observers[x][y].Model as Tiles.Model).Name == tileName)){
                         //tilePositions.Add(grid[x][y].Position);
                         tilePositions.Add(new Vector2I(x, y));
                         var bp = 1123;
@@ -356,27 +357,28 @@ namespace Grid {
 
         private void DestroyMatches(/* Array<Tiles.Model> allMatches */Array<Vector2I> allMatches){
             var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
-            var player = grid[playerPosition.X][playerPosition.Y];
+            //var player = grid[playerPosition.X][playerPosition.Y];
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
             for(int i = 0; i < allMatches.Count; i++){
                 var pos = allMatches[i];
-                var tile = grid[pos.X][pos.Y];
+                var tile = /* grid */observers[pos.X][pos.Y].Model as Tiles.Model;
 
                 if(playerIsAdjacent){ 
                     playerPosition = FindTilesByName(TileNames.Player)[0];                
-                    player = grid[playerPosition.X][playerPosition.Y];
+                    var player = /* grid */observers[playerPosition.X][playerPosition.Y];
 
                     if(tile is BuffableDamage.Model){
-                        ((BuffableDamage.Model) player).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
-                        ((BuffableDamage.Model) player).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
-                        ((BuffableDamage.Model) player).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
+                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
+                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
+                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
                         var bp = 123;
                     }   
 
 
-                    grid[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
+                    /* grid */observers[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
                     
-                    ((Transportable.Model) player).NotifyTransport(new Vector2I(pos.X, pos.Y));
+                    ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+
                     // grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     //     TileNames.Stamina.ToString().ToLower(), 
                     //     new Vector2I(69, 420)

@@ -27,3 +27,5 @@ script = ExtResource("4_2sf3b")
 [node name="DamageBuffer" type="Node" parent="Model" index="3"]
 unique_name_in_owner = true
 script = ExtResource("5_hunij")
+
+[connection signal="JumpTo" from="Model/Transporter" to="Animators/Transport" method="_on_transporter_jump_to"]

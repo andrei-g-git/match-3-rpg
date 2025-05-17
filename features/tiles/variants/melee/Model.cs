@@ -5,12 +5,14 @@ namespace Tiles {
         public partial class Model : Tiles.Model, BuffableDamage.Model { 
             private Vector2I position;
             public override string Name => "melee";
-            private int meleeBuff = 3;
-            public int MeleeBuff { get => meleeBuff; set => meleeBuff = value; }
-            private int rangedBuff = 0;        
-            public int RangedBuff { get => rangedBuff; set => rangedBuff = value; }
-            private int spellBuff = 0;        
-            public int SpellBuff { get => spellBuff; set => spellBuff = value; }
+            private BuffableDamage.Model damageBuffer = null;
+            public BuffableDamage.Model DamageBuffer {get => damageBuffer; set => damageBuffer = value;}
+            //private int meleeBuff = 3;
+            public int MeleeBuff { get => damageBuffer.MeleeBuff; /* set => damageBuffer.MeleeBuff = value; */ }
+            //private int rangedBuff = 0;        
+            public int RangedBuff { get => damageBuffer.RangedBuff; /* set => damageBuffer.RangedBuff = value; */ }
+            //private int spellBuff = 0;        
+            public int SpellBuff { get => damageBuffer.SpellBuff; /* set => damageBuffer.SpellBuff = value; */ }
 
 
             // public Model(Vector2I position) : base(position) {
@@ -18,15 +20,15 @@ namespace Tiles {
             // }
 
             public void IncreaseDamageOfMelee(int damageIncrement){
-                meleeBuff += damageIncrement;
+                damageBuffer.IncreaseDamageOfMelee(damageIncrement);
             }
 
             public void IncreaseDamageOfRanged(int damageIncrement){
-                rangedBuff += damageIncrement;
+                damageBuffer.IncreaseDamageOfRanged(damageIncrement);
             }
 
             public void IncreaseDamageOfSpell(int damageIncrement){
-                spellBuff += damageIncrement;
+                damageBuffer.IncreaseDamageOfSpell(damageIncrement);
             }
         }        
     }

@@ -29,13 +29,17 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
         var abc = 123;
         //signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
 
-
-
         //tileNode.AddChild(this);
+
+        //(SignalEmitter as Transport).JumpTo += JumpTo; //well this is substandard...
+
+        (GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
     }
 
-    public void Connect(){
-        signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target)));
+
+
+    public void Connect(){ //will discard
+        signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); //IT THINKS IT"S CALLING Connect() method of Object, that's why it's not working
     }
 
     private void JumpTo(Vector2I target){
@@ -57,7 +61,7 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 	}
 
 
-    private void OnMoveFinished(){
+    private void OnMoveFinished(){ //this is incorrect naming for an emitter, OnAction name should be used by the receiver, not the invoker
     	EmitSignal(SignalName.Updated);
     }
 }

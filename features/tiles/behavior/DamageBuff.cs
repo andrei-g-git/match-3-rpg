@@ -1,12 +1,15 @@
 using Godot;
 
 public partial class DamageBuff : Node, BuffableDamage.Model{   
+    [Export]
     private int meleeBuff = 0;
-    public int MeleeBuff {get => meleeBuff; set => meleeBuff = value;}
+    public int MeleeBuff {get => meleeBuff; /* set => meleeBuff = value; */}   
+    [Export]
     private int rangedBuff = 0;
-    public int RangedBuff {get => rangedBuff; set => rangedBuff = value;}
+    public int RangedBuff {get => rangedBuff; /* set => rangedBuff = value; */}   
+    [Export]
     private int spellBuff = 0;
-    public int SpellBuff {get => spellBuff; set => spellBuff = value;}
+    public int SpellBuff {get => spellBuff; /* set => spellBuff = value; */}
 
     public void IncreaseDamageOfMelee(int damageIncrement){
         meleeBuff += damageIncrement;
