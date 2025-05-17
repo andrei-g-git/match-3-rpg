@@ -59,14 +59,14 @@ namespace Grid {
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){
                 var newGrid = observers.Duplicate(true);
-                var sourceTile = newGrid[source.X][source.Y]; //these shouldn't be here...
-                var destinationTile = newGrid[destination.X][destination.Y];
+                var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
+                var destinationTile = observers[destination.X][destination.Y];
 
                 newGrid[source.X][source.Y] = destinationTile;
                 newGrid[destination.X][destination.Y] = sourceTile;
 
                 //(var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
-                (var sourceMatches, var destinationMatches) = FindMatchGroups(observers[source.X][source.Y], observers[destination.X][destination.Y], newGrid);
+                (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
 
                 /* Control */ TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
                 /* Control */ TileNode destinationNode = observers[destination.X][destination.Y];
@@ -80,11 +80,11 @@ namespace Grid {
                     observers = newGrid;                                                                                    
                 }
 
-                // var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
-                // var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+                var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+                var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
 
-                // GD.Print("source matches \n" + sourceMatches);
-                // GD.Print("destination matches \n" + destinationMatches);
+                GD.Print("source matches \n" + sourceMatches);
+                GD.Print("destination matches \n" + destinationMatches);
 
                 // GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
                 // GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
@@ -255,16 +255,16 @@ namespace Grid {
 
         //private Array<Vector2I> FindHorizontal(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
         private Array<Vector2I> FindHorizontal(TileNode tile_, Array<Array<TileNode>> grid_){
-            var name = tile_.Name;
+            var name = (tile_.Model as Tiles.Model).Name;  //CAREFUL, IF NO CAST IT ACCESSES Name PROP of Node, NOT Tiles.Model
             var matches = new Array<Vector2I>();
 
             for(int x = 0; x < rows; x++){
                 for(int y = 0; y < columns; y++){
                     if(y > 0 && y < (columns - 1)){
                         if(
-                            name == grid_[x][y - 1].Model.Name && 
-                            name == grid_[x][y].Model.Name && 
-                            name == grid_[x][y + 1].Model.Name 					
+                            name == (grid_[x][y - 1].Model as Tiles.Model).Name && 
+                            name == (grid_[x][y].Model as Tiles.Model).Name && 
+                            name == (grid_[x][y + 1].Model as Tiles.Model).Name 					
                         ){
                             matches.Add(new Vector2I(x, y - 1));
                             matches.Add(new Vector2I(x, y));
@@ -278,16 +278,16 @@ namespace Grid {
 
         //private Array<Vector2I> FindVertical(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
         private Array<Vector2I> FindVertical(TileNode tile_, Array<Array<TileNode>> grid_){        
-            var name = tile_.Name;
+            var name = tile_.Model.Name;
             var matches = new Array<Vector2I>();
 
             for(int x = 0; x < columns; x++){
                 for(int y = 0; y < rows; y++){
                     if(y > 0 && y < (rows - 1)){
                         if(
-                            name == grid_[y - 1][x].Model.Name && 
-                            name == grid_[y][x].Model.Name && 
-                            name == grid_[y + 1][x].Model.Name 					
+                            name == (grid_[y - 1][x].Model as Tiles.Model).Name && 
+                            name == (grid_[y][x].Model as Tiles.Model).Name && 
+                            name == (grid_[y + 1][x].Model as Tiles.Model).Name 					
                         ){
                             matches.Add(new Vector2I(y - 1, x));
                             matches.Add(new Vector2I(y, x));
