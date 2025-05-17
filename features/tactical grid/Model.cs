@@ -14,7 +14,7 @@ namespace Grid {
         private Array<Array<Tiles.Model>> grid = new Array<Array<Tiles.Model>>();
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
-        private Array<Array<Control>> observers = new Array<Array<Control>>();  
+        private Array<Array</* Control */TileNode>> observers = new Array<Array</* Control */TileNode>>();  
         public Array<Array<Tiles.Model>> Grid { get => grid; }
         public Model(
             Array<PackedScene> tileResources_, //HUHH???? Ce fac cu astea??
@@ -29,7 +29,7 @@ namespace Grid {
             rows = tileNameMatrix.Count;
             columns = tileNameMatrix[0].Count;
             observers.Resize(rows);
-            foreach(Array<Control> observer in observers){
+            foreach(Array</* Control */TileNode> observer in observers){
                 observer.Resize(columns);
             }
             //Console.WriteLine("GRID MODEL INITIALIZED");
@@ -45,7 +45,7 @@ namespace Grid {
             }  
         }
 
-        public void Register(Control tileNode_, int x_, int y_) { 
+        public void Register(TileNode tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((/* Modelable */Controllable) observer).Model;
             //((Viewable) observer).SignalEmitter = tileModel;   in node factory
@@ -56,52 +56,54 @@ namespace Grid {
 
 
         private void Swap2(Vector2I source, Vector2I direction){
-            Console.WriteLine("source and direction below \n");
-            Console.WriteLine("source:  ", source.X, "   ", source.Y);
-            Console.WriteLine("direction:  ", direction.X, "   ", direction.Y);
-
             Vector2I destination = source + direction;
             (var sourceMatches, var destinationMatches) = FindMatchGroups(source, direction);
 
-            Control sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
-            Control destinationNode = observers[destination.X][destination.Y];
+            /* Control */ TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
+            /* Control */ TileNode destinationNode = observers[destination.X][destination.Y];
             if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e
-                ((Viewable) sourceNode).Update(destination); //test
-                ((Viewable) destinationNode).Update(source);                
+                // ((Viewable) sourceNode).Update(destination); //test
+                // ((Viewable) destinationNode).Update(source);        
+                sourceNode.SwapAnimator.SwapTo(destination);
+                destinationNode.SwapAnimator.SwapTo(source); //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
+                                                                //maybe I should use signals or something ...                    
             }
 
-            var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
-            var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+            // var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+            // var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
 
-            GD.Print("source matches \n" + sourceMatches);
-            GD.Print("destination matches \n" + destinationMatches);
+            // GD.Print("source matches \n" + sourceMatches);
+            // GD.Print("destination matches \n" + destinationMatches);
 
-            GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
-            GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
+            // GD.Print("source lines \n" + sourceMatchColumn + "\n" + sourceMatchRow);
+            // GD.Print("destination lines \n" + destinationMatchColumn + "\n" + destinationMatchRow);
 
-            var playerPosition = FindTilesByName(TileNames.Player)[0];
-            var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
-            GD.Print("Path:  \n" + collapsePath);
-            DestroyMatches(collapsePath);
+            // var playerPosition = FindTilesByName(TileNames.Player)[0];
+            // var collapsePath = MakeCollapsePath(sourceMatchColumn, playerPosition);
+            // GD.Print("Path:  \n" + collapsePath);
+            // DestroyMatches(collapsePath);
         }
+
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(Vector2I source, Vector2I direction){
             var destination = source + direction;
-            GD.Print("dir   " + direction);
             Array<Vector2I> sourceMatches = [];
             Array<Vector2I> destinationMatches = [];
+            Array<Vector2I> sourceMatchesWithoutDupes = [];
+            Array<Vector2I> destinationMatchesWithoutDupes = [];
             if(destination.X >= 0 && destination.Y >= 0){
-                var newGrid = grid.Duplicate();
+
+                var newGrid = observers.Duplicate();
                 var sourceTile = newGrid[source.X][source.Y]; //these shouldn't be here...
                 var destinationTile = newGrid[destination.X][destination.Y];
 
                 newGrid[source.X][source.Y] = destinationTile;
                 newGrid[destination.X][destination.Y] = sourceTile;
 
-                GridUtilities.PrintGridInitials(
-                    GridUtilities.GetNamesGridFromTileGrid(newGrid),
-                    "SWAPPED GRID"
-                );
+                // GridUtilities.PrintGridInitials(
+                //     GridUtilities.GetNamesGridFromTileGrid(newGrid),
+                //     "SWAPPED GRID"
+                // );
 
                 var threeTileSourceMatches = FindMatchesWith(sourceTile, newGrid);
                 var threeTileDestinationMatches = FindMatchesWith(destinationTile, newGrid);
@@ -131,15 +133,75 @@ namespace Grid {
                         destinationMatches = twoTileDestinationMatches;    
                     }                
                 }
+
+                sourceMatchesWithoutDupes = Collections.RemoveDuplicates(sourceMatches);
+                destinationMatchesWithoutDupes = Collections.RemoveDuplicates(destinationMatches);
+
+                if((sourceMatchesWithoutDupes.Count > 0) || (destinationMatchesWithoutDupes.Count > 0)){
+                    observers = newGrid; //this is bad, shouldn't happen here...
+                }
             }
-            var sourceMatchesWithoutDupes = Collections.RemoveDuplicates(sourceMatches);
-            var destinationMatchesWithoutDupes = Collections.RemoveDuplicates(destinationMatches);
+
+
             return (sourceMatchesWithoutDupes, destinationMatchesWithoutDupes);
         }
 
+
+        // private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups_old(Vector2I source, Vector2I direction){
+        //     var destination = source + direction;
+        //     GD.Print("dir   " + direction);
+        //     Array<Vector2I> sourceMatches = [];
+        //     Array<Vector2I> destinationMatches = [];
+        //     if(destination.X >= 0 && destination.Y >= 0){
+        //         var newGrid = grid.Duplicate();
+        //         var sourceTile = newGrid[source.X][source.Y]; //these shouldn't be here...
+        //         var destinationTile = newGrid[destination.X][destination.Y];
+
+        //         newGrid[source.X][source.Y] = destinationTile;
+        //         newGrid[destination.X][destination.Y] = sourceTile;
+
+        //         GridUtilities.PrintGridInitials(
+        //             GridUtilities.GetNamesGridFromTileGrid(newGrid),
+        //             "SWAPPED GRID"
+        //         );
+
+        //         var threeTileSourceMatches = FindMatchesWith(sourceTile, newGrid);
+        //         var threeTileDestinationMatches = FindMatchesWith(destinationTile, newGrid);
+        //         if(threeTileSourceMatches.Count > 0){ //this does not allow L combinations where a 90deg L is matched at the origin, where the actor sits at the shorter side and can short match
+        //             //check if anyy adjacent to actor
+        //             sourceMatches = threeTileSourceMatches;
+        //             GD.Print("match 3");
+        //         } else {
+        //             if(CheckIfSwappingActor(source, destination)){
+        //                 GD.Print("player is part of swap");
+        //                 //check if any actor short matches are compatible
+        //                 var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
+        //                 if(twoTileSourceMatches.Count > 0){ 
+        //                     sourceMatches = twoTileSourceMatches;    
+        //                 }                          
+        //             }
+              
+        //         }
+
+        //         if(threeTileDestinationMatches.Count > 0){
+        //             //check if anyy adjacent to actor
+        //             destinationMatches = threeTileDestinationMatches;
+        //         } else {
+        //             //check if any actor short matches are compatible
+        //             var twoTileDestinationMatches = GridUtilities.FindAllMatchingAdjacentTiles(destinationTile, newGrid);
+        //             if(twoTileDestinationMatches.Count > 0){ 
+        //                 destinationMatches = twoTileDestinationMatches;    
+        //             }                
+        //         }
+        //     }
+        //     var sourceMatchesWithoutDupes = Collections.RemoveDuplicates(sourceMatches);
+        //     var destinationMatchesWithoutDupes = Collections.RemoveDuplicates(destinationMatches);
+        //     return (sourceMatchesWithoutDupes, destinationMatchesWithoutDupes);
+        // }
+
         private bool CheckIfSwappingActor(Vector2I source, Vector2I destination){
-            Tiles.Model sourceTile = grid[source.X][source.Y];
-            Tiles.Model destinationTile = grid[destination.X][destination.Y];
+            Tiles.Model sourceTile = /* grid */observers[source.X][source.Y].Model as Tiles.Model;
+            Tiles.Model destinationTile = /* grid */observers[destination.X][destination.Y].Model as Tiles.Model;
             string player = TileNames.Player.ToString().ToLower();
             GD.Print("source: " + sourceTile.Name + "  dest:  " + destinationTile.Name);
             return (sourceTile.Name == player || destinationTile.Name == player);
@@ -160,14 +222,23 @@ namespace Grid {
             return tilePositions;
         }
 
-        private Array<Vector2I> FindMatchesWith(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+
+        private Array<Vector2I> FindMatchesWith(TileNode tile_, Array<Array<TileNode>> grid_){
             var horizontalMatches = FindHorizontal(tile_, grid_);
             var verticalMatches = FindVertical(tile_, grid_);
             var mergedCsharpArray = horizontalMatches.Concat(verticalMatches).ToArray();            
             return new Array<Vector2I>(mergedCsharpArray);
         }
 
-        private Array<Vector2I> FindHorizontal(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+        // private Array<Vector2I> FindMatchesWith_old(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+        //     var horizontalMatches = FindHorizontal(tile_, grid_);
+        //     var verticalMatches = FindVertical(tile_, grid_);
+        //     var mergedCsharpArray = horizontalMatches.Concat(verticalMatches).ToArray();            
+        //     return new Array<Vector2I>(mergedCsharpArray);
+        // }
+
+        //private Array<Vector2I> FindHorizontal(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+        private Array<Vector2I> FindHorizontal(TileNode tile_, Array<Array<TileNode>> grid_){
             var name = tile_.Name;
             var matches = new Array<Vector2I>();
 
@@ -175,9 +246,9 @@ namespace Grid {
                 for(int y = 0; y < columns; y++){
                     if(y > 0 && y < (columns - 1)){
                         if(
-                            name == grid_[x][y - 1].Name && 
-                            name == grid_[x][y].Name && 
-                            name == grid_[x][y + 1].Name 					
+                            name == grid_[x][y - 1].Model.Name && 
+                            name == grid_[x][y].Model.Name && 
+                            name == grid_[x][y + 1].Model.Name 					
                         ){
                             matches.Add(new Vector2I(x, y - 1));
                             matches.Add(new Vector2I(x, y));
@@ -189,7 +260,8 @@ namespace Grid {
             return Collections.RemoveDuplicates(matches);	
         }
 
-        private Array<Vector2I> FindVertical(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+        //private Array<Vector2I> FindVertical(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+        private Array<Vector2I> FindVertical(TileNode tile_, Array<Array<TileNode>> grid_){        
             var name = tile_.Name;
             var matches = new Array<Vector2I>();
 
@@ -197,9 +269,9 @@ namespace Grid {
                 for(int y = 0; y < rows; y++){
                     if(y > 0 && y < (rows - 1)){
                         if(
-                            name == grid_[y - 1][x].Name && 
-                            name == grid_[y][x].Name && 
-                            name == grid_[y + 1][x].Name 					
+                            name == grid_[y - 1][x].Model.Name && 
+                            name == grid_[y][x].Model.Name && 
+                            name == grid_[y + 1][x].Model.Name 					
                         ){
                             matches.Add(new Vector2I(y - 1, x));
                             matches.Add(new Vector2I(y, x));

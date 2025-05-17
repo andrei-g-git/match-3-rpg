@@ -46,16 +46,18 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		return _position.X >= 0 && _position.Y >= 0;
 	}
 
-	private static Vector2I FindMatchWithAdjacentTile(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_, Vector2I direction){
-		if(GridUtilities.CheckIfDirectionExists(tile_.Position, direction)){
-			var neighboringPosition = tile_.Position + direction;
+	//private static Vector2I FindMatchWithAdjacentTile(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_, Vector2I direction){
+	private static Vector2I FindMatchWithAdjacentTile(TileNode tile_, Array<Array<TileNode>> grid_, Vector2I direction){	
+		if(GridUtilities.CheckIfDirectionExists(((Tiles.Model) tile_.Model).Position, direction)){
+			var neighboringPosition = ((Tiles.Model) tile_.Model).Position + direction;
 			if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
 				return neighboringPosition;
 			}
 		} 
 		return new Vector2I(-1, -1);
 	} 
-	public static Array<Vector2I> FindAllMatchingAdjacentTiles(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+	//public static Array<Vector2I> FindAllMatchingAdjacentTiles(Tiles.Model tile_, Array<Array<Tiles.Model>> grid_){
+	public static Array<Vector2I> FindAllMatchingAdjacentTiles(TileNode tile_, Array<Array<TileNode>> grid_){
 		Array<Vector2I> matches = [];
 		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Up)); 
 		matches.Add(FindMatchWithAdjacentTile(tile_, grid_, Vector2I.Right)); 

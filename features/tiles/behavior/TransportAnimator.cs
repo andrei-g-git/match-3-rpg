@@ -28,7 +28,10 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     public override void _Ready(){ //hasn't been added as child, won't run
         var abc = 123;
         //signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
-        tileNode.AddChild(this);
+
+
+
+        //tileNode.AddChild(this);
     }
 
     public void Connect(){

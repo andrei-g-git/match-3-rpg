@@ -16,7 +16,10 @@ public partial class SwapAnimator : Node, Swapable.View, Box, BoardRefreshing{
 
     public override void _Ready(){
         //base._Ready();
-        tileNode = GetParent() as Node;
+        //tileNode = GetParent() as Node;
+        //tileNode = GetNode<Node>("%Tile");
+        //tileNode = GetTree().CurrentScene; //currentScene will be the game root or some shit..., will tween the whole board
+        tileNode = Owner;
     }
     public void SwapTo(Vector2I target){
 		Vector2 reverseDestination = MathUtilities.InvertVector(target);
