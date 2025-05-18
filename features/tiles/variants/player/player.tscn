@@ -13,9 +13,10 @@ texture_normal = ExtResource("2_ib1fk")
 texture_pressed = ExtResource("2_ib1fk")
 script = ExtResource("3_kqfgq")
 
-[node name="Transport" type="Node" parent="Animators" index="1"]
+[node name="Transport" type="Node" parent="Animators" index="1" node_paths=PackedStringArray("tileNode")]
 unique_name_in_owner = true
 script = ExtResource("4_hunij")
+tileNode = NodePath("../..")
 
 [node name="Model" parent="." index="2"]
 script = ExtResource("5_kqfgq")

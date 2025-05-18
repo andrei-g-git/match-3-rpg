@@ -2,7 +2,8 @@ using Godot;
 using Tiles;
 
 public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Transportable.View, Parentable, Box{
-    private Node tileNode;
+    [Export]
+    private Node tileNode; //or could get as Owner but let's try dependency injection for good practice
     // private int sideLength;
     // private int margin;
     private int width, height, margin = 0;
