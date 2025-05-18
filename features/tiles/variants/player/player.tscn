@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c2bbcbjgw186g"]
+[gd_scene load_steps=9 format=3 uid="uid://c2bbcbjgw186g"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
 [ext_resource type="Script" uid="uid://mgasm3n7oogn" path="res://features/tiles/variants/player/Controller.cs" id="3_kqfgq"]
 [ext_resource type="Script" uid="uid://cfdilgmlghaks" path="res://features/tiles/behavior/Transport.cs" id="4_2sf3b"]
 [ext_resource type="Script" uid="uid://ca6vvh06y5mro" path="res://features/tiles/behavior/TransportAnimator.cs" id="4_hunij"]
+[ext_resource type="Script" uid="uid://bc5jwp3uuubtw" path="res://features/tiles/variants/player/Animators.cs" id="4_sdsyd"]
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_hunij"]
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
 
@@ -12,6 +13,9 @@
 texture_normal = ExtResource("2_ib1fk")
 texture_pressed = ExtResource("2_ib1fk")
 script = ExtResource("3_kqfgq")
+
+[node name="Animators" parent="." index="1"]
+script = ExtResource("4_sdsyd")
 
 [node name="Transport" type="Node" parent="Animators" index="1" node_paths=PackedStringArray("tileNode")]
 unique_name_in_owner = true

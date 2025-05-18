@@ -44,7 +44,7 @@ namespace Grid {
         //for example in the behavior folder I could have an Animation script eg. TransportAnimation.cs3q or SwappingAnimation.cs
         public /* Control */TileNode Create(TileNames tileName, Tiles.Model model, Node parent, Vector2I position) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
             var tileNode =  (/* Control */TileNode) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
-            ((/* Modelable */Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
+            //((Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
             parent.AddChild(tileNode);
 
             var ____model = ((Controllable) tileNode).Model as Tiles.Model;

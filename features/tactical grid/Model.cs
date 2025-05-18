@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Abstractions;
 using Constants;
 using Godot;
@@ -355,7 +356,7 @@ namespace Grid {
             return path;
         }
 
-        private void DestroyMatches(/* Array<Tiles.Model> allMatches */Array<Vector2I> allMatches){
+        private async void DestroyMatches(/* Array<Tiles.Model> allMatches */Array<Vector2I> allMatches){
             var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
             //var player = grid[playerPosition.X][playerPosition.Y];
             var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
@@ -364,30 +365,41 @@ namespace Grid {
                 var tile = /* grid */observers[pos.X][pos.Y].Model as Tiles.Model;
 
                 if(playerIsAdjacent){ 
-                    playerPosition = FindTilesByName(TileNames.Player)[0];                
-                    var player = /* grid */observers[playerPosition.X][playerPosition.Y];
-
-                    if(tile is BuffableDamage.Model){
-                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
-                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
-                        ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
-                        var bp = 123;
-                    }   
-
-
-                    /* grid */observers[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
-                    
-                    ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
-
-                    // grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    //     TileNames.Stamina.ToString().ToLower(), 
-                    //     new Vector2I(69, 420)
-                    // ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
+                    await PerformTileBehaviors(tile, pos);
                 }
-                 
+                
             }
             var bp2 = 123;
         }
+
+        private async Task PerformTileBehaviors(Tiles.Model tile, Vector2I positionInPath){
+            var playerPosition = FindTilesByName(TileNames.Player)[0];                
+            var player = /* grid */observers[playerPosition.X][playerPosition.Y];
+            var pos = positionInPath;
+            if(tile is BuffableDamage.Model){
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
+                var bp = 123;
+            }   
+
+
+            /* grid */observers[pos.X][pos.Y] = player; //but then player.Position will remain unchanged...
+            
+            ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+
+            var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
+            await ToSignal(emitter, "Transported");
+        }
+
+        private async void DestroyOneMatch(){
+            // grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //     TileNames.Stamina.ToString().ToLower(), 
+            //     new Vector2I(69, 420)
+            // ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
+        }
+
+
 
         // private void ReplaceCollapsingTileWithActor(Tiles.Model tile){ //hmm helper function inside a helper function I dunno about this..
         //     var transportables = tile.Transportables;
@@ -433,6 +445,10 @@ namespace Grid {
         // }   
        
     }
+
+    // private TileNode CreateRandomTile(){
+
+    // }
 
 }
 

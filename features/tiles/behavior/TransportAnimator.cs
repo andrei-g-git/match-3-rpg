@@ -19,6 +19,8 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 
     [Signal]
     public delegate void UpdatedEventHandler();
+    [Signal]
+    public delegate void TransportedEventHandler();
 
     // public TransportAnimator(Node tileNode, int sideLength, int margin){
     //     this.tileNode = tileNode;
@@ -64,5 +66,7 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 
     private void OnMoveFinished(){ //this is incorrect naming for an emitter, OnAction name should be used by the receiver, not the invoker
     	EmitSignal(SignalName.Updated);
+
+        EmitSignal(SignalName.Transported);
     }
 }

@@ -15,6 +15,8 @@ namespace Player{
             transportAnimator.Width = SideLength;
             transportAnimator.Height = SideLength;
             transportAnimator.Margin = Margin;
+
+            //Animators //must give a script so it stores sub animators by name
         }
     }
 }
