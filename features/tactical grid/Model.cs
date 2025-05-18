@@ -35,10 +35,18 @@ namespace Grid {
             }
         }
 
-        public void Register(TileNode tileNode_, int x_, int y_) { 
+        public void Register(TileNode tileNode_, int x_, int y_) {
+            SetTile(tileNode_, x_, y_);
+
+            var tileModel = ((Controllable) tileNode_).Model;
+            ((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
+        } 
+
+        public void SetTile(TileNode tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((Controllable) observer).Model;
-            ((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
+            (tileModel as Tiles.Model).Position = new Vector2I(x_, y_);
+            
         }
 
 
@@ -49,8 +57,10 @@ namespace Grid {
                 var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
                 var destinationTile = observers[destination.X][destination.Y];
 
-                newGrid[source.X][source.Y] = destinationTile;
-                newGrid[destination.X][destination.Y] = sourceTile;
+                GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y);
+                GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
+                // newGrid[source.X][source.Y] = destinationTile;
+                // newGrid[destination.X][destination.Y] = sourceTile;
 
                 (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
 
@@ -262,7 +272,9 @@ namespace Grid {
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
             }   
 
-            observers[pos.X][pos.Y] = player; 
+            //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
+            SetTile(player, pos.X, pos.Y);
+            //observers[pos.X][pos.Y] = player; 
             
             ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
 

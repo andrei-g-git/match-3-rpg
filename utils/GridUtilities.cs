@@ -79,7 +79,12 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 			}
 		}
 		return NamesGrid;
-	}		
+	}	
+
+	public static void PlaceTileOnBoard(TileNode tile, Array<Array<TileNode>> board, int x, int y){
+		board[x][y] = tile;
+		(tile.Model as Tiles.Model).Position = new Vector2I(x, y);
+	}	
 }
 
 
