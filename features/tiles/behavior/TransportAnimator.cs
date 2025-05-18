@@ -1,11 +1,9 @@
 using Godot;
 using Tiles;
 
-public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Transportable.View, Parentable, Box{
+public partial class TransportAnimator: Node, Listenable, Transportable.View, Parentable, Box{
     [Export]
     private Node tileNode; //or could get as Owner but let's try dependency injection for good practice
-    // private int sideLength;
-    // private int margin;
     private int width, height, margin = 0;
     private Node signalEmitter = null;
     public Node SignalEmitter { get => signalEmitter; set => signalEmitter = value; }
@@ -22,19 +20,7 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
     [Signal]
     public delegate void TransportedEventHandler();
 
-    // public TransportAnimator(Node tileNode, int sideLength, int margin){
-    //     this.tileNode = tileNode;
-    //     this.sideLength = sideLength;
-    //     this.margin = margin;
-    // }
-
-    public override void _Ready(){ //hasn't been added as child, won't run
-        var abc = 123;
-        //signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); /* should be enum */
-
-        //tileNode.AddChild(this);
-
-        //(SignalEmitter as Transport).JumpTo += JumpTo; //well this is substandard...
+    public override void _Ready(){ 
 
         (GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
     }
@@ -56,7 +42,6 @@ public partial class TransportAnimator: Node, Listenable, /* Animatable, */ Tran
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
         //queue free deletes the whole node including the Control, not just the tween
-        //parentNode.AddChild((Node) tween);
         
 		tween.TweenProperty(tileNode, "position", target, duration);
         tween.Finished += OnMoveFinished;

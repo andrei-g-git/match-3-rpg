@@ -6,18 +6,22 @@ namespace Tiles
 {
     public partial class Controller : Node/* , Listenable */
     {
-        [Export] int dragTreshold = 16;
+        [Export] 
+        private int dragTreshold = 16;
+        [Export]
+        private Node model;
         public Node SignalEmitter { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public StringName Signal { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        private Swapable.Model model = null;
+        //private Swapable.Model model = null;
         private Vector2 dragDirection = Vector2.Zero;
         private Vector2 totalDrag = Vector2.Zero;
         private bool pressing = false;
         private bool pressed = false;
 
         public override void _Ready(){
-            var modelScene = GetNode<Node>("%Model");
-            model = modelScene as Swapable.Model;
+            // var modelScene = GetNode<Node>("%Model");
+
+            // model = modelScene as Swapable.Model;
 
             var tileNode = GetParent() as Node;
             tileNode.Connect(BaseButton.SignalName.Pressed, Callable.From(OnPressed));

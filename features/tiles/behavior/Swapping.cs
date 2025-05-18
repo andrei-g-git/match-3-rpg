@@ -2,7 +2,9 @@ using Godot;
 using System;
 using Tiles;
 public partial class Swapping : Node, Swapable.Model{
-    //[Export] Node tile;
+    [Export] 
+    Node model; //for some reaosn this doesn't get the right node position...
+    private Node hardcodedModel = null;
 	[Signal] public delegate void TriedSwappingEventHandler(Vector2I source, Vector2I direction);
 	private Tiles.Model tile = null;
 	private bool isSwapable;
@@ -15,11 +17,11 @@ public partial class Swapping : Node, Swapable.Model{
     // }
 
     public override void _Ready(){
-        tile = GetNode<Node>("%Model") as Tiles.Model;
+        hardcodedModel = GetNode<Node>("%Model") as Tiles.Model;
     }
 
     public void NotifySwap(Vector2I direction){
-        EmitSignal(SignalName.TriedSwapping, tile.Position, direction);
+        EmitSignal(SignalName.TriedSwapping, (hardcodedModel as Tiles.Model).Position, direction);
     }
 
     public void ConnectWithSwapSignal(TriedSwappingEventHandler callback){

@@ -22,7 +22,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
         animators = GetNode<Node>("%Animators"); 
         model = GetNode<Node>("%Model"); 
 
-        ((Tiles.Model/* not ideal... */) model).SwapBehavior = GetNode<Node>("%Swapper") as Swapable.Model; //not ideal either....
+        //((Tiles.Model/* not ideal... */) model).SwapBehavior = GetNode<Node>("%Swapper") as Swapable.Model; //not ideal either....
 
         swapAnimator = GetNode<Node>("%Swap") as Swapable.View;
         //var swapAnimator = animators.GetChild<Node>("%Swap");

@@ -9,10 +9,11 @@
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_hunij"]
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
 
-[node name="Player" instance=ExtResource("1_7yhcl")]
+[node name="Player" node_paths=PackedStringArray("transportAnimator") instance=ExtResource("1_7yhcl")]
 texture_normal = ExtResource("2_ib1fk")
 texture_pressed = ExtResource("2_ib1fk")
 script = ExtResource("3_kqfgq")
+transportAnimator = NodePath("Animators/Transport")
 
 [node name="Animators" parent="." index="1"]
 script = ExtResource("4_sdsyd")
@@ -22,8 +23,10 @@ unique_name_in_owner = true
 script = ExtResource("4_hunij")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2"]
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer")]
 script = ExtResource("5_kqfgq")
+transporter = NodePath("Transporter")
+damageBuffer = NodePath("DamageBuffer")
 
 [node name="Transporter" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true

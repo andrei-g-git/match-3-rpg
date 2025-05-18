@@ -15,16 +15,6 @@ public partial class TacticalGrid : GridContainer
 		var tileNameGrid = GridUtilities.AssignTileNamesToIntGrid(intTable);	
 		GridUtilities.PrintGridInitials(tileNameGrid, "GRID INITIALS");
 
-		Console.WriteLine("TACTICAL GRID READY EVENT");
-
-		// var Model = GD.Load("res://features/tactical grid/Model.cs");
-		// var Controller = GD.Load("res://features/tactical grid/Controller.cs");
-		// var TileFactory = GD.Load("res://features/tiles/variants/Factory.cs");
-		// var NodeFactory = GD.Load("res://features/tactical grid/Factory.cs");
-
-		
-		// var model = Model.New(tile_scenes, tile_name_grid, TileFactory.new())
-		// var controller = Controller.new(model, self, NodeFactory.new())
 		var model = new Model(
 			tileScenes,
 			tileNameGrid,
@@ -34,7 +24,7 @@ public partial class TacticalGrid : GridContainer
 		var controller = new Controller(
 			model,
 			this,
-			new Grid.Factory(tileScenes/* , new Tiles.Factory() */)
+			new Grid.Factory(tileScenes)
 		);
 
 		//delete, temporary
@@ -43,9 +33,5 @@ public partial class TacticalGrid : GridContainer
 			
 		controller.Initialize();
 
-	}
-
-	public override void _Process(double delta)
-	{
 	}
 }

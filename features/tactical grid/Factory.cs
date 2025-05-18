@@ -2,65 +2,46 @@ using Abstractions;
 using Constants;
 using Godot;
 using Godot.Collections;
-using System;
-//using System.Collections.Generic;
-using System.Linq;
-using Tiles;
 
 namespace Grid {
     public partial class Factory: Node{
-        private Dictionary<string, PackedScene> preInstantiatedTiles = new Dictionary<string, PackedScene>();
-        private Array<string> tileNames = new Array<string>();//private List<string> tileNames;
-        private Array<PackedScene> tileScenes;//private List<PackedScene> tileScenes;
-        //private Tiles.Factory tileFactory = null;
-        public Factory(Array<PackedScene> tileScenes_/* , Tiles.Factory tileFactory_ */) {
+        private Dictionary<string, PackedScene> preInstantiatedTiles = [];
+        private Array<string> tileNames = [];
+        private Array<PackedScene> tileScenes;
+
+        public Factory(Array<PackedScene> tileScenes_) {
             tileScenes = tileScenes_;
-            //tileFactory = tileFactory_;
-            var bp = 123;
         }
 
-        public void Initialize() { //this should be called from director type class
-            //List<Control> tileNodes = (List<Control>) tileScenes.Select(scene => scene.Instantiate());
-            //tileNames = (List<string>)tileNodes.Select(node => node.Name);
-
-            //var result = tileScenes.Select(scene => scene.Instantiate() as Control);
-            //var tileNodes = new Array<Control>(result);
+        public void Initialize() { 
             var tileNodes = new Array<Control>();
             foreach(PackedScene scene in tileScenes){
                 tileNodes.Add(scene.Instantiate() as Control);
             }
-            //tileNames = (Array<string>) tileNodes.Select(node => node.Name.ToString());
             foreach(Control node in tileNodes){
                 tileNames.Add(((string) node.Name).ToLower());
             }
             for(int i = 0; i < tileNames.Count; i++) {
                 preInstantiatedTiles.Add(tileNames[i], tileScenes[i]);
             }
-            var bp = 123;
         }
 
-        //I should create each tile node with it's specifics like I create the tile models
-        //each tile piece should have it's own animation behavior that connects to it's model behavior through signals
-        //for example in the behavior folder I could have an Animation script eg. TransportAnimation.cs3q or SwappingAnimation.cs
-        public /* Control */TileNode Create(TileNames tileName, Tiles.Model model, Node parent, Vector2I position) { //I don't like that I'm exposing this factory to the tile model when I already have a tile model factory
-            var tileNode =  (/* Control */TileNode) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
-            //((Controllable) tileNode).Model = model;//tileFactory.Create(tileName, position);
+        public TileNode Create(TileNames tileName, Node parent, Vector2I position) { 
+            var tileNode =  (TileNode) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
             parent.AddChild(tileNode);
 
-            var ____model = ((Controllable) tileNode).Model as Tiles.Model;
-
-            InitializeNode(tileName, tileNode, /* model */____model, position);
+            InitializeNode(tileName, tileNode, position);
             return tileNode;
         }
 
-        private void InitializeNode(TileNames name, Node tileNode, Tiles.Model model, Vector2I position){
-
-            model.Position = position; //adding model directly to scene tree, can't have parameters in constructor
-
+        private void InitializeNode(TileNames name, Node tileNode, Vector2I position){
+            var _model = ((Controllable) tileNode).Model as Tiles.Model;
+            _model.Position = position;
+            
             switch(name){
-                case TileNames.Player: InitPlayer(tileNode, model); break;
-                case TileNames.Melee: InitMelee(tileNode, model); break;
-                case TileNames.Walk: InitWalk(tileNode, model); break;
+                case TileNames.Player: InitPlayer(tileNode, _model); break;
+                case TileNames.Melee: InitMelee(tileNode, _model); break;
+                case TileNames.Walk: InitWalk(tileNode, _model); break;
                 default: Foo(); break;
             }
         }
