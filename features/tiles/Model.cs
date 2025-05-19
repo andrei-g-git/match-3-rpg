@@ -13,6 +13,9 @@ namespace Tiles{
         private string name;
         public /* abstract */ virtual string Name { get; } //hides Node.Name, but I don't think I'll be using that...
         //private Swapable.Model swapper = null;
+
+        private TileName type;
+        public virtual TileName Type => type;
         public Swapable.Model SwapBehavior{get => (Swapable.Model) swapper; set => swapper = (Node)value; }
 
         public bool IsSwapable {get => (swapper as Swapable.Model).IsSwapable; set => (swapper as Swapable.Model).IsSwapable = value;}

@@ -1,10 +1,12 @@
 using Abstractions;
+using Constants;
 using Godot;
 
 public partial class TileNode : TextureButton, Controllable, Modelable, Animatable
 {
     [Export] public int SideLength {get; set;} = 64;
     [Export] public int Margin {get; set;}= 3;
+    public TileName Type => (model as Tiles.Model).Type; 
     private Node controller = null;
     public Node Controller { get => controller; set => controller = value; }
     private Node model = null;

@@ -266,7 +266,7 @@ namespace Grid {
             var playerPosition = FindTilesByName(TileNames.Player)[0];                
             var player = observers[playerPosition.X][playerPosition.Y];
             var pos = positionInPath;
-            if(tile is BuffableDamage.Model){
+            if(tile is BuffableDamage.Model){ //probably shouldn't buff if active actor not adjacent
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
