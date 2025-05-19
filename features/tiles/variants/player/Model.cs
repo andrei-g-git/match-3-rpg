@@ -1,3 +1,4 @@
+using Constants;
 using Godot;
 using Godot.Collections;
 
@@ -10,6 +11,7 @@ namespace Tiles {
             private Node damageBuffer;
             private Vector2I position;
             public override string Name => "player";
+            public override NamableTile Type => TileName.Player;
             private Movable moveBehavior = null;
             public Movable MoveBehavior {get => moveBehavior; set => moveBehavior = value;}
             //private Transportable.Model transporter = null;

@@ -1,3 +1,4 @@
+using Constants;
 using Godot;
 
 namespace Tiles {
@@ -7,7 +8,7 @@ namespace Tiles {
             private Node defender;
             private Vector2I position;
             public override string Name => "fighter";
-
+            public override NamableTile Type => TileName.Fighter;
             public int Health => Defender.Health;
 
             public int Defense =>  Defender.Defense;
