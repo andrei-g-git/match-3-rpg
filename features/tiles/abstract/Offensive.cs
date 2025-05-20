@@ -1,4 +1,6 @@
-public interface Offensive{
-    public int Damage { get; set; }
-    public void ApplyDamageBuff(/* Combatable.Model actor */object foo); // += buff to actor's damage depending on whether tile is spell, ranged or damage buff
+namespace Offensive{
+    public interface Model{
+        public int Damage { get; }
+        public void Attack(Tiles.Model actor);
+    }    
 }

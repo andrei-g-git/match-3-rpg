@@ -50,7 +50,7 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 	private static Vector2I FindMatchWithAdjacentTile(TileNode tile_, Array<Array<TileNode>> grid_, Vector2I direction){	
 		if(GridUtilities.CheckIfDirectionExists(((Tiles.Model) tile_.Model).Position, direction)){
 			var neighboringPosition = ((Tiles.Model) tile_.Model).Position + direction;
-			if(tile_.Name == grid_[neighboringPosition.X][neighboringPosition.Y].Name){
+			if(tile_.Type == grid_[neighboringPosition.X][neighboringPosition.Y].Type){
 				return neighboringPosition;
 			}
 		} 
@@ -86,6 +86,22 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		(tile.Model as Tiles.Model).Position = new Vector2I(x, y);
 	}	
 
+	public static Array<TileNode> FindTileInVincinity(TileNames tile, Vector2I center, Array<Array<TileNode>> board){
+		var findings = new Array<TileNode>();
+        var surroundings = new[]{
+            center + Vector2I.Up,
+			center + Vector2I.Right,
+			center + Vector2I.Down,
+			center + Vector2I.Left
+		};
+		for(int i=0; i < surroundings.Length; i++){
+			var pos = surroundings[i];
+			if(board[pos.X][pos.Y].Type == tile.ToString().ToLower()){
+				findings.Add(board[pos.X][pos.Y]);
+			}			
+		}
+		return findings;
+	}
 }
 
 

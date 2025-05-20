@@ -4,14 +4,16 @@ using Godot.Collections;
 
 namespace Tiles { 
     namespace Player{
-        public partial class Model : Tiles.Model, Movable, Transportable.Model, BuffableDamage.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
+        public partial class Model : Tiles.Model, Movable, Transportable.Model, BuffableDamage.Model, Offensive.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
             [Export]
             private Node transporter;
             [Export]
             private Node damageBuffer;
+            [Export]
+            private Node offender; //reeee
             private Vector2I position;
             public override string Name => "player";
-            public override NamableTile Type => TileName.Player;
+            //public override NamableTile Type => TileName.Player;
             private Movable moveBehavior = null;
             public Movable MoveBehavior {get => moveBehavior; set => moveBehavior = value;}
             //private Transportable.Model transporter = null;
@@ -23,7 +25,8 @@ namespace Tiles {
             public int MeleeBuff { get => (damageBuffer as BuffableDamage.Model).MeleeBuff; }     
             public int RangedBuff { get => (damageBuffer as BuffableDamage.Model).RangedBuff; }    
             public int SpellBuff { get => (damageBuffer as BuffableDamage.Model).SpellBuff; }
-
+            public Offensive.Model Offender {get => (Offensive.Model) offender; set => offender = (Node) value;}
+            public int Damage { get => (offender as Offensive.Model).Damage; }
 
             public bool VerifyShortMoveEligibility(string tileName){
                 return moveBehavior.VerifyShortMoveEligibility(tileName);
@@ -54,6 +57,11 @@ namespace Tiles {
             public void IncreaseDamageOfSpell(int damageIncrement){
                 (damageBuffer as BuffableDamage.Model).IncreaseDamageOfSpell(damageIncrement);
             }
+
+            public void Attack(Tiles.Model actor){
+                Offender.Attack(actor);
+            }
+
         }
     }
 

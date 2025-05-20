@@ -6,7 +6,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
 {
     [Export] public int SideLength {get; set;} = 64;
     [Export] public int Margin {get; set;}= 3;
-    public TileName Type => (model as Tiles.Model).Type; 
+    public /* TileName */ string Type => (model as Tiles.Model).Name;//(model as Tiles.Model).Type; 
     private Node controller = null;
     public Node Controller { get => controller; set => controller = value; }
     private Node model = null;

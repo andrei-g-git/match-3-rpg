@@ -6,7 +6,7 @@ namespace Tiles {
         public partial class Model : Tiles.Model {
             private Vector2I position;
             public override string Name => "energy";
-            public override NamableTile Type => TileName.Energy;
+            //public override NamableTile Type => TileName.Energy;
             public Model(/* Vector2I position */) : base(/* position */) {
 
             }

@@ -39,7 +39,7 @@ namespace Constants{ //shouldd get rid of this and use records
             };
         }
         public override string ToString() => Value;
-        public static implicit operator string(TileName type) => type.Value; //can now assign records to string variables
+        //public static implicit operator string(TileName type) => type.Value; //can now assign records to string variables
 
         public static readonly NamableTile Archer  = new TileName("archer");
         public static readonly NamableTile Chest = new TileName("chest");

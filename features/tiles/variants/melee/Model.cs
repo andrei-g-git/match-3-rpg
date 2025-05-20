@@ -6,7 +6,7 @@ namespace Tiles {
         public partial class Model : Tiles.Model, BuffableDamage.Model { 
             private Vector2I position;
             public override string Name => "melee";
-            public override NamableTile Type => TileName.Melee;
+            //public override NamableTile Type => TileName.Melee;
             private BuffableDamage.Model damageBuffer = null;
             public BuffableDamage.Model DamageBuffer {get => damageBuffer; set => damageBuffer = value;}
             //private int meleeBuff = 3;

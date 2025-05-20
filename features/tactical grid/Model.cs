@@ -272,14 +272,41 @@ namespace Grid {
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
             }   
 
-            //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
-            SetTile(player, pos.X, pos.Y);
-            //observers[pos.X][pos.Y] = player; 
+            // //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
+            // SetTile(player, pos.X, pos.Y);
+            // //observers[pos.X][pos.Y] = player; 
             
-            ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+            // ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
 
+            // var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
+            // await ToSignal(emitter, "Transported");
+        }
+
+        private async Task PerformPlayerBehaviors(Vector2I positionInPath){
+            var playerPosition = FindTilesByName(TileNames.Player)[0];                
+            var player = observers[playerPosition.X][playerPosition.Y];
+            var pos = positionInPath;
+
+            SetTile(player, pos.X, pos.Y);
+
+            var fighters = GridUtilities.FindTileInVincinity(TileNames.Fighter, pos, observers);
+            var archers = GridUtilities.FindTileInVincinity(TileNames.Archer, pos, observers);
+            if(fighters.Count>0 || archers.Count>0){
+                //This is a bad idea
+                //Whenever I need to scale this up I have to come back to this thing and change and tinker with it
+                //Each tile should have a component that runs the entirety of it's behaviors when iterated 
+                //That component should take in callbacks from it's parent board model and run it without being coupled to the board's implementations
+                //could resemble a strategy pattern, I dunno
+                var enemies = fighters + archers;
+                for(int i=0; i < enemies.Count; i++){
+                    //(enemies[i].Model as Defensive.Model).TakeDamage(player.Model as )
+                    (player.Model as Offensive.Model).Attack((Tiles.Model) enemies[i].Model);
+                }
+            }
+
+            ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
             var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
-            await ToSignal(emitter, "Transported");
+            await ToSignal(emitter, "Transported");            
         }
 
         private async void DestroyOneMatch(){

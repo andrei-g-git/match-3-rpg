@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2bbcbjgw186g"]
+[gd_scene load_steps=10 format=3 uid="uid://c2bbcbjgw186g"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bc5jwp3uuubtw" path="res://features/tiles/variants/player/Animators.cs" id="4_sdsyd"]
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_hunij"]
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
+[ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="9_1bdos"]
 
 [node name="Player" node_paths=PackedStringArray("transportAnimator") instance=ExtResource("1_7yhcl")]
 texture_normal = ExtResource("2_ib1fk")
@@ -23,10 +24,11 @@ unique_name_in_owner = true
 script = ExtResource("4_hunij")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer")]
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer", "offender")]
 script = ExtResource("5_kqfgq")
 transporter = NodePath("Transporter")
 damageBuffer = NodePath("DamageBuffer")
+offender = NodePath("Offender")
 
 [node name="Transporter" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true
@@ -35,5 +37,9 @@ script = ExtResource("4_2sf3b")
 [node name="DamageBuffer" type="Node" parent="Model" index="3"]
 unique_name_in_owner = true
 script = ExtResource("5_hunij")
+
+[node name="Offender" type="Node" parent="Model" index="4"]
+unique_name_in_owner = true
+script = ExtResource("9_1bdos")
 
 [connection signal="JumpTo" from="Model/Transporter" to="Animators/Transport" method="_on_transporter_jump_to"]

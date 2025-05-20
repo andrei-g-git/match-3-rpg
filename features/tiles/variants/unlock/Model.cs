@@ -6,7 +6,7 @@ namespace Tiles {
         public partial class Model : Tiles.Model {
             private Vector2I position;
             public override string Name => "unlock";
-            public override NamableTile Type => TileName.Unlock;
+            //public override NamableTile Type => TileName.Unlock;
             // public Model(Vector2I position) : base(position) {
 
             // }
