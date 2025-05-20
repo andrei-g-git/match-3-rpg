@@ -1,24 +1,14 @@
 using Godot;
-using Godot.Collections;
-using System;
-using System.Linq;
 
-public partial class Movement : Node, Movable{
-	private Array<string> shortMoveTiles = [];
-    public Array<string> ShortMoveTiles {get => shortMoveTiles;}
-
-    public void AddTile(string tileName){
-        shortMoveTiles.Add(tileName);
+public partial class Movement : Node, Movable.Model{
+    [Export]
+    private Node matcher;   
+    private Grid.Model board;
+    public Grid.Model Board { set => board = value; }    
+    public override void _Ready(){
+        (matcher as Match).TryMoving += Move;
+    }     
+    public void Move(Vector2I source, Vector2I direction){
+        throw new System.NotImplementedException();
     }
-    public void AddTiles(string[] tiles){
-        shortMoveTiles.Concat(tiles).ToArray();
-    }
-    public void RemoveTile(string tileName){
-		shortMoveTiles.Remove(tileName);
-    }
-
-    public bool VerifyShortMoveEligibility(string tileName){
-        return shortMoveTiles.Contains(tileName);
-    }
-
 }

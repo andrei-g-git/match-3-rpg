@@ -1,9 +1,7 @@
-using Godot.Collections;
+using Godot;
 
-public interface Movable{
-    public Array<string> ShortMoveTiles{get;}
-    public bool VerifyShortMoveEligibility(string tileName);
-    public void AddTile(string tileName);
-    public void AddTiles(string[] tiles);
-    public void RemoveTile(string tileName);
+namespace Movable{
+    public interface Model{
+        public void Move(Vector2I source, Vector2I direction);
+    }
 }

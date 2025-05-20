@@ -3,13 +3,25 @@ using Godot;
 
 namespace Tiles {
     namespace Archer{
-        public partial class Model : Tiles.Model{
-            private Vector2I position;
+        public partial class Model : Tiles.Model, Defensive.Model{
+            [Export]
+            private Node defender;
             public override string Name => "archer";
-            //public override NamableTile Type => TileName.Archer;
-            public Model(/* Vector2I position */): base(/* position */) {
+            public Defensive.Model Defender => defender as Defensive.Model;
 
+            public int Health => Defender.Health;
+
+            public int Defense => Defender.Defense;
+
+            private Vector2I position;
+
+            public void TakeDamage(int damage){
+                Defender.TakeDamage(damage);
             }
+
+            //public override NamableTile Type => TileName.Archer;
+
+
 
         }        
     }

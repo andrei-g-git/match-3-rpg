@@ -49,7 +49,48 @@ namespace Grid {
             
         }
 
+/////////////////////////////////////////////////////////////
 
+        public Array<Vector2I> TryMatching(Vector2I source, Vector2I direction){
+            Vector2I destination = source + direction;
+            if(destination.X >= 0 && destination.Y >= 0){
+                var newGrid = observers.Duplicate(true);
+                var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
+                var destinationTile = observers[destination.X][destination.Y];
+
+                GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y);
+                GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
+
+                (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
+
+                 TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
+                 TileNode destinationNode = observers[destination.X][destination.Y];
+                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e       
+                    sourceNode.SwapAnimator.SwapTo(destination);
+                    destinationNode.SwapAnimator.SwapTo(source);    
+                    observers = newGrid;        
+
+                    var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+                    var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+
+                    var collapsePath = MakeCollapsePath(
+                        sourceMatchColumn, 
+                        FindTilesByName(TileNames.Player)[0]
+                    );
+                    GD.Print("Path:  \n" + collapsePath);    
+
+                    return collapsePath;                                                                                           
+                }
+            }
+            return [];
+        }
+
+
+
+
+
+
+///////////////////////////////////////////////////////////
         private void Swap2(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){
@@ -70,17 +111,36 @@ namespace Grid {
                     sourceNode.SwapAnimator.SwapTo(destination);
                     destinationNode.SwapAnimator.SwapTo(source); //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
                                                                     //maybe I should use signals or something ...    
-                    observers = newGrid;                                                                                    
-                }
-                var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
-                var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+                    observers = newGrid;        
 
-                var collapsePath = MakeCollapsePath(
-                    sourceMatchColumn, 
-                    FindTilesByName(TileNames.Player)[0]
-                );
-                GD.Print("Path:  \n" + collapsePath);
-                DestroyMatches(collapsePath);                
+
+
+
+
+                    var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+                    var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+
+                    var collapsePath = MakeCollapsePath(
+                        sourceMatchColumn, 
+                        FindTilesByName(TileNames.Player)[0]
+                    );
+                    GD.Print("Path:  \n" + collapsePath);
+                    DestroyMatches(collapsePath);                                                                                                   
+                } else {
+                    if(sourceTile.Type == TileNames.Player.ToString().ToLower()){
+                        var player = sourceTile;
+                        var target = destinationTile;
+                        if(destinationTile is BuffableDamage.Model){
+                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) target).MeleeBuff);
+                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) target).RangedBuff);
+                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) target).SpellBuff);
+                        }    
+                        // sourceNode.SwapAnimator.SwapTo(destination);  //not swapping, replacing
+                        // destinationNode.SwapAnimator.SwapTo(source); 
+                        // observers = newGrid;                                                    
+                    }
+                }
+             
             }
 
         }
@@ -256,13 +316,14 @@ namespace Grid {
                 var tile = observers[pos.X][pos.Y].Model as Tiles.Model;
 
                 if(playerIsAdjacent){ 
-                    await PerformTileBehaviors(tile, pos);
+                    /* await */ PerformTileBehaviors(tile, pos);
+                    await PerformPlayerBehaviors(pos);
                 }
                 
             }
         }
 
-        private async Task PerformTileBehaviors(Tiles.Model tile, Vector2I positionInPath){
+        private /* async Task */ void PerformTileBehaviors(Tiles.Model tile, Vector2I positionInPath){
             var playerPosition = FindTilesByName(TileNames.Player)[0];                
             var player = observers[playerPosition.X][playerPosition.Y];
             var pos = positionInPath;
@@ -300,7 +361,8 @@ namespace Grid {
                 var enemies = fighters + archers;
                 for(int i=0; i < enemies.Count; i++){
                     //(enemies[i].Model as Defensive.Model).TakeDamage(player.Model as )
-                    (player.Model as Offensive.Model).Attack((Tiles.Model) enemies[i].Model);
+                    (player.Model as Offensive.Model).Attack((Tiles.Model) enemies[i].Model); 
+                    var bp3 = 1323;
                 }
             }
 

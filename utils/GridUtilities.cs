@@ -96,7 +96,8 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		};
 		for(int i=0; i < surroundings.Length; i++){
 			var pos = surroundings[i];
-			if(board[pos.X][pos.Y].Type == tile.ToString().ToLower()){
+			var loopedTileName = board[pos.X][pos.Y].Type;
+			if(loopedTileName == tile.ToString().ToLower()){
 				findings.Add(board[pos.X][pos.Y]);
 			}			
 		}
