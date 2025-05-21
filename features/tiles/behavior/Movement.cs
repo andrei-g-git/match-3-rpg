@@ -3,8 +3,8 @@ using Godot;
 public partial class Movement : Node, Movable.Model{
     // [Export]
     // private Node swapper; //matcher;   
-    [Export]
-    private Node model;
+    // [Export]
+    // private Node model;
     private Grid.Model board;
     public Grid.Model Board { set => board = value; }    
     [Signal]
@@ -14,15 +14,19 @@ public partial class Movement : Node, Movable.Model{
         //(matcher as Match).TryMoving += Move;
         var swapper = GetNode<Node>("%Swapper");
         (swapper as Swapping).TryMoving += Move;
+        //board = (GetNode<Node>("%Model") as GridItem).Board; //doesn't have it at this point....
+        var bp = 324;
     }     
     public void Move(Vector2I source, Vector2I direction){
         var destination = source + direction;
+        board = (GetNode<Node>("%Model") as GridItem).Board;
         var targetTile = board.GetTileModel(destination);
         //assume that only the player can move... this might cause problems
-        if(targetTile is Obtainable.Model wefwef){
+        if(targetTile is Obtainable.Model /* wefwef */){
             //move over and obtain -- if it's a walk tile then get nothing or decrease stamina -- but then other actions should decrease stamina too
+            var bp =345;
         }else{
-            if(targetTile is Hostility.Model dfdg){
+            if(targetTile is Hostility.Model /* dfdg */){
                 if((targetTile as Hostility.Model).IsEnemy){
                     //attack
                     //board.Fight(model as Tiles.Model, targetTile); no, this should send signal to offense behavior

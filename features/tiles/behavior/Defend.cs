@@ -10,5 +10,6 @@ public partial class Defend : Node, Defensive.Model
 
     public void TakeDamage(int damage){
         health -= Math.Max(0, damage - defense); //shouldd have a mode complex damage calc algorithm but this is fine for now
+        var bp =234;
     }
 }

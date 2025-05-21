@@ -8,7 +8,7 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
     //[Export]
     private Node model;
     private Grid.Model board;
-    public Grid.Model Board { set => board = value; }
+    public Grid.Model Board { get => board; set => board = value; }
 
 
     [Signal] 
@@ -27,7 +27,7 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
         if(collapsePath.Count > 0){
 
         }else{
-            //EmitSignal(SignalName.TryMoving, source, direction);
+            EmitSignal(SignalName.TryMoving, source, direction);
         }
     }
 

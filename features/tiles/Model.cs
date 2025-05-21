@@ -22,7 +22,14 @@ namespace Tiles{
         public bool CanSwap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         private Collapsable collapseBehavior = null;
         public Collapsable CollapseBehavior{get => collapseBehavior; set => collapseBehavior = value;}
-        public Grid.Model Board { set => (swapper as GridItem).Board = value; }
+        private Grid.Model board;
+        public Grid.Model Board { 
+            get => board; 
+            set  {
+                (swapper as GridItem).Board = value;
+                board = value;
+            }
+        }
 
         //public Array<TileNames> Transportables => throw new NotImplementedException();
 

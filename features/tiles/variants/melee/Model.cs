@@ -3,7 +3,7 @@ using Godot;
 
 namespace Tiles {
     namespace Melee{
-        public partial class Model : Tiles.Model, BuffableDamage.Model { 
+        public partial class Model : Tiles.Model, BuffableDamage.Model{ 
             private Vector2I position;
             public override string Name => "melee";
             //public override NamableTile Type => TileName.Melee;
@@ -20,6 +20,10 @@ namespace Tiles {
             // public Model(Vector2I position) : base(position) {
 
             // }
+            public override void _Ready(){
+                base._Ready();
+            }
+
 
             public void IncreaseDamageOfMelee(int damageIncrement){
                 damageBuffer.IncreaseDamageOfMelee(damageIncrement);
