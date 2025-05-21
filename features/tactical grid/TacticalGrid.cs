@@ -33,5 +33,7 @@ public partial class TacticalGrid : GridContainer
 			
 		controller.Initialize();
 
+		controller.CheckSomethingTHenDelete();
+
 	}
 }

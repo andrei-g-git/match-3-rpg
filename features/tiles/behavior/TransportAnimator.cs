@@ -21,6 +21,9 @@ public partial class TransportAnimator: Node, Listenable, Transportable.View, Pa
     public delegate void TransportedEventHandler();
 
     public override void _Ready(){ 
+        width = (tileNode as TileNode).SideLength; //AAaaand this is hard coupling...
+        height = (tileNode as TileNode).SideLength;
+        margin = (tileNode as TileNode).Margin;
 
         (GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
     }

@@ -39,14 +39,18 @@ namespace Grid {
             SetTile(tileNode_, x_, y_);
 
             var tileModel = ((Controllable) tileNode_).Model;
-            ((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
+            (tileModel as GridItem).Board = this;
+
+            //trying this too because why not....
+            (tileNode_.Controller as Tiles.Controller).Model = tileModel; //idunno...
+            //((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
         } 
 
         public void SetTile(TileNode tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((Controllable) observer).Model;
             (tileModel as Tiles.Model).Position = new Vector2I(x_, y_);
-            
+            var bp = 234;
         }
 
         public Tiles.Model GetTileModel(Vector2I position){
@@ -96,6 +100,11 @@ namespace Grid {
                 return targetTile.Model as Tiles.Model;
             }
             return null;
+        }
+
+        
+        public void Fight(Tiles.Model attacker, Tiles.Model defender){
+            (attacker as Offensive.Model).Attack(defender);
         }
 
 ///////////////////////////////////////////////////////////

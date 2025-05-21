@@ -137,7 +137,7 @@ public abstract partial class ViewAndController : Node, Viewable, Listenable{//I
 		pressed = false;
 		totalDrag = Vector2I.Zero;
 
-		((Swapable.Model)model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
+		//((Swapable.Model)model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
 		
 		dragDirection = Vector2I.Zero;
 		Console.WriteLine("RELEASED");

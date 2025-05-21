@@ -5,7 +5,7 @@ using System;
 using Tiles;
 
 namespace Tiles{
-    public /* abstract */ partial class Model : Node, Swapable.Model, Collapsable{    
+    public /* abstract */ partial class Model : Node, /* Swapable.Model, */ Collapsable, GridItem{    
         [Export]
         private Node swapper;    
         private Vector2I position;
@@ -18,11 +18,11 @@ namespace Tiles{
         public virtual NamableTile Type => type;
         public Swapable.Model SwapBehavior{get => (Swapable.Model) swapper; set => swapper = (Node)value; }
 
-        public bool IsSwapable {get => (swapper as Swapable.Model).IsSwapable; set => (swapper as Swapable.Model).IsSwapable = value;}
+        //public bool IsSwapable {get => (swapper as Swapable.Model).IsSwapable; set => (swapper as Swapable.Model).IsSwapable = value;}
         public bool CanSwap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
         private Collapsable collapseBehavior = null;
         public Collapsable CollapseBehavior{get => collapseBehavior; set => collapseBehavior = value;}
+        public Grid.Model Board { set => (swapper as GridItem).Board = value; }
 
         //public Array<TileNames> Transportables => throw new NotImplementedException();
 
@@ -35,18 +35,19 @@ namespace Tiles{
         //     throw new NotImplementedException();
         // }
 
+
         public override void _Ready(){
-            
+            var bp = 324;
         }
 
 
-        public void ConnectWithSwapSignal(Swapping.TriedSwappingEventHandler callback){
-            (swapper as Swapable.Model).ConnectWithSwapSignal(callback);
-        }
+        // public void ConnectWithSwapSignal(Swapping.TriedSwappingEventHandler callback){
+        //     (swapper as Swapable.Model).ConnectWithSwapSignal(callback);
+        // }
 
-        public void NotifySwap(Vector2I direction){
-            (swapper as Swapable.Model).NotifySwap(direction);
-        }
+        // public void NotifySwap(Vector2I direction){
+        //     (swapper as Swapable.Model).NotifySwap(direction);
+        // }
     }
 
 }

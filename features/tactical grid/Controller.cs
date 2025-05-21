@@ -25,12 +25,17 @@ namespace Grid {
 			factory = factory_;
 		}
 
+		public void CheckSomethingTHenDelete(){
+			var bp = 546;
+		}
 		public void Initialize() {
 			factory.Initialize();
 			rows = model.Grid.Count;
 			columns = model.Grid[0].Count;
 			PopulateGrid(columns, rows, parent, tileNodes);
 			RegisterObservers(columns, rows, model, tileNodes);
+			var grid = (model as Grid.Model).Grid;
+			var bp = 546;
 		}
 
 
@@ -44,6 +49,7 @@ namespace Grid {
 					var nameToCompare = char.ToUpper(name[0]) + name.Substring(1);
 					var enumName = (TileNames) Enum.Parse(typeof(TileNames), nameToCompare);
 					tileNodes_[x][y] = factory.Create(enumName, parent_, new Vector2I(x, y));
+					var bp = 34656;
 				}
 			}
 		}

@@ -2,17 +2,21 @@ using Godot;
 
 public partial class Movement : Node, Movable.Model{
     [Export]
-    private Node matcher;   
+    private Node swapper; //matcher;   
     [Export]
     private Node model;
     private Grid.Model board;
     public Grid.Model Board { set => board = value; }    
+    [Signal]
+    public delegate void TryFightingEventHandler(Tiles.Model target);
+
     public override void _Ready(){
-        (matcher as Match).TryMoving += Move;
+        //(matcher as Match).TryMoving += Move;
+        (swapper as Swapping).TryMoving += Move;
     }     
     public void Move(Vector2I source, Vector2I direction){
         var destination = source + direction;
-        var targetTile = (board as Grid.Model).GetTileModel(destination);
+        var targetTile = board.GetTileModel(destination);
         //assume that only the player can move... this might cause problems
         if(targetTile is Obtainable.Model wefwef){
             //move over and obtain -- if it's a walk tile then get nothing or decrease stamina -- but then other actions should decrease stamina too
@@ -20,6 +24,8 @@ public partial class Movement : Node, Movable.Model{
             if(targetTile is Hostility.Model dfdg){
                 if((targetTile as Hostility.Model).IsEnemy){
                     //attack
+                    //board.Fight(model as Tiles.Model, targetTile); no, this should send signal to offense behavior
+                    EmitSignal(SignalName.TryFighting, targetTile);
                 }
             }else{ //wait these should also be separate behaviors...
                 /* 

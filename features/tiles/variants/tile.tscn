@@ -12,10 +12,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_sr53p")
 
-[node name="Controller" type="Node" parent="." node_paths=PackedStringArray("model")]
+[node name="Controller" type="Node" parent="." node_paths=PackedStringArray("model", "tileNode")]
 unique_name_in_owner = true
 script = ExtResource("1_pnepx")
 model = NodePath("../Model")
+tileNode = NodePath("..")
 
 [node name="Animators" type="Node" parent="."]
 unique_name_in_owner = true
@@ -29,9 +30,10 @@ unique_name_in_owner = true
 script = ExtResource("1_tw5be")
 swapper = NodePath("Swapper")
 
-[node name="Swapper" type="Node" parent="Model" node_paths=PackedStringArray("model")]
+[node name="Swapper" type="Node" parent="Model" node_paths=PackedStringArray("signalEmitter", "model")]
 unique_name_in_owner = true
 script = ExtResource("4_w3q71")
+signalEmitter = NodePath("../../Controller")
 model = NodePath("..")
 
 [node name="Collapser" type="Node" parent="Model"]
