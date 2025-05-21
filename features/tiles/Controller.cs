@@ -17,7 +17,8 @@ namespace Tiles
         private Vector2 totalDrag = Vector2.Zero;
         private bool pressing = false;
         private bool pressed = false;
-
+        [Signal]
+        public delegate void TriedSwappingEventHandler(Vector2I direction); //NEW
         public override void _Ready(){
             // var modelScene = GetNode<Node>("%Model");
 
@@ -73,7 +74,8 @@ namespace Tiles
             pressed = false;
             totalDrag = Vector2I.Zero;
 
-            ((Swapable.Model) model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
+            //((Swapable.Model) model).NotifySwap(new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
+            EmitSignal(SignalName.TriedSwapping, new Vector2I((int)dragDirection.X, (int)dragDirection.Y));
             
             dragDirection = Vector2I.Zero;
         }

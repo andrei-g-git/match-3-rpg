@@ -49,8 +49,10 @@ namespace Grid {
             
         }
 
+        public Tiles.Model GetTileModel(Vector2I position){
+            return observers[position.X][position.Y].Model as  Tiles.Model;
+        }
 /////////////////////////////////////////////////////////////
-
         public Array<Vector2I> TryMatching(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){
@@ -85,12 +87,23 @@ namespace Grid {
             return [];
         }
 
-
-
-
-
+        public Tiles.Model TryMoving(Vector2I source, Vector2I direction){
+            var destination = source + direction;
+            var targetTile = observers[destination.X][destination.Y];
+            if((targetTile as Obtainable.Model).IsObtainable){
+                var sourceTile = observers[source.X][source.Y];
+                SetTile(sourceTile, destination.X, destination.Y);
+                return targetTile.Model as Tiles.Model;
+            }
+            return null;
+        }
 
 ///////////////////////////////////////////////////////////
+
+
+
+
+
         private void Swap2(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){

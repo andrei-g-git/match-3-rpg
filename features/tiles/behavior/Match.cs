@@ -10,7 +10,7 @@ public partial class Match : Node, Matchable.Model{
     [Signal]
     public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
     public override void _Ready(){
-        (swapper as Swapping).TriedSwapping += TryMatching;
+        (swapper as Swapping_old).TriedSwapping += TryMatching;
 
     }
 

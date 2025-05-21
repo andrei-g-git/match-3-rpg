@@ -1,32 +1,27 @@
 using Godot;
-using System;
-using Tiles;
-public partial class Swapping : Node, Swapable.Model{
-    [Export] 
-    Node model; //for some reaosn this doesn't get the right node position...
-    private Node hardcodedModel = null;
-	[Signal] public delegate void TriedSwappingEventHandler(Vector2I source, Vector2I direction);
-	private Tiles.Model tile = null;
-	private bool isSwapable;
-	public bool IsSwapable {get => isSwapable; set => isSwapable = value;}
-	private bool canSwap = false;
-    public bool CanSwap {get => canSwap; set => canSwap = value;}
 
-    // public Swapping(Tiles.Model tile_){  //can't have constructor, adding directly to scene tree in dummy node
-    // 	tile = tile_;
-    // }
+public partial class Swapping : Node, Swapable.Model{
+    [Export]
+    private Node signalEmitter; //this is the node controller, should not be in a model but I'm just using it as a signal source reference so meh...
+    [Export]
+    private Node model;
+    private Grid.Model board;
+    public Grid.Model Board { set => board = value; }
+	[Signal] 
+    public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
 
     public override void _Ready(){
-        hardcodedModel = GetNode<Node>("%Model") as Tiles.Model;
+        (signalEmitter as Tiles.Controller).TriedSwapping += TrySwapping;
     }
+    
+    public void TrySwapping(Vector2I direction){
+        var source = (model as Tiles.Model).Position;
+        var collapsePath = board.TryMatching(source, direction);
 
-    public void NotifySwap(Vector2I direction){
-        EmitSignal(SignalName.TriedSwapping, (hardcodedModel as Tiles.Model).Position, direction);
+        if(collapsePath.Count > 0){
+
+        }else{
+            EmitSignal(SignalName.TryMoving, source, direction);
+        }
     }
-
-    public void ConnectWithSwapSignal(TriedSwappingEventHandler callback){
-        TriedSwapping += callback;
-    }
-
-
 }

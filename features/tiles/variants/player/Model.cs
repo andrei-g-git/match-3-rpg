@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace Tiles { 
     namespace Player{
-        public partial class Model : Tiles.Model, Movable, Transportable.Model, BuffableDamage.Model, Offensive.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
+        public partial class Model : Tiles.Model, /* Movable, */ Transportable.Model, BuffableDamage.Model, Offensive.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
             [Export]
             private Node transporter;
             [Export]
@@ -14,8 +14,8 @@ namespace Tiles {
             private Vector2I position;
             public override string Name => "player";
             //public override NamableTile Type => TileName.Player;
-            private Movable moveBehavior = null;
-            public Movable MoveBehavior {get => moveBehavior; set => moveBehavior = value;}
+            // private Movable moveBehavior = null;
+            // public Movable MoveBehavior {get => moveBehavior; set => moveBehavior = value;}
             //private Transportable.Model transporter = null;
             public Transportable.Model Transporter{get => (Transportable.Model) transporter; set => transporter = (Node)value; }
             private Array<string> shortMoveTiles = [];
@@ -28,19 +28,19 @@ namespace Tiles {
             public Offensive.Model Offender {get => (Offensive.Model) offender; set => offender = (Node) value;}
             public int Damage { get => (offender as Offensive.Model).Damage; }
 
-            public bool VerifyShortMoveEligibility(string tileName){
-                return moveBehavior.VerifyShortMoveEligibility(tileName);
-            }
+            // public bool VerifyShortMoveEligibility(string tileName){
+            //     return moveBehavior.VerifyShortMoveEligibility(tileName);
+            // }
 
-            public void AddTile(string tileName){
-                moveBehavior.AddTile(tileName);
-            }
-            public void AddTiles(string[] tiles){
-                moveBehavior.AddTiles(tiles);
-            }
-            public void RemoveTile(string tileName){
-                moveBehavior.RemoveTile(tileName);
-            }
+            // public void AddTile(string tileName){
+            //     moveBehavior.AddTile(tileName);
+            // }
+            // public void AddTiles(string[] tiles){
+            //     moveBehavior.AddTiles(tiles);
+            // }
+            // public void RemoveTile(string tileName){
+            //     moveBehavior.RemoveTile(tileName);
+            // }
 
             public void NotifyTransport(Vector2I target){
                 (transporter as Transportable.Model).NotifyTransport(target);
