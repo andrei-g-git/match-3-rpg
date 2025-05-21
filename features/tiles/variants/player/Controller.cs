@@ -2,8 +2,8 @@ using Godot;
 
 namespace Player{
     public partial class Controller: TileNode{
-        [Export]
-        private Node transportAnimator;
+        //[Export]
+        //private Node transportAnimator;
         public override void _Ready(){
             base._Ready(); //well this is problematic...
             //var rootNode = GetTree().CurrentScene; //don't need
@@ -12,7 +12,7 @@ namespace Player{
             //model.DamageBuffer = GetNode<Node>("%DamageBuffer") as BuffableDamage.Model; //should have generic interface for damagbuffer composition
             //model.Transporter = GetNode<Node>("%Transporter") as Transportable.Model;
 
-            //var transportAnimator = GetNode<Node>("%Transport") as Box;
+            var transportAnimator = GetNode<Node>("%Transport") as Box;
             (transportAnimator as Box).Width = SideLength;
             (transportAnimator as Box).Height = SideLength;
             (transportAnimator as Box).Margin = Margin;

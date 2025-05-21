@@ -11,8 +11,8 @@ namespace Tiles
         // [Export]
         // private Node model;
         // public Node Model {set => model = value;} //should not need...
-        [Export]
-        private Node tileNode;
+        //[Export]
+        //private Node tileNode;
         public Node SignalEmitter { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public StringName Signal { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         //private Swapable.Model model = null;
@@ -27,7 +27,7 @@ namespace Tiles
 
             // model = modelScene as Swapable.Model;
 
-            //var tileNode = GetParent() as Node;
+            var tileNode = GetParent() as Node;
             tileNode.Connect(BaseButton.SignalName.Pressed, Callable.From(OnPressed));
             tileNode.Connect(BaseButton.SignalName.ButtonUp, Callable.From(OnReleased));
             tileNode.Connect(BaseButton.SignalName.ButtonDown, Callable.From(OnPressing));

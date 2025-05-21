@@ -6,7 +6,7 @@ using Tiles;
 
 namespace Tiles{
     public /* abstract */ partial class Model : Node, /* Swapable.Model, */ Collapsable, GridItem{    
-        [Export]
+        //[Export]
         private Node swapper;    
         private Vector2I position;
         public Vector2I Position{get => position; set => position = value; }
@@ -37,6 +37,7 @@ namespace Tiles{
 
 
         public override void _Ready(){
+            swapper = GetNode<Node>("%Swapper");
             var bp = 324;
         }
 

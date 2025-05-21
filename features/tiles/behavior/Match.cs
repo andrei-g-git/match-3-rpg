@@ -3,13 +3,14 @@ using Godot;
 using Godot.Collections;
 
 public partial class Match : Node, Matchable.Model{
-    [Export]
-    private Node swapper;
+    //[Export]
+    //private Node swapper;
     private Grid.Model board;
     public Grid.Model Board { set => board = value; }
     [Signal]
     public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
     public override void _Ready(){
+        var swapper = GetNode<Node>("%Swapper");
         (swapper as Swapping_old).TriedSwapping += TryMatching;
 
     }

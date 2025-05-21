@@ -2,7 +2,7 @@ using Godot;
 using Tiles;
 
 public partial class TransportAnimator: Node, Listenable, Transportable.View, Parentable, Box{
-    [Export]
+    // [Export]
     private Node tileNode; //or could get as Owner but let's try dependency injection for good practice
     private int width, height, margin = 0;
     private Node signalEmitter = null;
@@ -21,10 +21,10 @@ public partial class TransportAnimator: Node, Listenable, Transportable.View, Pa
     public delegate void TransportedEventHandler();
 
     public override void _Ready(){ 
-        width = (tileNode as TileNode).SideLength; //AAaaand this is hard coupling...
-        height = (tileNode as TileNode).SideLength;
-        margin = (tileNode as TileNode).Margin;
-
+        // width = (tileNode as TileNode).SideLength; //AAaaand this is hard coupling...
+        // height = (tileNode as TileNode).SideLength;
+        // margin = (tileNode as TileNode).Margin;
+        tileNode = GetParent();//GetNode<Node>("%Tile"); //doesn't find it since this is a child class with a different scene name
         (GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
     }
 

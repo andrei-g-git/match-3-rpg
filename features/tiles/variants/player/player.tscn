@@ -17,10 +17,9 @@ texture_pressed = ExtResource("2_ib1fk")
 [node name="Animators" parent="." index="1"]
 script = ExtResource("4_sdsyd")
 
-[node name="Transport" type="Node" parent="Animators" index="1" node_paths=PackedStringArray("tileNode")]
+[node name="Transport" type="Node" parent="Animators" index="1"]
 unique_name_in_owner = true
 script = ExtResource("4_hunij")
-tileNode = NodePath("../..")
 
 [node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer", "offender")]
 script = ExtResource("5_kqfgq")
@@ -36,14 +35,12 @@ script = ExtResource("4_2sf3b")
 unique_name_in_owner = true
 script = ExtResource("5_hunij")
 
-[node name="Offender" type="Node" parent="Model" index="4" node_paths=PackedStringArray("signalEmitter")]
+[node name="Offender" type="Node" parent="Model" index="4"]
 unique_name_in_owner = true
 script = ExtResource("9_1bdos")
-signalEmitter = NodePath("../Movement")
 
-[node name="Movement" type="Node" parent="Model" index="5" node_paths=PackedStringArray("swapper")]
+[node name="Movement" type="Node" parent="Model" index="5"]
 unique_name_in_owner = true
 script = ExtResource("10_di0hx")
-swapper = NodePath("../Swapper")
 
 [connection signal="JumpTo" from="Model/Transporter" to="Animators/Transport" method="_on_transporter_jump_to"]

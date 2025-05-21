@@ -1,8 +1,8 @@
 using Godot;
 
 public partial class Movement : Node, Movable.Model{
-    [Export]
-    private Node swapper; //matcher;   
+    // [Export]
+    // private Node swapper; //matcher;   
     [Export]
     private Node model;
     private Grid.Model board;
@@ -12,6 +12,7 @@ public partial class Movement : Node, Movable.Model{
 
     public override void _Ready(){
         //(matcher as Match).TryMoving += Move;
+        var swapper = GetNode<Node>("%Swapper");
         (swapper as Swapping).TryMoving += Move;
     }     
     public void Move(Vector2I source, Vector2I direction){

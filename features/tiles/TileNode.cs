@@ -18,9 +18,9 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
     public Node Animators { get => animators; set => animators = value; }
 
     //provisory
-    [Export]
-    private /* Swapable.View */ Node swapAnimator;// = null;
-    public /* Swapable.View */ Node SwapAnimator { get => swapAnimator;}
+    //[Export]
+    private Swapable.View  swapAnimator;// = null;
+    public Swapable.View SwapAnimator { get => swapAnimator;}
 
     public override void _Ready(){
         //children will call this before overriding ... so it's not really being overriden
@@ -30,7 +30,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
 
         //((Tiles.Model/* not ideal... */) model).SwapBehavior = GetNode<Node>("%Swapper") as Swapable.Model; //not ideal either....
 
-        // swapAnimator = GetNode<Node>("%Swap") as Swapable.View;
+        swapAnimator = GetNode<Node>("%Swap") as Swapable.View;
 
         // //var swapAnimator = animators.GetChild<Node>("%Swap");
         // // var swapAnimator = GetNode<Node>("%Swap") as Box;

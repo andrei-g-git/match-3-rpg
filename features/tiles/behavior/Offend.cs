@@ -3,13 +3,14 @@ using Tiles;
 
 public partial class Offend : Node, Offensive.Model
 {
-    [Export]
-    private Node signalEmitter;
+    // [Export]
+    // private Node signalEmitter;
     private int damage = 3;
     public int Damage => damage;
     int Offensive.Model.Damage { get => Damage; }
 
     public override void _Ready(){
+        var signalEmitter = GetNode<Node>("%Movement");
         (signalEmitter as Movement).TryFighting += Attack; //casting to class types instead of interfaces will come back to bite me in the ass but I can't define signals in the interface...
     }
 
