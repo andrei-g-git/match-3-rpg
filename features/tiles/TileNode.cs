@@ -7,31 +7,36 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
     [Export] public int SideLength {get; set;} = 64;
     [Export] public int Margin {get; set;}= 3;
     public /* TileName */ string Type => (model as Tiles.Model).Name;//(model as Tiles.Model).Type; 
-    private Node controller = null;
+    //[Export]
+    private Node controller;
     public Node Controller { get => controller; set => controller = value; }
-    private Node model = null;
+    //[Export]
+    private Node model; //this doesn't actually work I don't know why
     public Node Model { get => model; set => model = value; }
-    private Node animators = null;
+    //[Export]
+    private Node animators;
     public Node Animators { get => animators; set => animators = value; }
 
     //provisory
-    private Swapable.View swapAnimator = null;
-    public Swapable.View SwapAnimator { get => swapAnimator;}
+    [Export]
+    private /* Swapable.View */ Node swapAnimator;// = null;
+    public /* Swapable.View */ Node SwapAnimator { get => swapAnimator;}
 
     public override void _Ready(){
         //children will call this before overriding ... so it's not really being overriden
-        controller = GetNode<Node>("%Controller"); 
+        controller = GetNode<Node>("%Controller"); //this doesn't work either
         animators = GetNode<Node>("%Animators"); 
         model = GetNode<Node>("%Model"); 
 
         //((Tiles.Model/* not ideal... */) model).SwapBehavior = GetNode<Node>("%Swapper") as Swapable.Model; //not ideal either....
 
-        swapAnimator = GetNode<Node>("%Swap") as Swapable.View;
-        //var swapAnimator = animators.GetChild<Node>("%Swap");
-        // var swapAnimator = GetNode<Node>("%Swap") as Box;
-        // swapAnimator.Width = sideLength;
-        // swapAnimator.Height = sideLength;
-        // swapAnimator.Margin = margin;
+        // swapAnimator = GetNode<Node>("%Swap") as Swapable.View;
+
+        // //var swapAnimator = animators.GetChild<Node>("%Swap");
+        // // var swapAnimator = GetNode<Node>("%Swap") as Box;
+        // // swapAnimator.Width = sideLength;
+        // // swapAnimator.Height = sideLength;
+        // // swapAnimator.Margin = margin;
     }    
 
     

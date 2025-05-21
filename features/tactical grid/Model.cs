@@ -42,7 +42,7 @@ namespace Grid {
             (tileModel as GridItem).Board = this;
 
             //trying this too because why not....
-            (tileNode_.Controller as Tiles.Controller).Model = tileModel; //idunno...
+            //(tileNode_.Controller as Tiles.Controller).Model = tileModel; //apparently I gotta do it like this, exportiing doesn't work...(OBVIOUSLY IT SHOULD BE DONE FIRST)
             //((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
         } 
 
@@ -50,6 +50,8 @@ namespace Grid {
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((Controllable) observer).Model;
             (tileModel as Tiles.Model).Position = new Vector2I(x_, y_);
+
+            if(x_ == 0 && y_ == 0){(tileModel as Tiles.Model).Position = new Vector2I(69, 420);} //test
             var bp = 234;
         }
 
@@ -72,8 +74,8 @@ namespace Grid {
                  TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
                  TileNode destinationNode = observers[destination.X][destination.Y];
                 if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e       
-                    sourceNode.SwapAnimator.SwapTo(destination);
-                    destinationNode.SwapAnimator.SwapTo(source);    
+                    (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);
+                    (destinationNode.SwapAnimator as Swapable.View).SwapTo(source);    
                     observers = newGrid;        
 
                     var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
@@ -129,9 +131,9 @@ namespace Grid {
 
                  TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
                  TileNode destinationNode = observers[destination.X][destination.Y];
-                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e       
-                    sourceNode.SwapAnimator.SwapTo(destination);
-                    destinationNode.SwapAnimator.SwapTo(source); //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
+                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e    
+                    (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);
+                    (destinationNode.SwapAnimator as Swapable.View).SwapTo(source);  //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
                                                                     //maybe I should use signals or something ...    
                     observers = newGrid;        
 

@@ -7,16 +7,15 @@
 [ext_resource type="Script" uid="uid://ctdxf5ajlt1bn" path="res://features/tiles/behavior/Swapping.cs" id="4_w3q71"]
 [ext_resource type="Script" uid="uid://b1hdqclnw3wgv" path="res://features/tiles/behavior/Collapse.cs" id="5_sr53p"]
 
-[node name="Tile" type="TextureButton"]
+[node name="Tile" type="TextureButton" node_paths=PackedStringArray("swapAnimator")]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_sr53p")
+swapAnimator = NodePath("Animators/Swap")
 
-[node name="Controller" type="Node" parent="." node_paths=PackedStringArray("model", "tileNode")]
+[node name="Controller" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_pnepx")
-model = NodePath("../Model")
-tileNode = NodePath("..")
 
 [node name="Animators" type="Node" parent="."]
 unique_name_in_owner = true

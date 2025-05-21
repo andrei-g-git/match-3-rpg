@@ -1,16 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctgm67cwn6xip"]
+[gd_scene load_steps=6 format=3 uid="uid://ctgm67cwn6xip"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_br8r3"]
 [ext_resource type="Texture2D" uid="uid://bg7c5vr02sr2v" path="res://assets/images/tiles/melee.png" id="2_nuqek"]
 [ext_resource type="Texture2D" uid="uid://bq65ltsys2t1f" path="res://assets/images/tiles/melee_p.png" id="3_4mqn7"]
-[ext_resource type="Script" uid="uid://daum47q0bvr8d" path="res://features/tiles/variants/melee/Controller.cs" id="4_oku4e"]
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_cbpcj"]
 [ext_resource type="Script" uid="uid://dtllx21sqja7" path="res://features/tiles/variants/melee/Model.cs" id="5_oku4e"]
 
 [node name="Melee" instance=ExtResource("1_br8r3")]
 texture_normal = ExtResource("2_nuqek")
 texture_pressed = ExtResource("3_4mqn7")
-script = ExtResource("4_oku4e")
 
 [node name="Model" parent="." index="2"]
 script = ExtResource("5_oku4e")
