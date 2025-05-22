@@ -22,6 +22,7 @@ namespace Tiles {
             // }
             public override void _Ready(){
                 base._Ready();
+                damageBuffer = GetNode<Node>("%DamageBuffer") as BuffableDamage.Model;
             }
 
 

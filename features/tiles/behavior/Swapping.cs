@@ -27,7 +27,7 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
         var collapsePath = board.TryMatching(source, direction);
 
         if(collapsePath.Count > 0){
-            EmitSignal(SignalName.GotMatches);
+            EmitSignal(SignalName.GotMatches, collapsePath);
         }else{
             EmitSignal(SignalName.TryMoving, source, direction);
         }

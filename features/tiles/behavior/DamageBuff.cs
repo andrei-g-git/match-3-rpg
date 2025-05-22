@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class DamageBuff : Node, BuffableDamage.Model{   
+public partial class DamageBuff : Node, BuffableDamage.Model, Behavioral{   
     [Export]
     private int meleeBuff = 0;
     public int MeleeBuff {get => meleeBuff; /* set => meleeBuff = value; */}   
@@ -14,7 +14,8 @@ public partial class DamageBuff : Node, BuffableDamage.Model{
 
     public override void _Ready(){
         swapper = GetNode<Node>("%Swapper") as Swapping;
-        (swapper.MatchEmitter as Match).StartedCollapse += Foo; //not great, not terrible
+        //it makes this connection before the swapped tile even sends the matchEmitter reference...
+        //(swapper.MatchEmitter as Match).StartedCollapse += Foo; //not great, not terrible
     }
 
     public void Foo(){
@@ -35,5 +36,9 @@ public partial class DamageBuff : Node, BuffableDamage.Model{
 
     public void IncreaseDamageOfSpell(int damageIncrement){
         spellBuff += damageIncrement;
+    }
+
+    public void Fulfill(){
+        Foo();
     }
 }

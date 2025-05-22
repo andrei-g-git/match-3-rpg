@@ -167,6 +167,21 @@ namespace Grid {
             var position = (actor.Model as Tiles.Model).Position;
             return CheckIfTileIsNextToPath(path, position);
         }     
+
+        //the behavior to behavior signal way of doing in doesn't work, behavior does not receive ok signal emitter before receiving singal
+        //provisory
+        public void NotifyMathedTileToPerformBehaviors(Array<Vector2I> matches){
+            foreach(var match in matches){
+                var tile = observers[match.X][match.Y].Model as Tiles.Model;
+                if(
+                    tile is Tiles.Melee.Model /* || 
+                    tile is Tiles.Player.Model */
+                ){
+                    ((tile as Tiles.Melee.Model).DamageBuffer as Behavioral).Fulfill(); //well this is apocaliptic...   
+                }
+
+            }
+        }
 ///////////////////////////////////////////////////////////
 
 

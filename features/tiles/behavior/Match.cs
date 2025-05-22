@@ -5,8 +5,8 @@ using Godot.Collections;
 public partial class Match : Node, Matchable.Model{
     //[Export]
     //private Node swapper;
-    private Grid.Model board;
-    public Grid.Model Board { set => board = value; }
+    // private Grid.Model board;
+    // public Grid.Model Board { set => board = value; }
     private Swapping swapper;
     //public Node Swappeder { set => throw new NotImplementedException(); }
     [Signal] 
@@ -18,11 +18,15 @@ public partial class Match : Node, Matchable.Model{
     }
 
     public void OnGotMatches(Array<Vector2I> matches){
+        var board = (GetNode<Node>("%Model") as Tiles.Model).Board;
         board.ConnectAllMatchesWithSwappedTile(this, matches);
-        var isPlayerAdjacent = board.CheckIfActorNearPath(GetParent() as TileNode, matches);
-        if(isPlayerAdjacent){
-            EmitSignal(SignalName.StartedCollapse);            
-        }
+        var tileNode = GetParent().GetParent(); //wonderful...
+        var isPlayerAdjacent = board.CheckIfActorNearPath(tileNode as TileNode, matches);
+        // if(isPlayerAdjacent){ //can't use this yet, emits before receivers can connect to it's sender...
+        //     EmitSignal(SignalName.StartedCollapse);            
+        // }
 
+        //provisory
+        board.NotifyMathedTileToPerformBehaviors(matches);
     }
 }

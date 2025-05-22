@@ -17,7 +17,7 @@ public partial class Offend : Node, Offensive.Model
     public void Attack(Model actor){
         if(actor is Hostility.Model dfdg){
             if((actor as Hostility.Model).IsEnemy){
-                (actor as Defensive.Model).TakeDamage(damage); //the damage should be calculated form a formula                
+                (actor as Defensive.Model).TakeDamage(damage); //the damage should be calculated form a formula     (should also add buff)           
             }
         }
 

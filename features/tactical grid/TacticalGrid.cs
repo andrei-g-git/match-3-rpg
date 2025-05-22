@@ -10,7 +10,7 @@ public partial class TacticalGrid : GridContainer
 	[Export] public int cols;
 	[Export] public int rows;	
 	public override void _Ready(){
-		var table = FileUtilities.LoadCsv("D:\\projects\\match3\\mapping\\New folder\\a-7.csv");
+		var table = FileUtilities.LoadCsv("D:\\projects\\match3\\mapping\\New folder\\a-6.csv");
 		var intTable = Collections.Change2dStringArrayToInt(table);
 		var tileNameGrid = GridUtilities.AssignTileNamesToIntGrid(intTable);	
 		GridUtilities.PrintGridInitials(tileNameGrid, "GRID INITIALS");
