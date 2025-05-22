@@ -7,21 +7,22 @@ public partial class Match : Node, Matchable.Model{
     //private Node swapper;
     private Grid.Model board;
     public Grid.Model Board { set => board = value; }
-    [Signal]
-    public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
-    public override void _Ready(){
-        var swapper = GetNode<Node>("%Swapper");
-        (swapper as Swapping_old).TriedSwapping += TryMatching;
+    private Swapping swapper;
+    //public Node Swappeder { set => throw new NotImplementedException(); }
+    [Signal] 
+    public delegate void StartedCollapseEventHandler();
 
+    public override void _Ready(){
+        swapper = GetNode<Node>("%Swapper") as Swapping;
+        swapper.GotMatches += OnGotMatches;
     }
 
-    public void TryMatching(Vector2I source, Vector2I direction){ // I don't think I need the source, the source the parent Node
-        var collapsePath = board.TryMatching(source, direction);
-
-        if(collapsePath.Count > 0){
-
-        }else{
-            EmitSignal(SignalName.TryMoving, source, direction);
+    public void OnGotMatches(Array<Vector2I> matches){
+        board.ConnectAllMatchesWithSwappedTile(this, matches);
+        var isPlayerAdjacent = board.CheckIfActorNearPath(GetParent() as TileNode, matches);
+        if(isPlayerAdjacent){
+            EmitSignal(SignalName.StartedCollapse);            
         }
+
     }
 }

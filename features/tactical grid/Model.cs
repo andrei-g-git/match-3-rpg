@@ -58,6 +58,34 @@ namespace Grid {
         public Tiles.Model GetTileModel(Vector2I position){
             return observers[position.X][position.Y].Model as  Tiles.Model;
         }
+
+        public Array<Array<Tiles.Model>> GetAllTileModels(){
+            var columns = observers.Count;
+            var rows = observers[0].Count;
+            var models = new Array<Array<Tiles.Model>>();
+            models.Resize(columns);
+            for(int x=0; x<columns; x++){
+                models[x].Resize(rows);
+                for(int y=0; y<rows; y++){
+                    models[x][y] = (Tiles.Model) observers[x][y].Model;
+                }
+            }
+            return models;
+        }
+        public Array<Tiles.Model> GetModelsFromMatches(Array<Vector2I> matches){
+            var matchedModels = new Godot.Collections.Array<Tiles.Model>();
+            foreach(var match in matches){
+                matchedModels.Add(observers[match.X][match.Y].Model as Tiles.Model);
+            }
+            return matchedModels;
+        }
+
+        public void ConnectAllMatchesWithSwappedTile(Matchable.Model swappedTileMatcher, Array<Vector2I> matches){
+            var matchedModels = GetModelsFromMatches(matches);
+            foreach(var model in matchedModels){
+                model.SwapBehavior.MatchEmitter = (Node) swappedTileMatcher;
+            }
+        }
 /////////////////////////////////////////////////////////////
         public Array<Vector2I> TryMatching(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
@@ -109,6 +137,36 @@ namespace Grid {
             (attacker as Offensive.Model).Attack(defender);
         }
 
+
+        public void BuffDamage(Tiles.Model tile, Vector2I positionInPath){
+            var playerPosition = FindTilesByName(TileNames.Player)[0];                
+            var player = observers[playerPosition.X][playerPosition.Y];
+            var pos = positionInPath;
+            if(tile is BuffableDamage.Model){ //probably shouldn't buff if active actor not adjacent
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
+                ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
+            }   
+
+            // //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
+            // SetTile(player, pos.X, pos.Y);
+            // //observers[pos.X][pos.Y] = player; 
+            
+            // ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+
+            // var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
+            // await ToSignal(emitter, "Transported");
+        }
+
+        public Tiles.Model GetPlayer(){
+            var playerPosition = FindTilesByName(TileNames.Player)[0];                
+            return observers[playerPosition.X][playerPosition.Y].Model as Tiles.Model;            
+        }   
+
+        public bool CheckIfActorNearPath(TileNode actor, Array<Vector2I> path){
+            var position = (actor.Model as Tiles.Model).Position;
+            return CheckIfTileIsNextToPath(path, position);
+        }     
 ///////////////////////////////////////////////////////////
 
 
