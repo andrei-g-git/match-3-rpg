@@ -180,8 +180,18 @@ namespace Grid {
                     ((tile as Tiles.Melee.Model).DamageBuffer as Behavioral).Fulfill(); //well this is apocaliptic...   
                 }
 
+                ((tile as Tiles.Melee.Model).Transfer as Behavioral).Fulfill();
             }
         }
+
+        public Tiles.Model GetActorModel(TileNames actor){ //should be limited to actors, not all tiles
+            var pos =  FindTilesByName(actor)[0];
+            return observers[pos.X][pos.Y].Model as Tiles.Model;
+        }
+        public TileNode GetActor(TileNames actor){ //should be limited to actors, not all tiles
+            var pos =  FindTilesByName(actor)[0];
+            return observers[pos.X][pos.Y];
+        }        
 ///////////////////////////////////////////////////////////
 
 

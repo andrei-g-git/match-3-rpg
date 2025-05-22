@@ -22,11 +22,14 @@ public partial class Match : Node, Matchable.Model{
         board.ConnectAllMatchesWithSwappedTile(this, matches);
         var tileNode = GetParent().GetParent(); //wonderful...
         var isPlayerAdjacent = board.CheckIfActorNearPath(tileNode as TileNode, matches);
-        // if(isPlayerAdjacent){ //can't use this yet, emits before receivers can connect to it's sender...
-        //     EmitSignal(SignalName.StartedCollapse);            
-        // }
+        if(isPlayerAdjacent){ //should be able to match whether or not player is adjacent
+            //can't use this yet, emits before receivers can connect to it's sender...
+            //EmitSignal(SignalName.StartedCollapse);  
 
-        //provisory
-        board.NotifyMathedTileToPerformBehaviors(matches);
+            //provisory
+            board.NotifyMathedTileToPerformBehaviors(matches);                      
+        }
+
+
     }
 }

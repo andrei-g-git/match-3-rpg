@@ -31,4 +31,19 @@ public partial class Collections {
 		}
 		return newArray;
 	}
+
+	public class FixedSizeArray<[MustBeVariant]T>{
+		private Array _array = [];
+		private int maxSize;
+
+		public FixedSizeArray(int maxSize){
+			this.maxSize = maxSize;
+		}
+
+		public void Add(Variant item){
+			if(_array.Count < maxSize){
+				_array.Add(item);
+			}
+		}
+	}
 }

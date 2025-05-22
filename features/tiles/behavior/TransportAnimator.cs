@@ -24,8 +24,10 @@ public partial class TransportAnimator: Node, Listenable, Transportable.View, Pa
         // width = (tileNode as TileNode).SideLength; //AAaaand this is hard coupling...
         // height = (tileNode as TileNode).SideLength;
         // margin = (tileNode as TileNode).Margin;
+        //tileNode is 2 tiles up so it should be GetParent().GetParent()
         tileNode = GetParent();//GetNode<Node>("%Tile"); //doesn't find it since this is a child class with a different scene name
-        (GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
+        //(GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
+        (GetNode<Node>("%Transfer") as Transfer).TransferingActor += JumpTo;
     }
 
 
