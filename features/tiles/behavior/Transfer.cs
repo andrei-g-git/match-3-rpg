@@ -1,8 +1,11 @@
+using System.Threading.Tasks;
 using Abstractions;
 using Constants;
 using Godot;
 using Godot.Collections;
 using Transfering;
+
+//ACTOR NODE NEEDS A REFERENCE TO THIS TO CONNECT TO THE SIGNAL BUT IT'S DIFFICULT TO DO
 
 //THIS NEEDS TO SIT BELOW EVERY TILE MATCH BEHAVIOR IN THE SCENE BRANCH! this is to make sure other tile matching behaviors run before this prompts the player to act and run it's animation
 public partial class Transfer : Node, Transfering.Model, Behavioral{
@@ -20,21 +23,23 @@ public partial class Transfer : Node, Transfering.Model, Behavioral{
         //(swapper.MatchEmitter as Match).StartedCollapse += Foo; //not great, not terrible        
     }
 
-    public async void TransferTile(){
+    public async Task TransferTile(){
         //if player turn:
         //bypass the transferables part now but it's nice to have on the backburner
+
         var board = swapper.Board;
-        var playerNode = board.GetActor(TileNames.Player);
+        // var playerNode = board.GetActor(TileNames.Player);
         var pos = thisModel.Position;
-        board.SetTile(playerNode, pos.X, pos.Y); //I'm exposing too much of the tilegrid's implementation...
+        // board.SetTile(playerNode, pos.X, pos.Y); //I'm exposing too much of the tilegrid's implementation...
+        var transportAnimator = board.TransferTile(pos, this); //this isn't the same interface, it's not a task
 
         EmitSignal(SignalName.TransferingActor, pos);
 
-        var emitter = ((playerNode as Animatable).Animators as Player.Animators).TransportAnimator as Node; //he knows too much, we gotta "take care" of him
-        await ToSignal(emitter, "Transported"); 
+        //var emitter = ((playerNode as Animatable).Animators as Player.Animators).TransportAnimator as Node; //he knows too much, we gotta "take care" of him
+        await ToSignal(transportAnimator, "Transported"); 
     }
 
-    public void Fulfill(){
-        TransferTile();
+    public async void Fulfill(){
+        await TransferTile();
     }
 }

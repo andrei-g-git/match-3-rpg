@@ -191,7 +191,17 @@ namespace Grid {
         public TileNode GetActor(TileNames actor){ //should be limited to actors, not all tiles
             var pos =  FindTilesByName(actor)[0];
             return observers[pos.X][pos.Y];
-        }        
+        }    
+
+        public Node TransferTile(Vector2I target, Node emitter){
+            var playerNode = GetActor(TileNames.Player);
+            SetTile(playerNode, target.X, target.Y); 
+
+            //(playerNode as Listenable).SignalEmitter = emitter;
+            var transportAnimator = ((playerNode as Animatable).Animators as Player.Animators).TransportAnimator;
+            (transportAnimator as Listenable).Connect(emitter);
+            return transportAnimator as Node;
+        }  
 ///////////////////////////////////////////////////////////
 
 

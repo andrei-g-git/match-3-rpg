@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Constants;
 using Godot;
 
@@ -43,11 +44,9 @@ namespace Tiles {
                 damageBuffer.IncreaseDamageOfSpell(damageIncrement);
             }
 
-            public void TransferTile()
-            {
-                throw new System.NotImplementedException();
+            public async Task TransferTile(){
+                await transfer.TransferTile();
             }
-
         }        
     }
 

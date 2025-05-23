@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctgm67cwn6xip"]
+[gd_scene load_steps=8 format=3 uid="uid://ctgm67cwn6xip"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_br8r3"]
 [ext_resource type="Texture2D" uid="uid://bg7c5vr02sr2v" path="res://assets/images/tiles/melee.png" id="2_nuqek"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_cbpcj"]
 [ext_resource type="Script" uid="uid://dtllx21sqja7" path="res://features/tiles/variants/melee/Model.cs" id="5_oku4e"]
 [ext_resource type="Script" uid="uid://cd5tj1mc3jeyg" path="res://features/tiles/behavior/Match.cs" id="6_oku4e"]
+[ext_resource type="Script" uid="uid://bpy0kpvybq714" path="res://features/tiles/behavior/Transfer.cs" id="7_c87dq"]
 
 [node name="Melee" instance=ExtResource("1_br8r3")]
 texture_normal = ExtResource("2_nuqek")
@@ -22,3 +23,7 @@ meleeBuff = 2
 [node name="Matching" type="Node" parent="Model" index="3"]
 unique_name_in_owner = true
 script = ExtResource("6_oku4e")
+
+[node name="Transfer" type="Node" parent="Model" index="4"]
+unique_name_in_owner = true
+script = ExtResource("7_c87dq")

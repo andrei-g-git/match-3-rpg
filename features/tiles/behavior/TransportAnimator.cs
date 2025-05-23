@@ -27,13 +27,19 @@ public partial class TransportAnimator: Node, Listenable, Transportable.View, Pa
         //tileNode is 2 tiles up so it should be GetParent().GetParent()
         tileNode = GetParent();//GetNode<Node>("%Tile"); //doesn't find it since this is a child class with a different scene name
         //(GetNode<Node>("%Transporter") as Transport).JumpTo += JumpTo; //obviously I won't be keeping this
-        (GetNode<Node>("%Transfer") as Transfer).TransferingActor += JumpTo;
+        //(GetNode<Node>("%Transfer") as Transfer).TransferingActor += JumpTo; //this belongs to the transfering buff buff tile....
+        //(signalEmitter as Transfer).TransferingActor += JumpTo;
     }
 
 
 
-    public void Connect(){ //will discard
-        signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); //IT THINKS IT"S CALLING Connect() method of Object, that's why it's not working
+    // public void Connect(){ //will discard
+    //     signalEmitter.Connect(signal, Callable.From((Vector2I target) => JumpTo(target))); //IT THINKS IT"S CALLING Connect() method of Object, that's why it's not working
+    // }
+
+    public void Connect(Node signalEmitter){
+        this.signalEmitter = signalEmitter; //probably unnecessary
+        (signalEmitter as Transfer).TransferingActor += JumpTo;
     }
 
     private void JumpTo(Vector2I target){
