@@ -5,8 +5,6 @@ using Godot;
 using Godot.Collections;
 using Transfering;
 
-//ACTOR NODE NEEDS A REFERENCE TO THIS TO CONNECT TO THE SIGNAL BUT IT'S DIFFICULT TO DO
-
 //THIS NEEDS TO SIT BELOW EVERY TILE MATCH BEHAVIOR IN THE SCENE BRANCH! this is to make sure other tile matching behaviors run before this prompts the player to act and run it's animation
 public partial class Transfer : Node, Transfering.Model, Behavioral, Listenable{
     [field: Export]
@@ -16,6 +14,7 @@ public partial class Transfer : Node, Transfering.Model, Behavioral, Listenable{
 
     private Swapping swapper;
     private Tiles.Model thisModel;
+    private bool isTransfering = false;
     [Signal] 
     public delegate void TransferingActorEventHandler(Vector2I target);
     public override void _Ready(){
@@ -30,7 +29,12 @@ public partial class Transfer : Node, Transfering.Model, Behavioral, Listenable{
     }
 
     public async void Foo(){
-        await TransferTile();
+        if(!isTransfering){
+            isTransfering = true; //this is not completely retarded bucause the method is async...
+            await TransferTile();     
+            isTransfering = false;       
+        }
+
     }
     public async Task TransferTile(){
         //if player turn:

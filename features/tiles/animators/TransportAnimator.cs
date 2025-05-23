@@ -2,6 +2,8 @@ using Godot;
 using Tiles;
 
 public partial class TransportAnimator: Node, Listenable, Transportable.View, Parentable, Box{
+    [Export]
+    private float duration;
     // [Export]
     private Node tileNode; //or could get as Owner but let's try dependency injection for good practice
     private int width, height, margin = 0;
@@ -45,7 +47,7 @@ public partial class TransportAnimator: Node, Listenable, Transportable.View, Pa
     private void JumpTo(Vector2I target){
 		Vector2 reverseDestination = MathUtilities.InvertVector(target); //should be in moveto function, dry
 		Vector2I target_pixel_position = (Vector2I) reverseDestination * (/* sideLength */width + margin);	
-		MoveTo(target_pixel_position, 0.2f);
+		MoveTo(target_pixel_position, duration);
 	}
 
     private void MoveTo(Vector2 target, float duration){

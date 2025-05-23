@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://sol1h4j8gs60" path="res://features/tiles/Controller.cs" id="1_pnepx"]
 [ext_resource type="Script" uid="uid://xgvu10ajop3l" path="res://features/tiles/TileNode.cs" id="1_sr53p"]
 [ext_resource type="Script" uid="uid://c0nmjt2ujgv4o" path="res://features/tiles/Model.cs" id="1_tw5be"]
-[ext_resource type="Script" uid="uid://3rt0ds7sntmp" path="res://features/tiles/behavior/SwapAnimator.cs" id="2_5gocy"]
+[ext_resource type="Script" uid="uid://3rt0ds7sntmp" path="res://features/tiles/animators/SwapAnimator.cs" id="2_5gocy"]
 [ext_resource type="Script" uid="uid://ctdxf5ajlt1bn" path="res://features/tiles/behavior/Swapping.cs" id="4_w3q71"]
 [ext_resource type="Script" uid="uid://b1hdqclnw3wgv" path="res://features/tiles/behavior/Collapse.cs" id="5_sr53p"]
 

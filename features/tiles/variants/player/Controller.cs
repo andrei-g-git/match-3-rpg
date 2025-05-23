@@ -13,9 +13,14 @@ namespace Player{
             //model.Transporter = GetNode<Node>("%Transporter") as Transportable.Model;
 
             var transportAnimator = GetNode<Node>("%Transport") as Box;
-            (transportAnimator as Box).Width = SideLength;
-            (transportAnimator as Box).Height = SideLength;
-            (transportAnimator as Box).Margin = Margin;
+            transportAnimator.Width = SideLength;
+            transportAnimator.Height = SideLength;
+            transportAnimator.Margin = Margin;
+
+            var attackAnimator = GetNode<Node>("%Attack") as Box;
+            attackAnimator.Width = SideLength;
+            attackAnimator.Height = SideLength;
+            attackAnimator.Margin = Margin;
 
             //Animators //must give a script so it stores sub animators by name
         }
