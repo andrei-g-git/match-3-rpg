@@ -41,6 +41,10 @@ namespace Tiles {
             // public void RemoveTile(string tileName){
             //     moveBehavior.RemoveTile(tileName);
             // }
+            public override void _Ready()
+            {
+                base._Ready();
+            }
 
             public void NotifyTransport(Vector2I target){
                 (transporter as Transportable.Model).NotifyTransport(target);

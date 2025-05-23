@@ -32,6 +32,7 @@ namespace Tiles {
             }
             public void Connect(Node emitter){
                 (damageBuffer as Listenable).Connect(emitter);
+                (transfer as Listenable).Connect(emitter);
             }
 
             public void IncreaseDamageOfMelee(int damageIncrement){
