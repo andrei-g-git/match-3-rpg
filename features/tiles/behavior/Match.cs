@@ -19,15 +19,15 @@ public partial class Match : Node, Matchable.Model{
 
     public void OnGotMatches(Array<Vector2I> matches){
         var board = (GetNode<Node>("%Model") as Tiles.Model).Board;
-        board.ConnectAllMatchesWithSwappedTile(this, matches);
+        board.ConnectAllMatchesWithSwappedTile(this, matches);  //doesn't work and is undesirable
         var tileNode = GetParent().GetParent(); //wonderful...
         var isPlayerAdjacent = board.CheckIfActorNearPath(tileNode as TileNode, matches);
         if(isPlayerAdjacent){ //should be able to match whether or not player is adjacent
             //can't use this yet, emits before receivers can connect to it's sender...
-            //EmitSignal(SignalName.StartedCollapse);  
+            EmitSignal(SignalName.StartedCollapse);  
 
             //provisory
-            board.NotifyMathedTileToPerformBehaviors(matches);                      
+            //board.NotifyMathedTileToPerformBehaviors(matches);                      
         }
 
 

@@ -4,7 +4,7 @@ using Godot;
 
 namespace Tiles {
     namespace Melee{
-        public partial class Model : Tiles.Model, BuffableDamage.Model, Transfering.Model{ 
+        public partial class Model : Tiles.Model, BuffableDamage.Model, Transfering.Model, Listenable{ 
             private Vector2I position;
             public override string Name => "melee";
             //public override NamableTile Type => TileName.Melee;
@@ -30,7 +30,9 @@ namespace Tiles {
                 damageBuffer = GetNode<Node>("%DamageBuffer") as BuffableDamage.Model;
                 transfer = GetNode<Node>("%Transfer") as Transfering.Model;
             }
-
+            public void Connect(Node emitter){
+                (damageBuffer as Listenable).Connect(emitter);
+            }
 
             public void IncreaseDamageOfMelee(int damageIncrement){
                 damageBuffer.IncreaseDamageOfMelee(damageIncrement);
@@ -47,6 +49,8 @@ namespace Tiles {
             public async Task TransferTile(){
                 await transfer.TransferTile();
             }
+
+
         }        
     }
 

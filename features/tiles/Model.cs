@@ -31,6 +31,9 @@ namespace Tiles{
             }
         }
 
+        public Node SignalEmitter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public StringName Signal { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         //public Array<TileNames> Transportables => throw new NotImplementedException();
 
         // public Model(Vector2I position_) {
@@ -41,6 +44,7 @@ namespace Tiles{
         // {
         //     throw new NotImplementedException();
         // }
+
 
 
         public override void _Ready(){
@@ -56,6 +60,7 @@ namespace Tiles{
         // public void NotifySwap(Vector2I direction){
         //     (swapper as Swapable.Model).NotifySwap(direction);
         // }
+
     }
 
 }

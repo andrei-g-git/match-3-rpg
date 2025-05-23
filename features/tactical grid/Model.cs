@@ -83,7 +83,8 @@ namespace Grid {
         public void ConnectAllMatchesWithSwappedTile(Matchable.Model swappedTileMatcher, Array<Vector2I> matches){
             var matchedModels = GetModelsFromMatches(matches);
             foreach(var model in matchedModels){
-                model.SwapBehavior.MatchEmitter = (Node) swappedTileMatcher;
+                //model.SwapBehavior.MatchEmitter = (Node) swappedTileMatcher;
+                (model as Listenable).Connect(swappedTileMatcher as Node);
             }
         }
 /////////////////////////////////////////////////////////////
@@ -168,6 +169,7 @@ namespace Grid {
             return CheckIfTileIsNextToPath(path, position);
         }     
 
+        //THANKFULLY I MAY NOT HAVE TO USE THIS DISGUSTING ABOMINATION
         //the behavior to behavior signal way of doing in doesn't work, behavior does not receive ok signal emitter before receiving singal
         //provisory
         public void NotifyMathedTileToPerformBehaviors(Array<Vector2I> matches){
