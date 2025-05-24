@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://fy0q6ryr2dfd"]
+[gd_scene load_steps=9 format=3 uid="uid://fy0q6ryr2dfd"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_jhh66"]
 [ext_resource type="Texture2D" uid="uid://dag143mrosf0o" path="res://assets/images/tiles/fighter.png" id="2_shuo2"]
 [ext_resource type="Texture2D" uid="uid://bdqsx6nwlrb06" path="res://assets/images/tiles/fighter_p.png" id="3_f8sl8"]
+[ext_resource type="Script" uid="uid://bcyeyalemv4p3" path="res://features/tiles/animators/DefenseAnimator.cs" id="4_4glyp"]
+[ext_resource type="Script" uid="uid://d3mqq1t8ekts2" path="res://features/tiles/variants/fighter/Controller.cs" id="4_dfqvf"]
 [ext_resource type="Script" uid="uid://m5cqhy1t8qrk" path="res://features/tiles/behavior/Defend.cs" id="5_3dhge"]
 [ext_resource type="Script" uid="uid://bh25tr1e78yxn" path="res://features/tiles/variants/fighter/Model.cs" id="5_kjoix"]
 [ext_resource type="Script" uid="uid://d04t8vh0q3yil" path="res://features/tiles/behavior/Disposition.cs" id="6_3dhge"]
@@ -10,6 +12,13 @@
 [node name="Fighter" instance=ExtResource("1_jhh66")]
 texture_normal = ExtResource("2_shuo2")
 texture_pressed = ExtResource("3_f8sl8")
+script = ExtResource("4_dfqvf")
+
+[node name="Defend" type="Node" parent="Animators" index="1" node_paths=PackedStringArray("tileNode")]
+unique_name_in_owner = true
+script = ExtResource("4_4glyp")
+duration = 0.5
+tileNode = NodePath("../..")
 
 [node name="Model" parent="." index="2" node_paths=PackedStringArray("defender")]
 script = ExtResource("5_kjoix")

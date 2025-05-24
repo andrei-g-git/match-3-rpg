@@ -2,8 +2,7 @@ using Abstractions;
 using Constants;
 using Godot;
 
-public partial class TileNode : TextureButton, Controllable, Modelable, Animatable
-{
+public partial class TileNode : TextureButton, Controllable, Modelable, Animatable{
     [Export] public int SideLength {get; set;} = 64;
     [Export] public int Margin {get; set;}= 3;
     public /* TileName */ string Type => (model as Tiles.Model).Name;//(model as Tiles.Model).Type; 

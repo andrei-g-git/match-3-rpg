@@ -1,3 +1,4 @@
+using System;
 using Constants;
 using Godot;
 
@@ -24,6 +25,11 @@ namespace Tiles {
             public void TakeDamage(int damage){
                 Defender.TakeDamage(damage);
             }
+
+            public void ConnectTookDamage(Action<Vector2I> action){
+                (defender as Defensive.Model).ConnectTookDamage(action);
+            }
+
         }        
     }
 
