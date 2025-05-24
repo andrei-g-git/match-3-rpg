@@ -210,59 +210,59 @@ namespace Grid {
 
 
 
-        private void Swap2(Vector2I source, Vector2I direction){
-            Vector2I destination = source + direction;
-            if(destination.X >= 0 && destination.Y >= 0){
-                var newGrid = observers.Duplicate(true);
-                var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
-                var destinationTile = observers[destination.X][destination.Y];
+        // private void Swap2(Vector2I source, Vector2I direction){
+        //     Vector2I destination = source + direction;
+        //     if(destination.X >= 0 && destination.Y >= 0){
+        //         var newGrid = observers.Duplicate(true);
+        //         var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
+        //         var destinationTile = observers[destination.X][destination.Y];
 
-                GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y);
-                GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
-                // newGrid[source.X][source.Y] = destinationTile;
-                // newGrid[destination.X][destination.Y] = sourceTile;
+        //         GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y);
+        //         GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
+        //         // newGrid[source.X][source.Y] = destinationTile;
+        //         // newGrid[destination.X][destination.Y] = sourceTile;
 
-                (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
+        //         (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
 
-                 TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
-                 TileNode destinationNode = observers[destination.X][destination.Y];
-                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e    
-                    (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);
-                    (destinationNode.SwapAnimator as Swapable.View).SwapTo(source);  //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
-                                                                    //maybe I should use signals or something ...    
-                    observers = newGrid;        
-
-
+        //          TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
+        //          TileNode destinationNode = observers[destination.X][destination.Y];
+        //         if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e    
+        //             (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);
+        //             (destinationNode.SwapAnimator as Swapable.View).SwapTo(source);  //the model should probably not access the view's implementation, but I suppose swapto() is akin to update() a bit...     
+        //                                                             //maybe I should use signals or something ...    
+        //             observers = newGrid;        
 
 
 
-                    var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
-                    var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
 
-                    var collapsePath = MakeCollapsePath(
-                        sourceMatchColumn, 
-                        FindTilesByName(TileNames.Player)[0]
-                    );
-                    GD.Print("Path:  \n" + collapsePath);
-                    DestroyMatches(collapsePath);                                                                                                   
-                } else {
-                    if(sourceTile.Type == TileNames.Player.ToString().ToLower()){
-                        var player = sourceTile;
-                        var target = destinationTile;
-                        if(destinationTile is BuffableDamage.Model){
-                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) target).MeleeBuff);
-                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) target).RangedBuff);
-                            ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) target).SpellBuff);
-                        }    
-                        // sourceNode.SwapAnimator.SwapTo(destination);  //not swapping, replacing
-                        // destinationNode.SwapAnimator.SwapTo(source); 
-                        // observers = newGrid;                                                    
-                    }
-                }
+
+        //             var (sourceMatchColumn, sourceMatchRow) = FindLines(sourceMatches);
+        //             var (destinationMatchColumn, destinationMatchRow) = FindLines(destinationMatches);
+
+        //             var collapsePath = MakeCollapsePath(
+        //                 sourceMatchColumn, 
+        //                 FindTilesByName(TileNames.Player)[0]
+        //             );
+        //             GD.Print("Path:  \n" + collapsePath);
+        //             DestroyMatches(collapsePath);                                                                                                   
+        //         } else {
+        //             if(sourceTile.Type == TileNames.Player.ToString().ToLower()){
+        //                 var player = sourceTile;
+        //                 var target = destinationTile;
+        //                 if(destinationTile is BuffableDamage.Model){
+        //                     ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) target).MeleeBuff);
+        //                     ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) target).RangedBuff);
+        //                     ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) target).SpellBuff);
+        //                 }    
+        //                 // sourceNode.SwapAnimator.SwapTo(destination);  //not swapping, replacing
+        //                 // destinationNode.SwapAnimator.SwapTo(source); 
+        //                 // observers = newGrid;                                                    
+        //             }
+        //         }
              
-            }
+        //     }
 
-        }
+        // }
 
 
         private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(TileNode sourceTile, TileNode destinationTile, Array<Array<TileNode>> newGrid){            
@@ -427,75 +427,75 @@ namespace Grid {
             return path;
         }
 
-        private async void DestroyMatches(Array<Vector2I> allMatches){
-            var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
-            var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
-            for(int i = 0; i < allMatches.Count; i++){
-                var pos = allMatches[i];
-                var tile = observers[pos.X][pos.Y].Model as Tiles.Model;
+        // private async void DestroyMatches(Array<Vector2I> allMatches){
+        //     var playerPosition = FindTilesByName(TileNames.Player)[0]; //this function should be a utility
+        //     var playerIsAdjacent = CheckIfTileIsNextToPath(allMatches, playerPosition);            
+        //     for(int i = 0; i < allMatches.Count; i++){
+        //         var pos = allMatches[i];
+        //         var tile = observers[pos.X][pos.Y].Model as Tiles.Model;
 
-                if(playerIsAdjacent){ 
-                    /* await */ PerformTileBehaviors(tile, pos);
-                    await PerformPlayerBehaviors(pos);
-                }
+        //         if(playerIsAdjacent){ 
+        //             /* await */ PerformTileBehaviors(tile, pos);
+        //             await PerformPlayerBehaviors(pos);
+        //         }
                 
-            }
-        }
+        //     }
+        // }
 
-        private /* async Task */ void PerformTileBehaviors(Tiles.Model tile, Vector2I positionInPath){
-            var playerPosition = FindTilesByName(TileNames.Player)[0];                
-            var player = observers[playerPosition.X][playerPosition.Y];
-            var pos = positionInPath;
-            if(tile is BuffableDamage.Model){ //probably shouldn't buff if active actor not adjacent
-                ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
-                ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
-                ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
-            }   
+        // private /* async Task */ void PerformTileBehaviors(Tiles.Model tile, Vector2I positionInPath){
+        //     var playerPosition = FindTilesByName(TileNames.Player)[0];                
+        //     var player = observers[playerPosition.X][playerPosition.Y];
+        //     var pos = positionInPath;
+        //     if(tile is BuffableDamage.Model){ //probably shouldn't buff if active actor not adjacent
+        //         ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
+        //         ((BuffableDamage.Model) player.Model).IncreaseDamageOfRanged(((BuffableDamage.Model) tile).RangedBuff);
+        //         ((BuffableDamage.Model) player.Model).IncreaseDamageOfSpell(((BuffableDamage.Model) tile).SpellBuff);
+        //     }   
 
-            // //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
-            // SetTile(player, pos.X, pos.Y);
-            // //observers[pos.X][pos.Y] = player; 
+        //     // //GridUtilities.PlaceTileOnBoard(player, observers, pos.X, pos.Y);
+        //     // SetTile(player, pos.X, pos.Y);
+        //     // //observers[pos.X][pos.Y] = player; 
             
-            // ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+        //     // ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
 
-            // var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
-            // await ToSignal(emitter, "Transported");
-        }
+        //     // var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
+        //     // await ToSignal(emitter, "Transported");
+        // }
 
-        private async Task PerformPlayerBehaviors(Vector2I positionInPath){
-            var playerPosition = FindTilesByName(TileNames.Player)[0];                
-            var player = observers[playerPosition.X][playerPosition.Y];
-            var pos = positionInPath;
+        // private async Task PerformPlayerBehaviors(Vector2I positionInPath){
+        //     var playerPosition = FindTilesByName(TileNames.Player)[0];                
+        //     var player = observers[playerPosition.X][playerPosition.Y];
+        //     var pos = positionInPath;
 
-            SetTile(player, pos.X, pos.Y);
+        //     SetTile(player, pos.X, pos.Y);
 
-            var fighters = GridUtilities.FindTileInVincinity(TileNames.Fighter, pos, observers);
-            var archers = GridUtilities.FindTileInVincinity(TileNames.Archer, pos, observers);
-            if(fighters.Count>0 || archers.Count>0){
-                //This is a bad idea
-                //Whenever I need to scale this up I have to come back to this thing and change and tinker with it
-                //Each tile should have a component that runs the entirety of it's behaviors when iterated 
-                //That component should take in callbacks from it's parent board model and run it without being coupled to the board's implementations
-                //could resemble a strategy pattern, I dunno
-                var enemies = fighters + archers;
-                for(int i=0; i < enemies.Count; i++){
-                    //(enemies[i].Model as Defensive.Model).TakeDamage(player.Model as )
-                    (player.Model as Offensive.Model).Attack((Tiles.Model) enemies[i].Model); 
-                    var bp3 = 1323;
-                }
-            }
+        //     var fighters = GridUtilities.FindTileInVincinity(TileNames.Fighter, pos, observers);
+        //     var archers = GridUtilities.FindTileInVincinity(TileNames.Archer, pos, observers);
+        //     if(fighters.Count>0 || archers.Count>0){
+        //         //This is a bad idea
+        //         //Whenever I need to scale this up I have to come back to this thing and change and tinker with it
+        //         //Each tile should have a component that runs the entirety of it's behaviors when iterated 
+        //         //That component should take in callbacks from it's parent board model and run it without being coupled to the board's implementations
+        //         //could resemble a strategy pattern, I dunno
+        //         var enemies = fighters + archers;
+        //         for(int i=0; i < enemies.Count; i++){
+        //             //(enemies[i].Model as Defensive.Model).TakeDamage(player.Model as )
+        //             (player.Model as Offensive.Model).Attack((Tiles.Model) enemies[i].Model); 
+        //             var bp3 = 1323;
+        //         }
+        //     }
 
-            ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
-            var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
-            await ToSignal(emitter, "Transported");            
-        }
+        //     ((Transportable.Model) player.Model).NotifyTransport(new Vector2I(pos.X, pos.Y));
+        //     var emitter = ((player as Animatable).Animators as Player.Animators).TransportAnimator as Node;
+        //     await ToSignal(emitter, "Transported");            
+        // }
 
-        private async void DestroyOneMatch(){
-            // grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //     TileNames.Stamina.ToString().ToLower(), 
-            //     new Vector2I(69, 420)
-            // ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
-        }
+        // private async void DestroyOneMatch(){
+        //     grid[playerPosition.X][playerPosition.Y] = tileFactory.Create(    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //         TileNames.Stamina.ToString().ToLower(), 
+        //         new Vector2I(69, 420)
+        //     ); //I ALSO NEED TO CREATE THE VIEW NODE, BEST WAY IS TO REDRAW THE BOARD
+        // }
 
 
 

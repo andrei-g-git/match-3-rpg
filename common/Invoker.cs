@@ -1,7 +1,7 @@
 using Abstractions;
 using System.Collections.Generic;
 
-public partial class Invoker: Invokable{
+public partial class Invoker: Invokable{ //signals are commands, this is useless...
 	private List<Commandable> commandQueue = [];
     public List<Commandable> CommandQueue{get => commandQueue;}
 

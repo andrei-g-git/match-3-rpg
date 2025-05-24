@@ -25,9 +25,6 @@ namespace Grid {
 			factory = factory_;
 		}
 
-		public void CheckSomethingTHenDelete(){
-			var bp = 546;
-		}
 		public void Initialize() {
 			factory.Initialize();
 			rows = model.Grid.Count;

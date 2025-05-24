@@ -10,6 +10,7 @@ namespace Defensive{
     }  
 
     public interface View{
-        public Action<Vector2I, int> AnimateMethod {get;}
+        //public Action<Vector2I, int> AnimateMethod {get;}
+        public void AnimateDefending(Vector2I attackDirection, int damage);
     }  
 }

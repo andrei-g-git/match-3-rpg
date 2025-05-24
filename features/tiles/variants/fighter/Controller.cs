@@ -8,7 +8,8 @@ namespace Fighter{
 
             var model = GetNode<Node>("%Model");
             var defenseAnimator  = GetNode<Node>("%Defend");
-            (model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateMethod);
+            //(model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateMethod);
+            (model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateDefending);
 
             var damageNumber = GetNode<Node>("%DamageNumber");
             (model as Defensive.Model).ConnectTookDamage((damageNumber as DisplayableNumber).DisplayNumberAt);
