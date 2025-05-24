@@ -17,7 +17,7 @@ public partial class AttackAnimator : Node, Box{
 		(signalEmitter as Offend).Attacked += Attack;
 	}
 
-	public void Attack(Vector2I source_, Vector2I target_){
+	public void Attack_old(Vector2I source_, Vector2I target_){
 		var target = MathUtilities.InvertVector(target_);
 		var source = MathUtilities.InvertVector(source_);
 		var direction = source - target;
@@ -41,13 +41,13 @@ public partial class AttackAnimator : Node, Box{
 			.AsRelative();		
 	}
 
-	public void Attack_old(Vector2I source_, Vector2I target_){
+	public void Attack(Vector2I source_, Vector2I target_){
 		var target = MathUtilities.InvertVector(target_);
 		var source = MathUtilities.InvertVector(source_);
-		var direction = source - target;
-		var pixelTarget = target * width + direction * width/4;
+		var direction = MathUtilities.InvertVector(source - target);
+		var pixelTarget = /* target */source * (width + margin) + direction * (width + margin)/4; //I think multiplying with the direction causes this to get funky diagonal behavior
 		//var pixelTarget = MathUtilities.InvertVector(reversedPixelTarget);
-		var pixelSource = source * width;
+		var pixelSource = /* source */target * (width + margin);
 		Tween tween = CreateTween()
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
@@ -56,24 +56,24 @@ public partial class AttackAnimator : Node, Box{
 			"position", 
 			pixelTarget, 
 			duration
-		)
-			.From(pixelSource);
+		);
+		// 	.From(pixelSource);
 
-		tween.TweenProperty(
-			tileNode, 
-			"position", 
-			pixelSource, 
-			duration
-		)
-			.From(pixelTarget);
-		// tween
-		// 	.Chain()
-		// 	.TweenProperty(
-		// 		tileNode, 
-		// 		"position", 
-		// 		pixelSource, 
-		// 		duration				
-		// 	);
+		// tween.TweenProperty(
+		// 	tileNode, 
+		// 	"position", 
+		// 	pixelSource, 
+		// 	duration
+		// )
+		// 	.From(pixelTarget);
+		tween
+			.Chain()
+			.TweenProperty(
+				tileNode, 
+				"position", 
+				pixelSource, 
+				duration				
+			);
 
 		//tween.Finished += OnMoveFinished;			
 	}
