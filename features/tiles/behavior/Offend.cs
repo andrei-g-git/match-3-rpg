@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Tiles;
 
@@ -20,7 +21,7 @@ public partial class Offend : Node, Offensive.Model
 
     public void Attack(Model actor){
         if(actor is Hostility.Model dfdg){
-            if((actor as Hostility.Model).IsEnemy){
+            if((actor as Hostility.Model).IsEnemy){ //I'm checking this in the hauler too...
                 (actor as Defensive.Model).TakeDamage(damage); //the damage should be calculated form a formula     (should also add buff)     
                 //assume actor is adjacent
                 var source = model.Position;
@@ -31,5 +32,9 @@ public partial class Offend : Node, Offensive.Model
             }
         }
 
+    }
+
+    public void ConnectAttacked(Action<Vector2I, Vector2I> action){
+        Connect(SignalName.Attacked, Callable.From(action));
     }
 }

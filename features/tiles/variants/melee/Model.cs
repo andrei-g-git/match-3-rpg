@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Constants;
 using Godot;
@@ -47,10 +48,24 @@ namespace Tiles {
                 damageBuffer.IncreaseDamageOfSpell(damageIncrement);
             }
 
-            public async Task TransferTile(){
-                await transfer.TransferTile();
+            public /* async */ void TransferTile(){ //maybe the fact that I can't call this asyncronously has something to do with the haul animations not running in increments
+                /* await */ transfer.TransferTile(); //"cannot away void", but the implementation is async...
             }
 
+            public Task TransferTileTask()
+            {
+                throw new NotImplementedException();
+            }
+
+            void Transfering.Model.TransferTile()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void ConnectTransferingActor(Action<Vector2I> action)
+            {
+                throw new NotImplementedException();
+            }
 
         }        
     }

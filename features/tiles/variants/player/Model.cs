@@ -1,16 +1,19 @@
+using System;
 using Constants;
 using Godot;
 using Godot.Collections;
 
 namespace Tiles { 
     namespace Player{
-        public partial class Model : Tiles.Model, /* Movable, */ Transportable.Model, BuffableDamage.Model, Offensive.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
+        public partial class Model : Tiles.Model, /* Movable, */ /* Transportable.Model, */ BuffableDamage.Model, Offensive.Model, Haulable.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
             [Export]
             private Node transporter;
             [Export]
             private Node damageBuffer;
             [Export]
             private Node offender; //reeee
+            [Export]
+            private Node hauler;
             private Vector2I position;
             public override string Name => "player";
             //public override NamableTile Type => TileName.Player;
@@ -27,6 +30,7 @@ namespace Tiles {
             public int SpellBuff { get => (damageBuffer as BuffableDamage.Model).SpellBuff; }
             public Offensive.Model Offender {get => (Offensive.Model) offender; set => offender = (Node) value;}
             public int Damage { get => (offender as Offensive.Model).Damage; }
+            public Haulable.Model Hauler => hauler as Haulable.Model;
 
             // public bool VerifyShortMoveEligibility(string tileName){
             //     return moveBehavior.VerifyShortMoveEligibility(tileName);
@@ -46,9 +50,9 @@ namespace Tiles {
                 base._Ready();
             }
 
-            public void NotifyTransport(Vector2I target){
-                (transporter as Transportable.Model).NotifyTransport(target);
-            }
+            // public void NotifyTransport(Vector2I target){
+            //     (transporter as Transportable.Model).NotifyTransport(target);
+            // }
 
             public void IncreaseDamageOfMelee(int damageIncrement){
                 (damageBuffer as BuffableDamage.Model).IncreaseDamageOfMelee(damageIncrement);
@@ -64,6 +68,18 @@ namespace Tiles {
 
             public void Attack(Tiles.Model actor){
                 Offender.Attack(actor);
+            }
+
+            public void ConnectAttacked(Action<Vector2I, Vector2I> action){
+                (offender as Offensive.Model).ConnectAttacked(action);
+            }
+
+            public void AssessSurroundings(Vector2I position){
+                Hauler.AssessSurroundings(position);
+            }
+
+            public void ConnectTryFighting(Action<Tiles.Model> action){
+                Hauler.ConnectTryFighting(action);
             }
 
         }

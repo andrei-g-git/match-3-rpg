@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Abstractions;
 using Constants;
@@ -28,15 +29,18 @@ public partial class Transfer : Node, Transfering.Model, Behavioral, Listenable{
         ((Match) emitter).StartedCollapse += Foo;
     }
 
+    public async void TransferTile(){
+        await TransferTileTask();    
+    }
     public async void Foo(){
         if(!isTransfering){
             isTransfering = true; //this is not completely retarded bucause the method is async...
-            await TransferTile();     
+            await TransferTileTask();     
             isTransfering = false;       
         }
 
     }
-    public async Task TransferTile(){
+    public async Task TransferTileTask(){
         //if player turn:
         //bypass the transferables part now but it's nice to have on the backburner
 
@@ -53,7 +57,10 @@ public partial class Transfer : Node, Transfering.Model, Behavioral, Listenable{
     }
 
     public async void Fulfill(){
-        await TransferTile();
+        await TransferTileTask();
     }
 
+    public void ConnectTransferingActor(Action<Vector2I> action){
+        Connect(SignalName.TransferingActor, Callable.From(action));
+    }
 }

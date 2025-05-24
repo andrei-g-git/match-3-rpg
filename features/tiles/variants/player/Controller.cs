@@ -15,6 +15,10 @@ namespace Player{
             attackAnimator.Width = SideLength;
             attackAnimator.Height = SideLength;
             attackAnimator.Margin = Margin;
+
+            var offender = GetNode<Node>("%Offender") as Offensive.Model;
+            var hauler = GetNode<Node>("%Hauler") as Haulable.Model;
+            hauler.ConnectTryFighting(offender.Attack);
         }
     }
 }

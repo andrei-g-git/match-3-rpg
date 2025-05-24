@@ -12,7 +12,8 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
     private Node matchEmitter;
     public Node MatchEmitter { get => matchEmitter; set => matchEmitter = value; }
     [Signal] 
-    public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
+    //public delegate void TryMovingEventHandler(Vector2I source, Vector2I direction);
+    public delegate void TryMovingEventHandler(Vector2I target);
     [Signal]
     public delegate void GotMatchesEventHandler(Array<Vector2I> matches);
 
@@ -29,7 +30,8 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
         if(collapsePath.Count > 0){
             EmitSignal(SignalName.GotMatches, collapsePath);
         }else{
-            EmitSignal(SignalName.TryMoving, source, direction);
+            var target = source + direction;
+            EmitSignal(SignalName.TryMoving, target);
         }
     }
 

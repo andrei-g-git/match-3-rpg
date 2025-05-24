@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2bbcbjgw186g"]
+[gd_scene load_steps=12 format=3 uid="uid://c2bbcbjgw186g"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c5do70scu2xcx" path="res://features/tiles/animators/AttackAnimator.cs" id="6_di0hx"]
 [ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="9_1bdos"]
 [ext_resource type="Script" uid="uid://be02jfmlvfifs" path="res://features/tiles/behavior/Movement.cs" id="10_di0hx"]
+[ext_resource type="Script" uid="uid://bk3ko6hcthm46" path="res://features/tiles/behavior/Haul.cs" id="11_0hbcq"]
 
 [node name="Player" instance=ExtResource("1_7yhcl")]
 texture_normal = ExtResource("2_ib1fk")
@@ -31,10 +32,11 @@ duration = 0.52
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2" node_paths=PackedStringArray("damageBuffer", "offender")]
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("damageBuffer", "offender", "hauler")]
 script = ExtResource("5_kqfgq")
 damageBuffer = NodePath("DamageBuffer")
 offender = NodePath("Offender")
+hauler = NodePath("Hauler")
 
 [node name="DamageBuffer" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true
@@ -47,3 +49,7 @@ script = ExtResource("9_1bdos")
 [node name="Movement" type="Node" parent="Model" index="4"]
 unique_name_in_owner = true
 script = ExtResource("10_di0hx")
+
+[node name="Hauler" type="Node" parent="Model" index="5"]
+unique_name_in_owner = true
+script = ExtResource("11_0hbcq")

@@ -202,11 +202,38 @@ namespace Grid {
             //(playerNode as Listenable).SignalEmitter = emitter;
             var transportAnimator = ((playerNode as Animatable).Animators as Player.Animators).TransportAnimator;
             (transportAnimator as Listenable).Connect(emitter);
+
+            (emitter as Transfering.Model).ConnectTransferingActor((playerNode.Model as Haulable.Model).AssessSurroundings);
+
             return transportAnimator as Node;
         }  
+
+        public void AssessSurroundings(Tiles.Model actor, Vector2I position){
+            var neighbors = GetSurroundingTileModels(position);
+            foreach(var tile in neighbors){
+                if((tile as Hostility.Model).IsEnemy){
+                    //EmitSignal(Si)
+                }
+            }
+        }
 ///////////////////////////////////////////////////////////
 
+        public Array<Tiles.Model> GetSurroundingTileModels(Vector2I center){ //should be a grid utility
+            var neighbors = new Array<Tiles.Model>();
+            var surroundings = new Array<Vector2I>{
+                center + Vector2I.Up, 
+                center + Vector2I.Right, 
+                center + Vector2I.Down, 
+                center + Vector2I.Left
+            };
 
+            foreach(var pos in surroundings){
+                if(MathUtilities.CheckNegativeVectorAxes(pos)){
+                    neighbors.Add(observers[pos.X][pos.Y].Model as Tiles.Model);
+                }                
+            }
+            return neighbors;
+        }   
 
 
 

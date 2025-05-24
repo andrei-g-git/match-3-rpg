@@ -17,8 +17,8 @@ public partial class Movement : Node, Movable.Model{
         //board = (GetNode<Node>("%Model") as GridItem).Board; //doesn't have it at this point....
         var bp = 324;
     }     
-    public void Move(Vector2I source, Vector2I direction){
-        var destination = source + direction;
+    public void Move(Vector2I target/* source, Vector2I direction */){
+        var destination = target;//source + direction;
         board = (GetNode<Node>("%Model") as GridItem).Board;
         var targetTile = board.GetTileModel(destination);
         //assume that only the player can move... this might cause problems
