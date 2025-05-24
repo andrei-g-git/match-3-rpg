@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bat5m03vla221"]
+[gd_scene load_steps=5 format=3 uid="uid://bat5m03vla221"]
+
+[ext_resource type="Script" uid="uid://dvdekjbucbj4v" path="res://features/tiles/feedback/DamageNumber.cs" id="1_6a30u"]
 
 [sub_resource type="Animation" id="Animation_a7k5d"]
 resource_name = "fade_scale_in_out"
@@ -59,7 +61,11 @@ _data = {
 &"fade_scale_in_out": SubResource("Animation_a7k5d")
 }
 
-[node name="DamageNumber" type="Node2D"]
+[node name="DamageNumber" type="Node2D" node_paths=PackedStringArray("label", "container", "animationPlayer")]
+script = ExtResource("1_6a30u")
+label = NodePath("AnimationPlayer/LabelContainer/Label")
+container = NodePath("AnimationPlayer/LabelContainer")
+animationPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -71,5 +77,3 @@ libraries = {
 [node name="Label" type="Label" parent="AnimationPlayer/LabelContainer"]
 offset_right = 35.0
 offset_bottom = 49.0
-text = "Blah
-"

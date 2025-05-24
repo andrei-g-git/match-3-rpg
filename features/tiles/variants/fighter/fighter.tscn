@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://fy0q6ryr2dfd"]
+[gd_scene load_steps=10 format=3 uid="uid://fy0q6ryr2dfd"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_jhh66"]
 [ext_resource type="Texture2D" uid="uid://dag143mrosf0o" path="res://assets/images/tiles/fighter.png" id="2_shuo2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://m5cqhy1t8qrk" path="res://features/tiles/behavior/Defend.cs" id="5_3dhge"]
 [ext_resource type="Script" uid="uid://bh25tr1e78yxn" path="res://features/tiles/variants/fighter/Model.cs" id="5_kjoix"]
 [ext_resource type="Script" uid="uid://d04t8vh0q3yil" path="res://features/tiles/behavior/Disposition.cs" id="6_3dhge"]
+[ext_resource type="PackedScene" uid="uid://bat5m03vla221" path="res://features/tiles/feedback/damage_number.tscn" id="6_06fdr"]
 
 [node name="Fighter" instance=ExtResource("1_jhh66")]
 texture_normal = ExtResource("2_shuo2")
@@ -19,6 +20,9 @@ unique_name_in_owner = true
 script = ExtResource("4_4glyp")
 duration = 0.5
 tileNode = NodePath("../..")
+
+[node name="DamageNumber" parent="Animators" index="2" instance=ExtResource("6_06fdr")]
+unique_name_in_owner = true
 
 [node name="Model" parent="." index="2" node_paths=PackedStringArray("defender")]
 script = ExtResource("5_kjoix")

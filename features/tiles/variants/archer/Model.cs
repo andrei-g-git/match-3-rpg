@@ -17,7 +17,7 @@ namespace Tiles {
                 Defender.TakeDamage(damage);
             }
 
-            public void ConnectTookDamage(Action<Vector2I> action){
+            public void ConnectTookDamage(Action<Vector2I, int> action){
                 (defender as Defensive.Model).ConnectTookDamage(action);
             }
 

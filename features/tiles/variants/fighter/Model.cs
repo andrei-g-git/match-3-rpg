@@ -7,6 +7,8 @@ namespace Tiles {
         public partial class Model : Tiles.Model, Defensive.Model, Hostility.Model  {
             [Export]
             private Node defender;
+            [Export]
+            private Node damageNumber;
             private Vector2I position;
             public override string Name => "fighter";
             //public override NamableTile Type => TileName.Fighter;
@@ -26,7 +28,7 @@ namespace Tiles {
                 Defender.TakeDamage(damage);
             }
 
-            public void ConnectTookDamage(Action<Vector2I> action){
+            public void ConnectTookDamage(Action<Vector2I, int> action){
                 (defender as Defensive.Model).ConnectTookDamage(action);
             }
 

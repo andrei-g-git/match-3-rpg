@@ -1,5 +1,5 @@
 using Godot;
 
-public interface DisplayableText{
-    public void DisplayTextAt(string text, Vector2 position);
+public interface DisplayableNumber{
+    public void DisplayNumberAt(Vector2I position, int value);
 }

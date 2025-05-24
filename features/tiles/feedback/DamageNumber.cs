@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class DamageNumber : Node, DisplayableText{
+public partial class DamageNumber : Node, DisplayableNumber{
 	[Export]
 	private Label label;
 	[Export]
@@ -16,8 +16,9 @@ public partial class DamageNumber : Node, DisplayableText{
 
 	}
 
-	public void DisplayTextAt(string text, Vector2 position){
-		label.Text = text;
+	public void DisplayNumberAt(Vector2I position, int value){
+		label.Text = value.ToString();
+
 		animationPlayer.Play("fade_scale_in_out");
 		var tween = CreateTween();
 		var endPosition = new Vector2(
@@ -25,12 +26,15 @@ public partial class DamageNumber : Node, DisplayableText{
 			-height
 		) + position;
 		var duration = animationPlayer.GetAnimation("fade_scale_in_out").Length;
+
+		var pixelStart = MathUtilities.InvertVector(position * 48);
+		var pixelEnd = MathUtilities.InvertVector(endPosition * 48);
 		tween.TweenProperty(
 			container,
 			"position",
-			endPosition,
+			pixelStart,
 			duration
 		)
-			.From(position);
+			.From(pixelEnd);
 	}
 }

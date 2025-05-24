@@ -6,10 +6,10 @@ namespace Defensive{
         public int Health{get;}
         public int Defense{get;}
         public void TakeDamage(int damage);
-        public void ConnectTookDamage(Action<Vector2I> action);
+        public void ConnectTookDamage(Action<Vector2I, int> action);
     }  
 
     public interface View{
-        public Action<Vector2I> AnimateMethod {get;}
+        public Action<Vector2I, int> AnimateMethod {get;}
     }  
 }

@@ -9,7 +9,7 @@ public partial class Defend : Node, Defensive.Model{
     private Tiles.Model model;
 
     [Signal]
-    public delegate void TookDamageEventHandler(Vector2I direction);
+    public delegate void TookDamageEventHandler(Vector2I direction, int amount);
 
     public override void _Ready(){
         model = GetNode<Node>("%Model") as Tiles.Model;
@@ -18,10 +18,10 @@ public partial class Defend : Node, Defensive.Model{
     public void TakeDamage(int damage){
         health -= Math.Max(0, damage - defense); //shouldd have a mode complex damage calc algorithm but this is fine for now
         var bp =234;
-        EmitSignal(SignalName.TookDamage, model.Position);
+        EmitSignal(SignalName.TookDamage, model.Position, damage - defense);
     }
 
-    public void ConnectTookDamage(Action<Vector2I> action){
+    public void ConnectTookDamage(Action<Vector2I, int> action){
         //TookDamage += action;
         Connect(SignalName.TookDamage, Callable.From(action));
     }
