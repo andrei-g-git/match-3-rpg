@@ -39,8 +39,8 @@ namespace Tiles {
             public Movable.Model Movement => movement as Movable.Model;
             public int Stamina { get => (movement as Movable.Model).Stamina; set => (movement as Movable.Model).Stamina = value; }
             public int Health => Defender.Health;
-            public int MaxHealth => Defender.Health;
-            public int Defense => Defender.Health;
+            public int MaxHealth => Defender.MaxHealth;
+            public int Defense => Defender.Defense;
 
             // public bool VerifyShortMoveEligibility(string tileName){
             //     return moveBehavior.VerifyShortMoveEligibility(tileName);

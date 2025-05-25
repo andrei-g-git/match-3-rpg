@@ -33,10 +33,11 @@ duration = 0.52
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2" node_paths=PackedStringArray("damageBuffer", "offender", "hauler", "movement")]
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("damageBuffer", "offender", "defender", "hauler", "movement")]
 script = ExtResource("5_kqfgq")
 damageBuffer = NodePath("DamageBuffer")
 offender = NodePath("Offender")
+defender = NodePath("Defender")
 hauler = NodePath("Hauler")
 movement = NodePath("Movement")
 
@@ -51,7 +52,7 @@ script = ExtResource("9_1bdos")
 [node name="Defender" type="Node" parent="Model" index="4"]
 unique_name_in_owner = true
 script = ExtResource("10_c77j6")
-health = 10
+health = 5
 maxHealth = 10
 defense = 2
 
