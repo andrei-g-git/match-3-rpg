@@ -137,6 +137,10 @@ namespace Tiles {
                 Defender.ReceiveHealingFrom(tile);
             }
 
+            public void ConnectLeftEmptyTile(Action<Vector2I> action)
+            {
+                Movement.ConnectLeftEmptyTile(action);
+            }
         }
     }
 

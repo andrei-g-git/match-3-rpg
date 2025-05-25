@@ -19,6 +19,8 @@ public partial class Movement : Node, Movable.Model{
     public delegate void TookStepEventHandler(Vector2I direction);
     [Signal]
     public delegate void GotHealthEventHandler(Tiles.Model healthTile);
+    [Signal]
+    public delegate void LeftEmptyTileEventHandler(Vector2I position);
     //[Signal]
     //public delegate void GotConsumableEventHandler(Consumable.Model item);
 
@@ -43,7 +45,8 @@ public partial class Movement : Node, Movable.Model{
     }
     public void Move(Vector2I target/* source, Vector2I direction */){
         var destination = target;//source + direction;
-        board = (GetNode<Node>("%Model") as GridItem).Board;
+        var model = GetNode<Node>("%Model");
+        board = (model as GridItem).Board;
         var targetTile = board.GetTileModel(destination);
         //assume that only the player can move... this might cause problems
         if(targetTile is Walkable.Model){ //THIS DOESN'T WORK because the actor already changed position and will itself appear as the target
@@ -57,6 +60,8 @@ public partial class Movement : Node, Movable.Model{
                 if(targetTile is Healable.Model){
                 
                     EmitSignal(SignalName.GotHealth, targetTile);
+                    //implement after recieving an ok signal:
+                    EmitSignal(SignalName.LeftEmptyTile, (model as Tiles.Model).Position); //IF I GET RID OF THE Position PROPERTY THIS WON'T WORK
                 }else{
                     if(targetTile is Hostility.Model /* dfdg */){
                         if((targetTile as Hostility.Model).IsEnemy){
@@ -95,5 +100,9 @@ public partial class Movement : Node, Movable.Model{
 
     public void ConnectGotConsumable(Action<Model> action){
         //Connect(SignalName.GotConsumable, Callable.From(action));
+    }
+
+    public void ConnectLeftEmptyTile(Action<Vector2I> action){
+        Connect(SignalName.LeftEmptyTile, Callable.From(action));
     }
 }

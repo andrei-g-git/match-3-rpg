@@ -9,5 +9,6 @@ namespace Movable{
         public void ConnectTookStep(Action<Vector2I> action);
         public void ConnectGotConsumable(Action<Tiles.Model> action);
         public void ConnectGotHealth(Action<Node> action);
+        public void ConnectLeftEmptyTile(Action<Vector2I> action);
     }
 }

@@ -8,7 +8,7 @@ using Godot.Collections;
 using Tiles;
 
 namespace Grid {
-    public partial class Model : Node {
+    public partial class Model : Node, IGrid {
         private int columns = 0;
         private int rows = 0;
         private Array<Array<string>> tileNameMatrix = new Array<Array<string>>();
@@ -17,6 +17,8 @@ namespace Grid {
         private Tiles.Factory tileFactory;
         private Array<Array<TileNode>> observers = new Array<Array<TileNode>>();  
         public Array<Array<TileNode>> Grid { get => observers; }
+        [Signal]
+        public delegate void RandomizedTileEventHandler(string tileName, Vector2I position);
         public Model(
             Array<PackedScene> tileResources_, //HUHH???? Ce fac cu astea??
             Array<Array<string>> tileNameMatrix_,
@@ -101,7 +103,15 @@ namespace Grid {
             }
             GridUtilities.PrintGridInitialsFromStringMatrix(nameMatrix, header);
         }
-/////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////
+
+        public void CollapseTile(Vector2I position){
+            var random = new Random();
+            var enumValues = Enum.GetValues(typeof (TileNames));
+            var pickedTileEnumValue = enumValues.GetValue(random.Next(enumValues.Length));
+            var tileName = pickedTileEnumValue.ToString().ToLower();
+            
+        }
         public Array<Vector2I> TryMatching(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){
@@ -579,7 +589,13 @@ namespace Grid {
                 }               
             }
             return false;
-        }  
+        }
+
+        public void ConnectRandomizedTile(Action<string, Vector2I> action)
+        {
+            Connect(SignalName.RandomizedTile, Callable.From(action));
+        }
+
     }
 
     // private TileNode CreateRandomTile(){

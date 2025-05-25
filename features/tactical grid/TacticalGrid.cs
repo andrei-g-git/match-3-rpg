@@ -1,4 +1,5 @@
 using System;
+using Constants;
 using Godot;
 using Godot.Collections;
 using Grid;
@@ -28,12 +29,23 @@ public partial class TacticalGrid : GridContainer
 			tileNameGrid,
 			new Tiles.Factory()
 		);
+		var tileNodeFactory = new Grid.Factory(tileScenes);
 		model.Initialize();
 		var controller = new Controller(
 			model,
 			this,
-			new Grid.Factory(tileScenes)
+			tileNodeFactory
 		);
+
+		(model as IGrid).ConnectRandomizedTile((string tileName, Vector2I position) => {
+			var tileNode = tileNodeFactory.Create(
+				(TileNames) Enum.Parse(typeof(TileNames), char.ToUpper(tileName[0]) + tileName.Substring(1)),
+				this,
+				position
+			);
+			model.SetTile(tileNode, position.X, position.Y); //probably won't work, Create() aleardy adds the node to the tree willy nilly and that's not enough initialization I think, still need to register etc...
+		});
+
 
 		//delete, temporary
 		controller.TemporaryTileNameGrid = tileNameGrid;	
