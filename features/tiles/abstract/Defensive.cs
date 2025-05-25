@@ -8,6 +8,7 @@ namespace Defensive{
         public int Defense{get;}
         public void TakeDamage(int damage);
         public void ReceiveHealing(int amount);
+        public void ReceiveHealingFrom(/* Healable.Model */Node tile);
         public void ConnectTookDamage(Action<Vector2I, int> action);
     }  
 

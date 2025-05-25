@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Tiles;
 
 public partial class Movement : Node, Movable.Model{
     // [Export]
@@ -16,6 +17,10 @@ public partial class Movement : Node, Movable.Model{
     public delegate void TryFightingEventHandler(Tiles.Model target);
     [Signal]
     public delegate void TookStepEventHandler(Vector2I direction);
+    [Signal]
+    public delegate void GotHealthEventHandler(Tiles.Model healthTile);
+    //[Signal]
+    //public delegate void GotConsumableEventHandler(Consumable.Model item);
 
     public override void _Ready(){
         //(matcher as Match).TryMoving += Move;
@@ -46,35 +51,49 @@ public partial class Movement : Node, Movable.Model{
             EmitSignal(SignalName.TookStep, target);
         }else{
             if(targetTile is Obtainable.Model /* wefwef */){
-                //move over and obtain -- if it's a walk tile then get nothing or decrease stamina -- but then other actions should decrease stamina too
+                
                 var bp =345;
             }else{
-                if(targetTile is Hostility.Model /* dfdg */){
-                    if((targetTile as Hostility.Model).IsEnemy){
-                        //attack
-                        //board.Fight(model as Tiles.Model, targetTile); no, this should send signal to offense behavior
-                        EmitSignal(SignalName.TryFighting, targetTile);
-                    }
-                }else{ //wait these should also be separate behaviors...
-                    /* 
-                        if it's a chest or door
-                            remove tile
-                                if it's a chest
-                                    replace with contents (could be reward or something perilous)
-                        else
-                            if it's a friend
-                                open dialog/trade UI
+                if(targetTile is Healable.Model){
+                
+                    EmitSignal(SignalName.GotHealth, targetTile);
+                }else{
+                    if(targetTile is Hostility.Model /* dfdg */){
+                        if((targetTile as Hostility.Model).IsEnemy){
+                            //attack
+                            //board.Fight(model as Tiles.Model, targetTile); no, this should send signal to offense behavior
+                            EmitSignal(SignalName.TryFighting, targetTile);
+                        }
+                    }else{ //wait these should also be separate behaviors...
+                        /* 
+                            if it's a chest or door
+                                remove tile
+                                    if it's a chest
+                                        replace with contents (could be reward or something perilous)
                             else
-                                if it's a switch
-                                    operate it with custom effects
-                    */
+                                if it's a friend
+                                    open dialog/trade UI
+                                else
+                                    if it's a switch
+                                        operate it with custom effects
+                        */
+                    }                    
                 }
+
             }            
         }
+    }
 
+
+    public void ConnectGotHealth(Action<Node> action){
+        Connect(SignalName.GotHealth, Callable.From(action));
     }
 
     public void ConnectTookStep(Action<Vector2I> action){
         Connect(SignalName.TookStep, Callable.From(action));
+    }
+
+    public void ConnectGotConsumable(Action<Model> action){
+        //Connect(SignalName.GotConsumable, Callable.From(action));
     }
 }

@@ -38,6 +38,12 @@ namespace Tiles {
             public void ReceiveHealing(int amount){
                 Defender.ReceiveHealing(amount);
             }
+
+            public void ReceiveHealingFrom(Node tile)
+            {
+                Defender.ReceiveHealingFrom(tile);
+            }
+
         }        
     }
 

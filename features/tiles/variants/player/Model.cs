@@ -119,9 +119,22 @@ namespace Tiles {
                 Defender.ReceiveHealing(amount);
             }
 
-            public void ConnectTookDamage(Action<Vector2I, int> action)
+            public void ConnectTookDamage(Action<Vector2I, int> action){
+                Defender.ConnectTookDamage(action);
+            }
+
+            public void ConnectGotConsumable(Action<Tiles.Model> action)
             {
                 throw new NotImplementedException();
+            }
+
+            public void ConnectGotHealth(Action<Node> action){
+                Movement.ConnectGotHealth(action);
+            }
+
+            public void ReceiveHealingFrom(Node tile)
+            {
+                Defender.ReceiveHealingFrom(tile);
             }
 
         }

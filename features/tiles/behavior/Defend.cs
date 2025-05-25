@@ -35,4 +35,9 @@ public partial class Defend : Node, Defensive.Model{
         health += amount;
         if(health > maxHealth) health = maxHealth;
     }
+
+    public void ReceiveHealingFrom(/* Healable.Model */Node tile){
+        (tile as Healable.Model).HealPlayer(this); //well this is stupid...
+        var bp = 123;
+    }    
 }

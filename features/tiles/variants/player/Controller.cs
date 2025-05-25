@@ -20,6 +20,10 @@ namespace Player{
             var hauler = GetNode<Node>("%Hauler") as Haulable.Model;
             hauler.ConnectTryFighting(offender.Attack);
 
+            var movement = GetNode<Node>("%Movement") as Movable.Model;
+            var defender = GetNode<Node>("%Defender") as Defensive.Model;
+            movement.ConnectGotHealth(defender.ReceiveHealingFrom);
+
             
         }
     }
