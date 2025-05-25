@@ -20,3 +20,6 @@ texture = ExtResource("1_73w1c")
 
 [node name="TacticalGrid" parent="Panel" instance=ExtResource("2_ge4kj")]
 layout_mode = 0
+columns = 4
+cols = 4
+rows = 4

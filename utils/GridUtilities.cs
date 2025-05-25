@@ -7,7 +7,7 @@ using Tiles;
 
 
 public static partial class GridUtilities { //these shouldn't be utilities, they should be in 'commmon'
-	public static void PrintGridInitials(Array<Array<string>> tiles, string header){
+	public static void PrintGridInitialsFromStringMatrix(Array<Array<string>> tiles, string header){
 		int rows = tiles.Count;
 		int cols = tiles[0].Count;
 		var initialsGrid = new Array<Array<string>>();

@@ -87,6 +87,20 @@ namespace Grid {
                 (model as Listenable).Connect(swappedTileMatcher as Node);
             }
         }
+
+        public void PrintGridInitials(string header){
+            var nameMatrix = new Array<Array<String>>();
+            var cols = observers.Count;
+            var rows = observers[0].Count;
+            nameMatrix.Resize(cols);
+            for(int x=0; x<cols; x++){
+                nameMatrix[x].Resize(rows);
+                for(int y=0; y<cols; y++){
+                    nameMatrix[x][y] = (observers[x][y].Model as Tiles.Model).Name; //name is a very dangerous interface since Node has it too and if I don't cast I'll get the wrong value
+                }
+            }
+            GridUtilities.PrintGridInitialsFromStringMatrix(nameMatrix, header);
+        }
 /////////////////////////////////////////////////////////////
         public Array<Vector2I> TryMatching(Vector2I source, Vector2I direction){
             Vector2I destination = source + direction;
@@ -95,14 +109,21 @@ namespace Grid {
                 var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
                 var destinationTile = observers[destination.X][destination.Y];
 
-                GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y);
-                GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
+                // GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y); //can't update player model position here
+                // GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
+                newGrid[source.X][source.Y] = destinationTile;
+                newGrid[destination.X][destination.Y] = sourceTile;
 
                 (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
 
                  TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
                  TileNode destinationNode = observers[destination.X][destination.Y];
-                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e       
+                if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e      
+                    //new
+                    SetTile(destinationTile, source.X, source.Y); //this is a bit redundant but I can only change player model positions here...
+                    SetTile(sourceTile, destination.X, destination.Y);
+
+
                     (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);
                     (destinationNode.SwapAnimator as Swapable.View).SwapTo(source);    
                     observers = newGrid;        
@@ -216,7 +237,19 @@ namespace Grid {
                 }
             }
         }
-///////////////////////////////////////////////////////////
+//   /////////////////////////////////////////////////////////
+        public Tiles.Model JustSwap(Vector2I source, Vector2I destination){
+            var sourceTile = observers[source.X][source.Y]; 
+            var destinationTile = observers[destination.X][destination.Y];
+
+            GridUtilities.PlaceTileOnBoard(destinationTile, observers, source.X, source.Y);
+            GridUtilities.PlaceTileOnBoard(sourceTile, observers, destination.X, destination.Y);
+
+            (sourceTile.SwapAnimator as Swapable.View).SwapTo(destination);
+            (destinationTile.SwapAnimator as Swapable.View).SwapTo(source);    
+
+            return (Tiles.Model)destinationTile.Model;
+        }
 
         public Array<Tiles.Model> GetSurroundingTileModels(Vector2I center){ //should be a grid utility
             var neighbors = new Array<Tiles.Model>();
@@ -301,14 +334,14 @@ namespace Grid {
             if(threeTileSourceMatches.Count > 0){ //this does not allow L combinations where a 90deg L is matched at the origin, where the actor sits at the shorter side and can short match
                 sourceMatches = threeTileSourceMatches;
             } else {
-                var source = (sourceTile.Model as Tiles.Model).Position;
-                var destination = (destinationTile.Model as Tiles.Model).Position;
-                if(CheckIfSwappingActor(source, destination)){
-                    var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
-                    if(twoTileSourceMatches.Count > 0){ 
-                        sourceMatches = twoTileSourceMatches;    
-                    }                          
-                }
+                // var source = (sourceTile.Model as Tiles.Model).Position;   //POORLY IMPLEMENTED, GOTTA CHANGE, doesn't work when player tile swaps, it will match any 2 tiles of the same type on the board
+                // var destination = (destinationTile.Model as Tiles.Model).Position;
+                // if(CheckIfSwappingActor(source, destination)){
+                //     var twoTileSourceMatches = GridUtilities.FindAllMatchingAdjacentTiles(sourceTile, newGrid); 
+                //     if(twoTileSourceMatches.Count > 0){ 
+                //         sourceMatches = twoTileSourceMatches;    
+                //     }                          
+                // }
             
             }
 

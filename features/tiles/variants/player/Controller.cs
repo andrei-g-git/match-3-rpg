@@ -19,6 +19,8 @@ namespace Player{
             var offender = GetNode<Node>("%Offender") as Offensive.Model;
             var hauler = GetNode<Node>("%Hauler") as Haulable.Model;
             hauler.ConnectTryFighting(offender.Attack);
+
+            
         }
     }
 }
