@@ -348,10 +348,10 @@ namespace Grid {
             if(threeTileDestinationMatches.Count > 0){
                 destinationMatches = threeTileDestinationMatches;
             } else {
-                var twoTileDestinationMatches = GridUtilities.FindAllMatchingAdjacentTiles(destinationTile, newGrid);
-                if(twoTileDestinationMatches.Count > 0){ 
-                    destinationMatches = twoTileDestinationMatches;    
-                }                
+                // var twoTileDestinationMatches = GridUtilities.FindAllMatchingAdjacentTiles(destinationTile, newGrid);
+                // if(twoTileDestinationMatches.Count > 0){ 
+                //     destinationMatches = twoTileDestinationMatches;    
+                // }                
             }
             var sourceMatchesWithoutDupes = Collections.RemoveDuplicates(sourceMatches);
             var destinationMatchesWithoutDupes = Collections.RemoveDuplicates(destinationMatches);
