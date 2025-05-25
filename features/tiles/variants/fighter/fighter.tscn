@@ -31,6 +31,9 @@ defender = NodePath("Defender")
 [node name="Defender" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true
 script = ExtResource("5_3dhge")
+health = 6
+maxHealth = 6
+defense = 1
 
 [node name="Disposition" type="Node" parent="Model" index="3"]
 unique_name_in_owner = true

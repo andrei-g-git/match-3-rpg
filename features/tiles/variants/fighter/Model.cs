@@ -19,6 +19,9 @@ namespace Tiles {
             public bool IsAggressive { get => disposition.IsAggressive; set => disposition.IsAggressive = value; }
             public bool IsEnemy { get => disposition.IsEnemy; set => disposition.IsEnemy = value; }
 
+            public int MaxHealth => Defender.MaxHealth;
+
+
             public override void _Ready(){
                 base._Ready();
                 disposition = GetNode<Node>("%Disposition") as Hostility.Model;
@@ -32,6 +35,9 @@ namespace Tiles {
                 (defender as Defensive.Model).ConnectTookDamage(action);
             }
 
+            public void ReceiveHealing(int amount){
+                Defender.ReceiveHealing(amount);
+            }
         }        
     }
 

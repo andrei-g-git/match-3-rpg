@@ -24,7 +24,7 @@ public partial class Match : Node, Matchable.Model{
         var isPlayerAdjacent = board.CheckIfActorNearPath(tileNode as TileNode, matches);
         if(isPlayerAdjacent){ //should be able to match whether or not player is adjacent
             //can't use this yet, emits before receivers can connect to it's sender...
-            EmitSignal(SignalName.StartedCollapse);  
+            EmitSignal(SignalName.StartedCollapse);  //THIS IS FINE, ONLY EMMITS TO MATCHES THAT HAVE BEEN CONNECTED BUT I GOTTA DISCONNECT 
 
             //provisory
             //board.NotifyMathedTileToPerformBehaviors(matches);                      

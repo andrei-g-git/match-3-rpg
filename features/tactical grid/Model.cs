@@ -121,7 +121,7 @@ namespace Grid {
                 if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e      
                     //new
                     SetTile(destinationTile, source.X, source.Y); //this is a bit redundant but I can only change player model positions here...
-                    SetTile(sourceTile, destination.X, destination.Y);
+                    SetTile(sourceTile, destination.X, destination.Y); //should probably not do it here to begin with. should be done in behavior so that expected source and target tiles are still relevant when behavior activates
 
 
                     (sourceNode.SwapAnimator as Swapable.View).SwapTo(destination);

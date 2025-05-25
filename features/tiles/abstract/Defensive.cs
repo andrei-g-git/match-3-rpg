@@ -4,8 +4,10 @@ using Godot;
 namespace Defensive{
     public interface Model{
         public int Health{get;}
+        public int MaxHealth{get;}
         public int Defense{get;}
         public void TakeDamage(int damage);
+        public void ReceiveHealing(int amount);
         public void ConnectTookDamage(Action<Vector2I, int> action);
     }  
 

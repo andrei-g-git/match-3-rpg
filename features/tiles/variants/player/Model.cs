@@ -5,13 +5,15 @@ using Godot.Collections;
 
 namespace Tiles { 
     namespace Player{
-        public partial class Model : Tiles.Model, Movable.Model, /* Transportable.Model, */ BuffableDamage.Model, Offensive.Model, Haulable.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
+        public partial class Model : Tiles.Model, Movable.Model, /* Transportable.Model, */ BuffableDamage.Model, Offensive.Model, Defensive.Model, Haulable.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
             [Export]
             private Node transporter;
             [Export]
             private Node damageBuffer;
             [Export]
             private Node offender; //reeee
+            [Export]
+            private Node defender;
             [Export]
             private Node hauler;
             [Export]
@@ -32,9 +34,13 @@ namespace Tiles {
             public int SpellBuff { get => (damageBuffer as BuffableDamage.Model).SpellBuff; }
             public Offensive.Model Offender {get => (Offensive.Model) offender; set => offender = (Node) value;}
             public int Damage { get => (offender as Offensive.Model).Damage; }
+            public Defensive.Model Defender {get => (defender as Defensive.Model); set => defender = (Node) value;}
             public Haulable.Model Hauler => hauler as Haulable.Model;
             public Movable.Model Movement => movement as Movable.Model;
             public int Stamina { get => (movement as Movable.Model).Stamina; set => (movement as Movable.Model).Stamina = value; }
+            public int Health => Defender.Health;
+            public int MaxHealth => Defender.Health;
+            public int Defense => Defender.Health;
 
             // public bool VerifyShortMoveEligibility(string tileName){
             //     return moveBehavior.VerifyShortMoveEligibility(tileName);
@@ -49,6 +55,7 @@ namespace Tiles {
             // public void RemoveTile(string tileName){
             //     moveBehavior.RemoveTile(tileName);
             // }
+
 
             public override void _Ready()
             {
@@ -101,6 +108,22 @@ namespace Tiles {
             {
                 throw new NotImplementedException();
             }
+
+            public void TakeDamage(int damage)
+            {
+                Defender.TakeDamage(damage);
+            }
+
+            public void ReceiveHealing(int amount)
+            {
+                Defender.ReceiveHealing(amount);
+            }
+
+            public void ConnectTookDamage(Action<Vector2I, int> action)
+            {
+                throw new NotImplementedException();
+            }
+
         }
     }
 

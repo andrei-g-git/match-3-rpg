@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2bbcbjgw186g"]
+[gd_scene load_steps=13 format=3 uid="uid://c2bbcbjgw186g"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
 [ext_resource type="Script" uid="uid://c5do70scu2xcx" path="res://features/tiles/animators/AttackAnimator.cs" id="6_di0hx"]
 [ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="9_1bdos"]
+[ext_resource type="Script" uid="uid://m5cqhy1t8qrk" path="res://features/tiles/behavior/Defend.cs" id="10_c77j6"]
 [ext_resource type="Script" uid="uid://be02jfmlvfifs" path="res://features/tiles/behavior/Movement.cs" id="10_di0hx"]
 [ext_resource type="Script" uid="uid://bk3ko6hcthm46" path="res://features/tiles/behavior/Haul.cs" id="11_0hbcq"]
 
@@ -47,11 +48,18 @@ script = ExtResource("5_hunij")
 unique_name_in_owner = true
 script = ExtResource("9_1bdos")
 
-[node name="Movement" type="Node" parent="Model" index="4"]
+[node name="Defender" type="Node" parent="Model" index="4"]
+unique_name_in_owner = true
+script = ExtResource("10_c77j6")
+health = 10
+maxHealth = 10
+defense = 2
+
+[node name="Movement" type="Node" parent="Model" index="5"]
 unique_name_in_owner = true
 script = ExtResource("10_di0hx")
 stamina = 10
 
-[node name="Hauler" type="Node" parent="Model" index="5"]
+[node name="Hauler" type="Node" parent="Model" index="6"]
 unique_name_in_owner = true
 script = ExtResource("11_0hbcq")

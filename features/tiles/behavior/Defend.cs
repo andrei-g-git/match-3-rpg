@@ -2,9 +2,14 @@ using System;
 using Godot;
 
 public partial class Defend : Node, Defensive.Model{
-    private int health = 10; //these shouldn't init with values OR have editor exports! STATS SHOULD LOAD FROM DISK DATA!
+    [Export]
+    private int health;// = 10; //these shouldn't init with values OR have editor exports! STATS SHOULD LOAD FROM DISK DATA!
+    [Export]
+    private int maxHealth;
+    [Export]
+    private int defense;
     public int Health => health;
-    private int defense = 1;
+    public int MaxHealth => maxHealth;
     public int Defense => defense;
     private Tiles.Model model;
 
@@ -24,5 +29,10 @@ public partial class Defend : Node, Defensive.Model{
     public void ConnectTookDamage(Action<Vector2I, int> action){
         //TookDamage += action;
         Connect(SignalName.TookDamage, Callable.From(action));
+    }
+
+    public void ReceiveHealing(int amount){
+        health += amount;
+        if(health > maxHealth) health = maxHealth;
     }
 }

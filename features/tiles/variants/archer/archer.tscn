@@ -17,3 +17,5 @@ defender = NodePath("Defender")
 [node name="Defender" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true
 script = ExtResource("4_j5csd")
+health = 4
+maxHealth = 4

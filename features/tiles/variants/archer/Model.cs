@@ -11,6 +11,8 @@ namespace Tiles {
             public Defensive.Model Defender => defender as Defensive.Model;
             public int Health => Defender.Health;
             public int Defense => Defender.Defense;
+            public int MaxHealth => Defender.MaxHealth;
+
             private Vector2I position;
 
             public void TakeDamage(int damage){
@@ -21,6 +23,9 @@ namespace Tiles {
                 (defender as Defensive.Model).ConnectTookDamage(action);
             }
 
+            public void ReceiveHealing(int amount){
+                Defender.ReceiveHealing(amount);
+            }
         }        
     }
 
