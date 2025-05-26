@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ReplaceableController : TextureRect{
+public partial class ReplaceableController : TextureButton{
 	[Export]
 	private string type;
 
@@ -9,7 +9,7 @@ public partial class ReplaceableController : TextureRect{
         //return base._GetDragData(atPosition);
 
 		var previewTexture = new TextureRect();
-		previewTexture.Texture = Texture;
+		previewTexture.Texture = TextureNormal;
 		previewTexture.Size = Size/2;
 		// var preview = new Control();
 		// preview.AddChild()

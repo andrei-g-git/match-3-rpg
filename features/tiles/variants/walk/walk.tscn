@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_2vxwd"]
 [ext_resource type="Texture2D" uid="uid://o1ujk2ulrwxl" path="res://assets/images/tiles/walk.png" id="2_r8c4e"]
 [ext_resource type="Texture2D" uid="uid://16u4uwpfl121" path="res://assets/images/tiles/walk_p.png" id="3_djg6i"]
-[ext_resource type="Script" uid="uid://b5gmd7wx1hkmq" path="res://features/tiles/variants/walk/Controller.cs" id="4_khh45"]
+[ext_resource type="Script" uid="uid://c7fxy68755nlf" path="res://features/tiles/variants/walk/Manager.cs" id="4_khh45"]
 [ext_resource type="Script" uid="uid://cqa18112cq2wc" path="res://features/tiles/variants/walk/Model.cs" id="5_khh45"]
 [ext_resource type="Script" uid="uid://c0wotg4mmgwqc" path="res://features/tiles/behavior/Walkway.cs" id="6_xaq8t"]
 

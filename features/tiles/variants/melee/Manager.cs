@@ -1,7 +1,7 @@
 using Godot;
 
 namespace Melee{
-    public partial class Controller: TileNode{
+    public partial class Manager: TileNode{
         public override void _Ready(){
             base._Ready(); //well this is problematic...
 

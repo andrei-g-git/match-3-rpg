@@ -23,7 +23,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
 
     public override void _Ready(){
         //children will call this before overriding ... so it's not really being overriden
-        controller = GetNode<Node>("%Controller"); //this doesn't work either
+        controller = GetNode<Node>("%Manager"); //this doesn't work either
         animators = GetNode<Node>("%Animators"); 
         model = GetNode<Node>("%Model"); 
 

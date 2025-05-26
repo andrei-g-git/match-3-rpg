@@ -18,7 +18,7 @@ public partial class Swapping : Node, Swapable.Model, GridItem{
     public delegate void GotMatchesEventHandler(Array<Vector2I> matches);
 
     public override void _Ready(){
-        var signalEmitter = GetNode<Node>("%Controller");
+        var signalEmitter = GetNode<Node>("%Manager");
         model = GetNode<Node>("%Model");
         (signalEmitter as Tiles.Controller).TriedSwapping += TrySwapping;
     }

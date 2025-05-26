@@ -43,3 +43,4 @@ script = ExtResource("3_aq3js")
 
 [node name="Walk" parent="ReplaceablesContainer/HBoxContainer" instance=ExtResource("4_ojnl1")]
 layout_mode = 2
+script = null

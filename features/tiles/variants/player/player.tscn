@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
-[ext_resource type="Script" uid="uid://mgasm3n7oogn" path="res://features/tiles/variants/player/Controller.cs" id="3_di0hx"]
+[ext_resource type="Script" uid="uid://dq781qicc0khi" path="res://features/tiles/variants/player/Manager.cs" id="3_di0hx"]
 [ext_resource type="Script" uid="uid://ca6vvh06y5mro" path="res://features/tiles/animators/TransportAnimator.cs" id="4_hunij"]
 [ext_resource type="Script" uid="uid://bc5jwp3uuubtw" path="res://features/tiles/variants/player/Animators.cs" id="4_sdsyd"]
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_hunij"]
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
 [ext_resource type="Script" uid="uid://c5do70scu2xcx" path="res://features/tiles/animators/AttackAnimator.cs" id="6_di0hx"]
 [ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="9_1bdos"]
-[ext_resource type="Script" uid="uid://m5cqhy1t8qrk" path="res://features/tiles/behavior/Defend.cs" id="10_c77j6"]
+[ext_resource type="Script" uid="uid://clvt00ras2j7f" path="res://features/tiles/behavior/Defender.cs" id="10_c77j6"]
 [ext_resource type="Script" uid="uid://be02jfmlvfifs" path="res://features/tiles/behavior/Movement.cs" id="10_di0hx"]
 [ext_resource type="Script" uid="uid://bk3ko6hcthm46" path="res://features/tiles/behavior/Haul.cs" id="11_0hbcq"]
 
@@ -33,8 +33,9 @@ duration = 0.52
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2" node_paths=PackedStringArray("damageBuffer", "offender", "defender", "hauler", "movement")]
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer", "offender", "defender", "hauler", "movement")]
 script = ExtResource("5_kqfgq")
+transporter = NodePath("../Animators/Transport")
 damageBuffer = NodePath("DamageBuffer")
 offender = NodePath("Offender")
 defender = NodePath("Defender")

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class Defend : Node, Defensive.Model{
+public partial class Defender : Node, Defensive.Model{
     [Export]
     private int health;// = 10; //these shouldn't init with values OR have editor exports! STATS SHOULD LOAD FROM DISK DATA!
     [Export]

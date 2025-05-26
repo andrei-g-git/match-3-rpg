@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c36ixilbso4hw" path="res://assets/images/tiles/archer.png" id="2_wpebl"]
 [ext_resource type="Texture2D" uid="uid://dmhm8hj8n0a15" path="res://assets/images/tiles/archer_p.png" id="3_ulbmt"]
 [ext_resource type="Script" uid="uid://cvxhhddo464os" path="res://features/tiles/variants/archer/Model.cs" id="4_8n0rb"]
-[ext_resource type="Script" uid="uid://m5cqhy1t8qrk" path="res://features/tiles/behavior/Defend.cs" id="4_j5csd"]
+[ext_resource type="Script" uid="uid://clvt00ras2j7f" path="res://features/tiles/behavior/Defender.cs" id="4_j5csd"]
 
 [node name="Archer" instance=ExtResource("1_uxrsv")]
 texture_normal = ExtResource("2_wpebl")
@@ -19,3 +19,4 @@ unique_name_in_owner = true
 script = ExtResource("4_j5csd")
 health = 4
 maxHealth = 4
+defense = null
