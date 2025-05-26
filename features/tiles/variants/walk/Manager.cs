@@ -1,7 +1,7 @@
 using Godot;
 
 namespace Walk{
-    public partial class Manager: TileNode, Replaceable.Controller{
+    public partial class Manager: TileNode/* , Replaceable.Controller */{
         public override void _Ready(){
             base._Ready();
 

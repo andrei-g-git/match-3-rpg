@@ -3,6 +3,8 @@ using System;
 namespace Constants{ //shouldd get rid of this and use records
     public enum TileNames{
         Archer , 
+        Barrel, //NEW
+        Chair, //NEW, now the initials matrix won't show unique tiles
         Chest, 
         Defend, 
         Energy, 
@@ -12,8 +14,10 @@ namespace Constants{ //shouldd get rid of this and use records
         Player, 
         Ranged, 
         Stamina, 
+        Table, //NEW
         Unlock, 
         Walk, 
+        Wall
     }
 
     public interface NamableTile{
