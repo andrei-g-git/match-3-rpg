@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bksxfk4wrqqho"]
+[gd_scene load_steps=5 format=3 uid="uid://bksxfk4wrqqho"]
 
 [ext_resource type="Texture2D" uid="uid://cmy5w5gf0asrn" path="res://bg-square.png" id="1_73w1c"]
 [ext_resource type="PackedScene" uid="uid://b62yrohccjj0" path="res://features/tactical grid/tactical_grid.tscn" id="2_ge4kj"]
+[ext_resource type="Script" uid="uid://dy8tjftcisv4d" path="res://features/replaceables/ReplaceableTileInventory.cs" id="3_aq3js"]
+[ext_resource type="PackedScene" uid="uid://l652ub713hb7" path="res://features/replaceables/tiles/walk.tscn" id="4_ojnl1"]
 
 [node name="Game" type="Node2D"]
 
@@ -23,3 +25,21 @@ layout_mode = 0
 columns = 4
 cols = 4
 rows = 4
+
+[node name="ReplaceablesContainer" type="Panel" parent="."]
+modulate = Color(0.360784, 0.572549, 0.529412, 0.854902)
+offset_left = 602.0
+offset_top = 6.0
+offset_right = 764.0
+offset_bottom = 755.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReplaceablesContainer"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 17.0
+offset_right = 98.0
+offset_bottom = 559.0
+script = ExtResource("3_aq3js")
+
+[node name="Walk" parent="ReplaceablesContainer/HBoxContainer" instance=ExtResource("4_ojnl1")]
+layout_mode = 2

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck0wurxnko73p"]
+
+[ext_resource type="Script" uid="uid://cm116ux0vvsxi" path="res://features/replaceables/ReplaceableController.cs" id="1_vtt2t"]
+
+[node name="ReplaceableTile" type="TextureButton"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_vertical = 0
+script = ExtResource("1_vtt2t")
