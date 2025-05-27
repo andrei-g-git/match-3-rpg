@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbk46ui7vxuyj"]
+
+[ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_oi3fh"]
+[ext_resource type="Texture2D" uid="uid://1htm46t1vgp3" path="res://assets/images/tiles/table.png" id="2_snhx5"]
+[ext_resource type="Texture2D" uid="uid://bsb8w2ieplqww" path="res://assets/images/tiles/table_p.png" id="3_l01w0"]
+
+[node name="Table" instance=ExtResource("1_oi3fh")]
+texture_normal = ExtResource("2_snhx5")
+texture_pressed = ExtResource("3_l01w0")

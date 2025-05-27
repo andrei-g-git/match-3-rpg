@@ -19,7 +19,7 @@ public partial class TacticalGrid : GridContainer
 		/////////////////////
 
 
-		var table = FileUtilities.LoadCsv("D:\\projects\\match3\\mapping\\New folder\\a-7.1.csv");
+		var table = FileUtilities.LoadCsv("D:\\projects\\match3\\mapping\\New folder\\a-7.2.csv");
 		var intTable = Collections.Change2dStringArrayToInt(table);
 		var tileNameGrid = GridUtilities.AssignTileNamesToIntGrid(intTable);	
 		GridUtilities.PrintGridInitialsFromStringMatrix(tileNameGrid, "GRID INITIALS");

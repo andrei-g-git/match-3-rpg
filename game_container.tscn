@@ -1,9 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://bksxfk4wrqqho"]
+[gd_scene load_steps=21 format=3 uid="uid://bksxfk4wrqqho"]
 
 [ext_resource type="Texture2D" uid="uid://cmy5w5gf0asrn" path="res://bg-square.png" id="1_73w1c"]
 [ext_resource type="PackedScene" uid="uid://b62yrohccjj0" path="res://features/tactical grid/tactical_grid.tscn" id="2_ge4kj"]
 [ext_resource type="Script" uid="uid://dy8tjftcisv4d" path="res://features/replaceables/ReplaceableTileInventory.cs" id="3_aq3js"]
+[ext_resource type="PackedScene" uid="uid://biktknumwu2py" path="res://features/tiles/variants/archer/archer.tscn" id="3_f2hay"]
+[ext_resource type="PackedScene" uid="uid://cwmiat5e5hta4" path="res://features/tiles/variants/barrel/barrel.tscn" id="4_7kvip"]
 [ext_resource type="PackedScene" uid="uid://l652ub713hb7" path="res://features/replaceables/tiles/walk.tscn" id="4_ojnl1"]
+[ext_resource type="PackedScene" uid="uid://cm0htkrj5xqc3" path="res://features/tiles/variants/chair/chair.tscn" id="5_gjebb"]
+[ext_resource type="PackedScene" uid="uid://ddmhkmi84mjie" path="res://features/tiles/variants/chest/chest.tscn" id="6_dogg7"]
+[ext_resource type="PackedScene" uid="uid://b2v860hcpvhjf" path="res://features/tiles/variants/defend/defend.tscn" id="7_fluj6"]
+[ext_resource type="PackedScene" uid="uid://bipiv0umwglc1" path="res://features/tiles/variants/energy/energy.tscn" id="8_ay8a2"]
+[ext_resource type="PackedScene" uid="uid://fy0q6ryr2dfd" path="res://features/tiles/variants/fighter/fighter.tscn" id="9_x6hdm"]
+[ext_resource type="PackedScene" uid="uid://b65diw677el5w" path="res://features/tiles/variants/health/health.tscn" id="10_1sm4p"]
+[ext_resource type="PackedScene" uid="uid://ctgm67cwn6xip" path="res://features/tiles/variants/melee/melee.tscn" id="11_5moos"]
+[ext_resource type="PackedScene" uid="uid://c2bbcbjgw186g" path="res://features/tiles/variants/player/player.tscn" id="12_8go6q"]
+[ext_resource type="PackedScene" uid="uid://b1bq2ke6ygc1g" path="res://features/tiles/variants/ranged/ranged.tscn" id="13_d1r73"]
+[ext_resource type="PackedScene" uid="uid://nsgudna3nkel" path="res://features/tiles/variants/stamina/stamina.tscn" id="14_eyjl0"]
+[ext_resource type="PackedScene" uid="uid://cbk46ui7vxuyj" path="res://features/tiles/variants/table/table.tscn" id="15_pqmma"]
+[ext_resource type="PackedScene" uid="uid://iarf1kc6h53k" path="res://features/tiles/variants/unlock/unlock.tscn" id="16_ygbuu"]
+[ext_resource type="PackedScene" uid="uid://bfq5oc6q021h6" path="res://features/tiles/variants/walk/walk.tscn" id="17_qvuxw"]
+[ext_resource type="PackedScene" uid="uid://bmgdagyf458mf" path="res://features/tiles/variants/wall/wall.tscn" id="18_jlki0"]
 
 [node name="Game" type="Node2D"]
 
@@ -23,6 +39,7 @@ texture = ExtResource("1_73w1c")
 [node name="TacticalGrid" parent="Panel" instance=ExtResource("2_ge4kj")]
 layout_mode = 0
 columns = 4
+tileScenes = Array[PackedScene]([ExtResource("3_f2hay"), ExtResource("4_7kvip"), ExtResource("5_gjebb"), ExtResource("6_dogg7"), ExtResource("7_fluj6"), ExtResource("8_ay8a2"), ExtResource("9_x6hdm"), ExtResource("10_1sm4p"), ExtResource("11_5moos"), ExtResource("12_8go6q"), ExtResource("13_d1r73"), ExtResource("14_eyjl0"), ExtResource("15_pqmma"), ExtResource("16_ygbuu"), ExtResource("17_qvuxw"), ExtResource("18_jlki0")])
 cols = 4
 rows = 4
 

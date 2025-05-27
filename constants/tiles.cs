@@ -17,7 +17,7 @@ namespace Constants{ //shouldd get rid of this and use records
         Table, //NEW
         Unlock, 
         Walk, 
-        Wall
+        Wall //WALL
     }
 
     public interface NamableTile{
