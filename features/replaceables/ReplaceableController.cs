@@ -14,7 +14,12 @@ public partial class ReplaceableController : TextureButton{
 		// var preview = new Control();
 		// preview.AddChild()
 		SetDragPreview(previewTexture);
+		GD.Print("drag data:   " + type);
 		return type;
     }
+
+	// public void _on_pressed(){
+	// 	GD.Print("pressssssssssing");
+	// }
 
 }

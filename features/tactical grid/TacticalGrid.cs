@@ -10,13 +10,13 @@ public partial class TacticalGrid : GridContainer
 	[Export] public int cols;
 	[Export] public int rows;	
 	public override void _Ready(){
-		///////////test
-		var foo = new Ztest.Impl();
-		var bar = new Ztest.Sender();
-		(bar as Ztest.Sender).ConnectMySignal((foo as Ztest.Inter).SomeMethod);
-		AddChild(foo);
-		AddChild(bar);
-		/////////////////////
+		// ///////////test
+		// var foo = new Ztest.Impl();
+		// var bar = new Ztest.Sender();
+		// (bar as Ztest.Sender).ConnectMySignal((foo as Ztest.Inter).SomeMethod);
+		// AddChild(foo);
+		// AddChild(bar);
+		// /////////////////////
 
 
 		var table = FileUtilities.LoadCsv("D:\\projects\\match3\\mapping\\New folder\\a-7.2.csv");

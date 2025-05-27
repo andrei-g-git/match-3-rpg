@@ -13,8 +13,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_sr53p")
 
-[node name="Controller" type="Node" parent="."]
+[node name="Controller" type="Control" parent="."]
 unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 64.0
 script = ExtResource("1_pnepx")
 
 [node name="DragController" type="Node" parent="Controller"]

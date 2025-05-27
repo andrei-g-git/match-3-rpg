@@ -14,8 +14,12 @@ texture_pressed = ExtResource("3_5axg1")
 [node name="Controller" parent="." index="0"]
 script = ExtResource("4_qmydm")
 
-[node name="ReplaceController" type="Node" parent="Controller" index="1"]
+[node name="ReplaceController" type="Control" parent="Controller" index="1"]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 64.0
 script = ExtResource("4_23v20")
 
 [node name="Model" parent="." index="2"]

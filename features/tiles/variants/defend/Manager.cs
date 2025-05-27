@@ -16,8 +16,28 @@ namespace Defend{
         public override void _Ready(){
             base._Ready();
 
-            var replaceController = GetNode<Node>("%ReplaceController") as Replaceable.Controller;
-            Connect(SignalName.ButtonUp, Callable.From((Action<Vector2, Variant>) replaceController._DropData));
+            // var replaceController = GetNode<Node>("%ReplaceController") as Replaceable.Controller;
+            // Connect(SignalName.ButtonUp, Callable.From((Action<Vector2, Variant>) replaceController._DropData));
+
+
+            // //test
+            // Connect(/* BaseButton. */SignalName.ButtonUp, Callable.From(Bar));
         }
+
+        // public void Bar(){
+        //     GD.Print("BUTTON UP, from defend manager");
+        // }
+
+        // public override bool _CanDropData(Vector2 atPosition, Variant data)
+        // {
+        //     base._CanDropData(atPosition, data);
+        //     return true;
+        // }
+
+        // public override void _DropData(Vector2 atPosition, Variant data)
+        // {
+        //     base._DropData(atPosition, data);
+        //     GD.Print("DATA FROM ROOT DEFENSE MANAGER:   " + (string) data);
+        // }
     }
 }
