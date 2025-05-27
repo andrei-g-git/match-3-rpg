@@ -2,13 +2,18 @@ using Godot;
 using System;
 
 namespace Defend{
-	public partial class Controller : Control, ControllableTile/* , Replaceable.Controller */{
+	public partial class Controller : Control, ControllableTile, Replaceable.Controller{
 		[Export]
 		public Node dragController;
 		[Export]
 		public Control replaceController;
 		public Draggable.Controller DragController { get => dragController as Draggable.Controller; /* set => dragController = (Node) value; */ }
-        //public Replaceable.Controller ReplaceController { get => replaceController as Replaceable.Controller; }
+        public Replaceable.Controller ReplaceController { get => replaceController as Replaceable.Controller; }
+
+        public void ConnectReplacingTile(Action<int> action)
+        {
+            ReplaceController.ConnectReplacingTile(action);
+        }
 
 
         // public override bool _CanDropData(Vector2 atPosition, Variant data)
@@ -21,7 +26,7 @@ namespace Defend{
         //     GD.Print("DROPPED TO PARENT CONTRILLER:   " + (string) data);
         // }
 
-		public Replaceable.Controller GetReplaceController(){
+        public Replaceable.Controller GetReplaceController(){
 			return replaceController as Replaceable.Controller;
 		}
     }	

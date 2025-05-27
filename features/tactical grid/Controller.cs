@@ -36,6 +36,8 @@ namespace Grid {
 		}
 
 
+		//this is more of a model...
+
 		private void PopulateGrid(int columns_, int rows_, Node parent_, Array<Array<TileNode>> tileNodes_) {
 			tileNodes_.Resize(rows_);			
 			for(int x = 0; x < rows_; x++) {
@@ -50,6 +52,8 @@ namespace Grid {
 				}
 			}
 		}
+
+		// private void Repopulate()
 
 		private void RegisterObservers(int columns_, int rows_, Model gridModel_, Array<Array<TileNode>> tileNodes_) {
             for (int x = 0; x < rows_; x++) {

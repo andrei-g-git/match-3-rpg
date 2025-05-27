@@ -37,6 +37,7 @@ public partial class TacticalGrid : GridContainer
 			tileNodeFactory
 		);
 
+		//THIS SHOULD PROBABLY HAPPEN AFTER controller.Initialize() since that's where tiles are added to the parent grid
 		(model as IGrid).ConnectRandomizedTile((string tileName, Vector2I position) => {
 			var tileNode = tileNodeFactory.Create(
 				(TileNames) Enum.Parse(typeof(TileNames), char.ToUpper(tileName[0]) + tileName.Substring(1)),
@@ -46,6 +47,8 @@ public partial class TacticalGrid : GridContainer
 			model.SetTile(tileNode, position.X, position.Y); //probably won't work, Create() aleardy adds the node to the tree willy nilly and that's not enough initialization I think, still need to register etc...
 		});
 
+		
+
 
 		//delete, temporary
 		controller.TemporaryTileNameGrid = tileNameGrid;	
@@ -53,6 +56,6 @@ public partial class TacticalGrid : GridContainer
 			
 		controller.Initialize();
 
-
+		model.ConnectReplaceableTiles(); //sould be in initializer
 	}
 }

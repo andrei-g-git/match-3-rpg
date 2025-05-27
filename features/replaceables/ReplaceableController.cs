@@ -1,9 +1,10 @@
+using Constants;
 using Godot;
 using System;
 
 public partial class ReplaceableController : TextureButton{
 	[Export]
-	private string type;
+	private TileNames type;
 
     public override Variant _GetDragData(Vector2 atPosition){
         //return base._GetDragData(atPosition);
@@ -15,7 +16,7 @@ public partial class ReplaceableController : TextureButton{
 		// preview.AddChild()
 		SetDragPreview(previewTexture);
 		GD.Print("drag data:   " + type);
-		return type;
+		return (int) type;
     }
 
 	// public void _on_pressed(){

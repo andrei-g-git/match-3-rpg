@@ -11,8 +11,10 @@
 texture_normal = ExtResource("2_31caa")
 texture_pressed = ExtResource("3_5axg1")
 
-[node name="Controller" parent="." index="0"]
+[node name="Controller" parent="." index="0" node_paths=PackedStringArray("dragController", "replaceController")]
 script = ExtResource("4_qmydm")
+dragController = NodePath("DragController")
+replaceController = NodePath("ReplaceController")
 
 [node name="ReplaceController" type="Control" parent="Controller" index="1"]
 unique_name_in_owner = true

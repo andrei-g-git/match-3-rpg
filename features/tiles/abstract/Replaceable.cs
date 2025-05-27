@@ -1,4 +1,5 @@
 using System;
+using Constants;
 using Godot;
 
 namespace Replaceable{
@@ -12,5 +13,6 @@ namespace Replaceable{
         public void _DropData(Vector2 atPosition, Variant data);
         // public void ConnectCanDropData(Action<Vector2, Variant> action);
         // public void ConnectDropData(Action<Vector2, Variant> action);
+        public void ConnectReplacingTile(Action<int> action);
     }
 }

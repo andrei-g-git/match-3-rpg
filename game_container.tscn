@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bksxfk4wrqqho"]
+[gd_scene load_steps=22 format=3 uid="uid://bksxfk4wrqqho"]
 
 [ext_resource type="Texture2D" uid="uid://cmy5w5gf0asrn" path="res://bg-square.png" id="1_73w1c"]
 [ext_resource type="PackedScene" uid="uid://b62yrohccjj0" path="res://features/tactical grid/tactical_grid.tscn" id="2_ge4kj"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://iarf1kc6h53k" path="res://features/tiles/variants/unlock/unlock.tscn" id="16_ygbuu"]
 [ext_resource type="PackedScene" uid="uid://bfq5oc6q021h6" path="res://features/tiles/variants/walk/walk.tscn" id="17_qvuxw"]
 [ext_resource type="PackedScene" uid="uid://bmgdagyf458mf" path="res://features/tiles/variants/wall/wall.tscn" id="18_jlki0"]
+[ext_resource type="Script" uid="uid://bblpu5si8m8vk" path="res://features/tactical grid/View.cs" id="19_7kvip"]
 
 [node name="Game" type="Node2D"]
 
@@ -43,6 +44,11 @@ tileScenes = Array[PackedScene]([ExtResource("3_f2hay"), ExtResource("4_7kvip"),
 cols = 4
 rows = 4
 
+[node name="View" type="GridContainer" parent="Panel/TacticalGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("19_7kvip")
+
 [node name="ReplaceablesContainer" type="Panel" parent="."]
 modulate = Color(0.360784, 0.572549, 0.529412, 0.854902)
 offset_left = 602.0
@@ -60,3 +66,4 @@ script = ExtResource("3_aq3js")
 
 [node name="Walk" parent="ReplaceablesContainer/HBoxContainer" instance=ExtResource("4_ojnl1")]
 layout_mode = 2
+type = 0

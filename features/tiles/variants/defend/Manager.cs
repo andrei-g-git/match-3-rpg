@@ -3,6 +3,9 @@ using Godot;
 
 namespace Defend{
     public partial class Manager: TileNode{
+        [Export]
+        private Node controller;
+        public override Node Controller => controller; //< ---------------- Overriding causes a bajillion errors -- should prob remove Controller as a base tile child and just add the controllar versions to each inheriting tile
 
         // public override bool _CanDropData(Vector2 atPosition, Variant data){
         //     return base._CanDropData(atPosition, data);

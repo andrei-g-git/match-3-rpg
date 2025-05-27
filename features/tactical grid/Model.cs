@@ -16,6 +16,7 @@ namespace Grid {
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
         private Array<Array<TileNode>> observers = new Array<Array<TileNode>>();  
+        private Grid.Viewable view; //I guess this is also an observer...
         public Array<Array<TileNode>> Grid { get => observers; }
         [Signal]
         public delegate void RandomizedTileEventHandler(string tileName, Vector2I position);
@@ -35,6 +36,7 @@ namespace Grid {
             foreach(Array<TileNode> observer in observers){
                 observer.Resize(columns);
             }
+
         }
 
         public void Register(TileNode tileNode_, int x_, int y_) {
@@ -47,6 +49,28 @@ namespace Grid {
             //(tileNode_.Controller as Tiles.Controller).Model = tileModel; //apparently I gotta do it like this, exportiing doesn't work...(OBVIOUSLY IT SHOULD BE DONE FIRST)
             //((Swapable.Model)tileModel).ConnectWithSwapSignal((Vector2I source, Vector2I direction) => Swap2(source, direction));
         } 
+
+        public void ConnectReplaceableTiles(){
+            for(int x=0; x<observers.Count; x++){
+                for(int y=0; y<observers[x].Count; y++){
+                    var testttt = observers[x][y].Controller;
+                    if(observers[x][y].Controller is Replaceable.Controller dfg){
+                        var controller = observers[x][y].Controller as Replaceable.Controller;
+                        controller.ConnectReplacingTile(ReplaceTile(x, y));                        
+                    }
+                }
+            }
+        }
+
+        public Action<int> ReplaceTile(int col, int row){
+            return (int tileEnumAsInt) => {
+                var tileType = (TileNames) tileEnumAsInt;
+                GD.Print("Greetings from the grid model, will now replace:  " + tileType.ToString());
+            };
+        }
+        // public void ReplaceTile(int tileEnumAsInt){
+            
+        // }
 
         public void SetTile(TileNode tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;

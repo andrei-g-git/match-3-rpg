@@ -1,8 +1,13 @@
+using Constants;
 using Godot;
+using Godot.Collections;
 using Replaceable;
 using System;
 
+
 public partial class ReplaceController : Control, Replaceable.Controller{
+    [Signal]
+    public delegate void ReplacingTileEventHandler(TileNames type);
     //public Replaceable.Controller ReplaceController { get => this; }
 
 
@@ -18,12 +23,19 @@ public partial class ReplaceController : Control, Replaceable.Controller{
     }
 
     public override void _DropData(Vector2 atPosition, Variant data){
-        GD.Print("REPLACING TILE WITH:   " + (string) data); //check if it's an actual string...
+        //int enumValue = (int)(TileNames)Enum.Parse(typeof(TileNames), (string))
+        TileNames tileType = (TileNames)(int)data;
+        GD.Print("REPLACING TILE WITH:   " + tileType.ToString()); //check if it's an actual string...
+        EmitSignal(SignalName.ReplacingTile, (int) data);
     }
     public Controller GetReplaceController(){
         return this;
     }
-    
+
+    public void ConnectReplacingTile(Action<int> action){
+        Connect(SignalName.ReplacingTile, Callable.From(action));
+    }
+
     // public void ConnectCanDropData(Action<Vector2, Variant> action){
     //     Connect(Signal)
     // }
@@ -31,4 +43,5 @@ public partial class ReplaceController : Control, Replaceable.Controller{
     // public void ConnectDropData(Action<Vector2, Variant> action){
     //     throw new NotImplementedException();
     // }
+
 }
