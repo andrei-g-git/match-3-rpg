@@ -6,9 +6,9 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
     [Export] public int SideLength {get; set;} = 64;
     [Export] public int Margin {get; set;}= 3;
     public /* TileName */ string Type => (model as Tiles.Model).Name;//(model as Tiles.Model).Type; 
-    [Export]
+    // [Export]
     private Node controller;
-    public virtual Node Controller { get => controller; set => controller = value; }
+    public /* virtual */ Node Controller { get => controller; set => controller = value; }
     //[Export]
     private Node model; //this doesn't actually work I don't know why
     public Node Model { get => model; set => model = value; }
@@ -24,6 +24,7 @@ public partial class TileNode : TextureButton, Controllable, Modelable, Animatab
     public override void _Ready(){
         //children will call this before overriding ... so it's not really being overriden
         //controller = GetNode<Node>("%DragController"); //this doesn't work either
+        controller = GetNode<Node>("%Controller");
         animators = GetNode<Node>("%Animators"); 
         model = GetNode<Node>("%Model"); 
 

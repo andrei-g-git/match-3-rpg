@@ -3,9 +3,9 @@ using Godot;
 
 namespace Defend{
     public partial class Manager: TileNode{
-        [Export]
+        //[Export]
         private Node controller;
-        public override Node Controller => controller; //< ---------------- Overriding causes a bajillion errors -- should prob remove Controller as a base tile child and just add the controllar versions to each inheriting tile
+        public /* override */ Node Controller => controller; //< ---------------- Overriding causes a bajillion errors -- should prob remove Controller as a base tile child and just add the controllar versions to each inheriting tile
 
         // public override bool _CanDropData(Vector2 atPosition, Variant data){
         //     return base._CanDropData(atPosition, data);
@@ -18,6 +18,8 @@ namespace Defend{
 
         public override void _Ready(){
             base._Ready();
+
+            //Controller = GetNode<Node>("%Controller");
 
             // var replaceController = GetNode<Node>("%ReplaceController") as Replaceable.Controller;
             // Connect(SignalName.ButtonUp, Callable.From((Action<Vector2, Variant>) replaceController._DropData));

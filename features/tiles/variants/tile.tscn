@@ -8,11 +8,10 @@
 [ext_resource type="Script" uid="uid://ctdxf5ajlt1bn" path="res://features/tiles/behavior/Swapping.cs" id="4_w3q71"]
 [ext_resource type="Script" uid="uid://b1hdqclnw3wgv" path="res://features/tiles/behavior/Collapse.cs" id="5_sr53p"]
 
-[node name="Tile" type="TextureButton" node_paths=PackedStringArray("controller")]
+[node name="Tile" type="TextureButton"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_sr53p")
-controller = NodePath("Controller")
 
 [node name="Controller" type="Control" parent="."]
 unique_name_in_owner = true
