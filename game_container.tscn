@@ -38,6 +38,7 @@ offset_bottom = 40.0
 texture = ExtResource("1_73w1c")
 
 [node name="TacticalGrid" parent="Panel" instance=ExtResource("2_ge4kj")]
+unique_name_in_owner = true
 layout_mode = 0
 columns = 4
 tileScenes = Array[PackedScene]([ExtResource("3_f2hay"), ExtResource("4_7kvip"), ExtResource("5_gjebb"), ExtResource("6_dogg7"), ExtResource("7_fluj6"), ExtResource("8_ay8a2"), ExtResource("9_x6hdm"), ExtResource("10_1sm4p"), ExtResource("11_5moos"), ExtResource("12_8go6q"), ExtResource("13_d1r73"), ExtResource("14_eyjl0"), ExtResource("15_pqmma"), ExtResource("16_ygbuu"), ExtResource("17_qvuxw"), ExtResource("18_jlki0")])

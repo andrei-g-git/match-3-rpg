@@ -15,6 +15,8 @@ namespace Grid {
         private Array<Array<Tiles.Model>> grid = new Array<Array<Tiles.Model>>();
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
+        private Grid.Factory gridFactory;
+        private Node tacticalGrid;
         private Array<Array<TileNode>> observers = new Array<Array<TileNode>>();  
         private Grid.Viewable view; //I guess this is also an observer...
         public Array<Array<TileNode>> Grid { get => observers; }
@@ -23,11 +25,15 @@ namespace Grid {
         public Model(
             Array<PackedScene> tileResources_, //HUHH???? Ce fac cu astea??
             Array<Array<string>> tileNameMatrix_,
-            Tiles.Factory tileFactory_
+            Tiles.Factory tileFactory_,
+            Grid.Factory gridFactory_,
+            Node tacticalGrid_
         ){
             tileResources = tileResources_;
             tileNameMatrix = tileNameMatrix_;
             tileFactory = tileFactory_;
+            gridFactory = gridFactory_;
+            tacticalGrid = tacticalGrid_;
         }
         public void Initialize(){
             rows = tileNameMatrix.Count;
@@ -66,6 +72,16 @@ namespace Grid {
             return (int tileEnumAsInt) => {
                 var tileType = (TileNames) tileEnumAsInt;
                 GD.Print("Greetings from the grid model, will now replace:  " + tileType.ToString());
+
+                //var parent = GetNode<Node>("%TacticalGrid"); //nosir, I do not like this...  (also the model is not part of the scene tree, it wasn't added...)
+                var newTile = gridFactory.Create(
+                    tileType,
+                    tacticalGrid,
+                    new Vector2I(col, row)
+                );
+                SetTile(newTile, col, row);
+
+                var bp = 234;
             };
         }
         // public void ReplaceTile(int tileEnumAsInt){

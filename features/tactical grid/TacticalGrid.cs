@@ -24,13 +24,17 @@ public partial class TacticalGrid : GridContainer
 		var tileNameGrid = GridUtilities.AssignTileNamesToIntGrid(intTable);	
 		GridUtilities.PrintGridInitialsFromStringMatrix(tileNameGrid, "GRID INITIALS");
 
+		var tileNodeFactory = new Grid.Factory(tileScenes);
+
 		var model = new Model(
 			tileScenes,
 			tileNameGrid,
-			new Tiles.Factory()
+			new Tiles.Factory(),
+			tileNodeFactory,
+			this
 		);
-		var tileNodeFactory = new Grid.Factory(tileScenes);
 		model.Initialize();
+
 		var controller = new Controller(
 			model,
 			this,
