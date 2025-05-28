@@ -18,6 +18,7 @@ unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 64.0
 offset_bottom = 64.0
+mouse_filter = 2
 script = ExtResource("1_pnepx")
 
 [node name="DragController" type="Node" parent="Controller"]

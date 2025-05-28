@@ -34,7 +34,7 @@ namespace Grid {
             return tileNode;
         }
 
-        private void InitializeNode(TileNames name, Node tileNode, Vector2I position){
+        private void InitializeNode(TileNames name, Node tileNode, Vector2I position){ //getting rid of this...
             var _model = ((Controllable) tileNode).Model as Tiles.Model;
             _model.Position = position;
             

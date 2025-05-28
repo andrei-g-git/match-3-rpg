@@ -18,6 +18,7 @@ public partial class ReplaceController : Control, Replaceable.Controller{
 	// 	tileNode.Connect(BaseButton.SignalName.ButtonUp, Callable.From((Action<Vector2, Variant>) _DropData));
     // }
 
+
     public override bool _CanDropData(Vector2 atPosition, Variant data){
         return ((string )data).Length > 0;
     }
