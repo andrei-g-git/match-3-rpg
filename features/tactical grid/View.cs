@@ -2,12 +2,18 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public partial class View : GridContainer, Grid.Viewable{
-	private int cols, rows = 0; 
-	// public int Cols {set => cols = value;} //these are redundant..
-	// public int Rows {set => rows= value;}
+public partial class View : GridContainer, Grid.Viewable, IGrid{ //IGrid ans Grid.Viewable kind of coincide..., should merge
+	private int cols, rows = 0;
+    public int Cols { get => cols; set => cols = value; }
+    public int Rows { get => rows; set => rows = value; }
 
-	public void Update(Array<Array<Node>> tiles){
+
+    public override void _Ready(){
+        Columns = cols;
+    }
+
+
+    public void Update(Array<Array<Node>> tiles){
 		ClearTiles();
 		cols = tiles.Count;
 		rows = tiles[0].Count;
@@ -23,4 +29,10 @@ public partial class View : GridContainer, Grid.Viewable{
 			tile.QueueFree();
 		}
 	}
+
+    public void ConnectRandomizedTile(Action<string, Vector2I> action)
+    {
+        throw new NotImplementedException();
+    }
+
 }

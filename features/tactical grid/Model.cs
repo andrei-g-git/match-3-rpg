@@ -9,8 +9,10 @@ using Tiles;
 
 namespace Grid {
     public partial class Model : Node, IGrid {
-        private int columns = 0;
-        private int rows = 0;
+        private int columns, rows = 0;
+        public int Cols{get => columns; set => columns = value;}
+        public int Rows{get => rows; set => rows = value;}
+
         private Array<Array<string>> tileNameMatrix = new Array<Array<string>>();
         private Array<Array<Tiles.Model>> grid = new Array<Array<Tiles.Model>>();
         private Array<PackedScene> tileResources;
