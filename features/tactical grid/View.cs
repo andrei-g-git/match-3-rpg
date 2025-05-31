@@ -58,7 +58,8 @@ public partial class View : GridContainer, Grid.Viewable, IGrid{ //IGrid ans Gri
 				//RemoveChild(tile);
 				AddChild(tile/* (Node) tiles[x][y] */);
 			}
-		}			
+		}
+		var bp = 2345;			
 	}
 
 	private async Task ClearTilesCoroutine(){

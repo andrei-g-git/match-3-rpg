@@ -9,7 +9,8 @@ namespace Abstractions{
 	}
 	public interface Modelable{
 		
-		public void Register(Control tileNode);
+		public void Register(/* Control */ Node tileNode, int x, int y);
+		public void Notify();
 	}	
 
 	public interface Viewable{

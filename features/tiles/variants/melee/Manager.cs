@@ -1,3 +1,4 @@
+using Abstractions;
 using Godot;
 
 namespace Melee{
@@ -7,6 +8,10 @@ namespace Melee{
 
             // var model = GetNode<Node>("%Model") as Tiles.Model;
             // (model as Tiles.Melee.Model).DamageBuffer = GetNode<Node>("%DamageBuffer") as BuffableDamage.Model;
+
+            var matching = GetNode("%Matching") as Updating.Model;
+            var model = GetNode("%Model") as Modelable;
+            matching.ConnectUpdate(model.Notify);
         }
     }
 }

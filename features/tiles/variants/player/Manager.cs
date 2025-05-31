@@ -24,9 +24,14 @@ namespace Player{
             var defender = GetNode<Node>("%Defender") as Defensive.Model;
             movement.ConnectGotHealth(defender.ReceiveHealingFrom);
 
-            var model = GetNode<Node>("%Model");
-            var board = (model as GridItem).Board;
-            //movement.ConnectLeftEmptyTile(board.Bar)
+            // var model = GetNode<Node>("%Model");
+            // var board = (model as GridItem).Board;
+            // //movement.ConnectLeftEmptyTile(board.Bar)
+
+            
+            var model = (GetParent().GetParent() as TacticalGrid).Model;
+            //matching.ConnectUpdate(model.Notify);
+            (movement as Updating.Model).ConnectUpdate(model.Notify);
 
             
         }

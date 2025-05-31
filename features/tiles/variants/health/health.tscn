@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b65diw677el5w"]
+[gd_scene load_steps=8 format=3 uid="uid://b65diw677el5w"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_pndg0"]
 [ext_resource type="Texture2D" uid="uid://calcyyir2g5o2" path="res://assets/images/tiles/health.png" id="2_ro3n1"]
 [ext_resource type="Texture2D" uid="uid://buejj1j7hbjja" path="res://assets/images/tiles/health_p.png" id="3_uq710"]
+[ext_resource type="Script" uid="uid://cavfv25rvhc4p" path="res://features/tiles/variants/health/Manager.cs" id="4_sklac"]
 [ext_resource type="Script" uid="uid://ms4bibboydcb" path="res://features/tiles/behavior/Healing.cs" id="5_882d6"]
 [ext_resource type="Script" uid="uid://bd3lftdck78ur" path="res://features/tiles/variants/health/Model.cs" id="5_yc8wy"]
 [ext_resource type="Script" uid="uid://cd5tj1mc3jeyg" path="res://features/tiles/behavior/Match.cs" id="6_882d6"]
@@ -10,6 +11,7 @@
 [node name="Health" instance=ExtResource("1_pndg0")]
 texture_normal = ExtResource("2_ro3n1")
 texture_pressed = ExtResource("3_uq710")
+script = ExtResource("4_sklac")
 
 [node name="Model" parent="." index="2" node_paths=PackedStringArray("healing")]
 script = ExtResource("5_yc8wy")

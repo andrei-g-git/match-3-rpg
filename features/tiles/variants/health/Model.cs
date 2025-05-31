@@ -1,9 +1,10 @@
+using Abstractions;
 using Constants;
 using Godot;
 
 namespace Tiles {
     namespace Health{
-        public partial class Model : Tiles.Model, Healable.Model, Consumable.Model, Listenable {
+        public partial class Model : Tiles.Model, Healable.Model, Consumable.Model, Listenable, Modelable {
             [Export]
             private Node healing;
             private Vector2I position;
@@ -30,6 +31,15 @@ namespace Tiles {
                 Healing.HealPlayerOnMatch();
             }
 
+            public void Notify()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Register(Node tileNode, int x, int y)
+            {
+                throw new System.NotImplementedException();
+            }
         }        
     }
 

@@ -19,6 +19,7 @@ namespace Defend{
         public override void _Ready(){
             base._Ready();
 
+
             //Controller = GetNode<Node>("%Controller");
 
             // var replaceController = GetNode<Node>("%ReplaceController") as Replaceable.Controller;

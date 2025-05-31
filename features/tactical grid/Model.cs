@@ -8,7 +8,7 @@ using Godot.Collections;
 using Tiles;
 
 namespace Grid {
-    public partial class Model : Node, IGrid {
+    public partial class Model : Node, IGrid, Abstractions.Modelable {
         private int columns, rows = 0;
         public int Cols{get => columns; set => columns = value;}
         public int Rows{get => rows; set => rows = value;}
@@ -47,7 +47,7 @@ namespace Grid {
 
         }
 
-        public void Register(TileNode tileNode_, int x_, int y_) {
+        public void Register(/* Tile */Node tileNode_, int x_, int y_) {
             SetTile(tileNode_, x_, y_);
 
             var tileModel = ((Controllable) tileNode_).Model;
@@ -68,6 +68,10 @@ namespace Grid {
                     }
                 }
             }
+        }
+
+        public void Notify(){
+            (tacticalGrid as Grid.Viewable).Update(observers);
         }
 
         public Action<int> ReplaceTile(int col, int row){

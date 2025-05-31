@@ -2,7 +2,7 @@ using System;
 using Godot;
 using Tiles;
 
-public partial class Movement : Node, Movable.Model{
+public partial class Movement : Node, Movable.Model, Updating.Model{
     // [Export]
     // private Node swapper; //matcher;   
     // [Export]
@@ -21,6 +21,8 @@ public partial class Movement : Node, Movable.Model{
     public delegate void GotHealthEventHandler(Tiles.Model healthTile);
     [Signal]
     public delegate void LeftEmptyTileEventHandler(Vector2I position);
+    [Signal]
+    public delegate void UpdateEventHandler();
     //[Signal]
     //public delegate void GotConsumableEventHandler(Consumable.Model item);
 
@@ -52,6 +54,7 @@ public partial class Movement : Node, Movable.Model{
         if(targetTile is Walkable.Model){ //THIS DOESN'T WORK because the actor already changed position and will itself appear as the target
             TakeAStep(target);
             EmitSignal(SignalName.TookStep, target);
+            EmitSignal(SignalName.Update);
         }else{
             if(targetTile is Obtainable.Model /* wefwef */){
                 
@@ -104,5 +107,10 @@ public partial class Movement : Node, Movable.Model{
 
     public void ConnectLeftEmptyTile(Action<Vector2I> action){
         Connect(SignalName.LeftEmptyTile, Callable.From(action));
+    }
+
+    public void ConnectUpdate(Action action)
+    {
+        Connect(SignalName.Update, Callable.From(action));
     }
 }

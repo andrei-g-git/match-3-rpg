@@ -7,6 +7,10 @@ using Grid;
 public partial class TacticalGrid : Node //GridContainer
 {
 	[Export] private Array<PackedScene> tileScenes; //should all be private
+	[Export]
+	public Node View;
+	private Grid.Model model;
+	public Grid.Model Model => model;
 
 	// [Export] public int cols;
 	// [Export] public int rows;	
@@ -34,7 +38,7 @@ public partial class TacticalGrid : Node //GridContainer
 
 		var tileNodeFactory = new Grid.Factory(tileScenes);
 
-		var model = new Model(
+		model = new Model(
 			tileScenes,
 			tileNameGrid,
 			new Tiles.Factory(),
