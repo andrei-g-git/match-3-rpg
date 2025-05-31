@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://fy0q6ryr2dfd"]
+[gd_scene load_steps=13 format=3 uid="uid://fy0q6ryr2dfd"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_jhh66"]
 [ext_resource type="Texture2D" uid="uid://dag143mrosf0o" path="res://assets/images/tiles/fighter.png" id="2_shuo2"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://bh25tr1e78yxn" path="res://features/tiles/variants/fighter/Model.cs" id="5_kjoix"]
 [ext_resource type="Script" uid="uid://d04t8vh0q3yil" path="res://features/tiles/behavior/Disposition.cs" id="6_3dhge"]
 [ext_resource type="PackedScene" uid="uid://bat5m03vla221" path="res://features/tiles/feedback/damage_number.tscn" id="6_06fdr"]
+[ext_resource type="Script" uid="uid://c5do70scu2xcx" path="res://features/tiles/animators/AttackAnimator.cs" id="7_qcjfy"]
+[ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="10_prd5c"]
+[ext_resource type="Script" uid="uid://be02jfmlvfifs" path="res://features/tiles/behavior/Movement.cs" id="11_m7hmm"]
 
 [node name="Fighter" instance=ExtResource("1_jhh66")]
 texture_normal = ExtResource("2_shuo2")
@@ -23,6 +26,13 @@ tileNode = NodePath("../..")
 
 [node name="DamageNumber" parent="Animators" index="2" instance=ExtResource("6_06fdr")]
 unique_name_in_owner = true
+
+[node name="Attack" type="Node" parent="Animators" index="3" node_paths=PackedStringArray("signalEmitter", "tileNode")]
+unique_name_in_owner = true
+script = ExtResource("7_qcjfy")
+duration = 0.515
+signalEmitter = NodePath("../../Model/Offender")
+tileNode = NodePath("../..")
 
 [node name="Model" parent="." index="2" node_paths=PackedStringArray("defender")]
 script = ExtResource("5_kjoix")
@@ -40,3 +50,11 @@ unique_name_in_owner = true
 script = ExtResource("6_3dhge")
 isAggressive = true
 isEnemy = true
+
+[node name="Offender" type="Node" parent="Model" index="4"]
+unique_name_in_owner = true
+script = ExtResource("10_prd5c")
+
+[node name="Movement" type="Node" parent="Model" index="5"]
+unique_name_in_owner = true
+script = ExtResource("11_m7hmm")
