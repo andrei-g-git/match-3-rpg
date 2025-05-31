@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Abstractions;
 using Constants;
 using Godot;
 using Godot.Collections;
@@ -81,9 +82,9 @@ public static partial class GridUtilities { //these shouldn't be utilities, they
 		return NamesGrid;
 	}	
 
-	public static void PlaceTileOnBoard(TileNode tile, Array<Array<TileNode>> board, int x, int y){
+	public static void PlaceTileOnBoard(/* Tile */Node tile, Array<Array</* Tile */Node>> board, int x, int y){
 		board[x][y] = tile;
-		(tile.Model as Tiles.Model).Position = new Vector2I(x, y);
+		((tile as Controllable).Model as Tiles.Model).Position = new Vector2I(x, y);
 	}	
 
 	public static Array<TileNode> FindTileInVincinity(TileNames tile, Vector2I center, Array<Array<TileNode>> board){

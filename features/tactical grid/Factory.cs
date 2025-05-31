@@ -34,6 +34,11 @@ namespace Grid {
             return tileNode;
         }
 
+        public TileNode CreateWithoutAdding(TileNames tileName, Vector2I position){
+            var tileNode =  (TileNode) preInstantiatedTiles[tileName.ToString().ToLower()].Instantiate();
+            return tileNode;
+        }
+
         private void InitializeNode(TileNames name, Node tileNode, Vector2I position){ //getting rid of this...
             var _model = ((Controllable) tileNode).Model as Tiles.Model;
             _model.Position = position;

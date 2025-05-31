@@ -46,4 +46,16 @@ public partial class Collections {
 			}
 		}
 	}
+
+	public static Array<Array<Node>> Convert2DArrayToNodes<[MustBeVariant]T>(Array<Array<T>> oldArray) where T : Node{
+		var newArray = new Array<Array<Node>>();
+		for(int x=0; x<oldArray.Count; x++){
+			var column = new Array<Node>();
+			for(int y=0; y<oldArray[0].Count; y++){
+				column.Add(oldArray[x][y]);
+			}
+			newArray.Add(column);
+		}
+		return newArray;
+	}
 }

@@ -18,10 +18,10 @@ namespace Grid {
         private Array<PackedScene> tileResources;
         private Tiles.Factory tileFactory;
         private Grid.Factory gridFactory;
-        private Node tacticalGrid;
-        private Array<Array<TileNode>> observers = new Array<Array<TileNode>>();  
+        private Node tacticalGrid; //it's the view
+        private Array<Array</* Tile */Node>> observers = new Array<Array</* Tile */Node>>();  
         private Grid.Viewable view; //I guess this is also an observer...
-        public Array<Array<TileNode>> Grid { get => observers; }
+        public Array<Array</* Tile */Node>> Grid { get => observers; }
         [Signal]
         public delegate void RandomizedTileEventHandler(string tileName, Vector2I position);
         public Model(
@@ -41,7 +41,7 @@ namespace Grid {
             rows = tileNameMatrix.Count;
             columns = tileNameMatrix[0].Count;
             observers.Resize(rows);
-            foreach(Array<TileNode> observer in observers){
+            foreach(Array</* Tile */Node> observer in observers){
                 observer.Resize(columns);
             }
 
@@ -61,10 +61,10 @@ namespace Grid {
         public void ConnectReplaceableTiles(){
             for(int x=0; x<observers.Count; x++){
                 for(int y=0; y<observers[x].Count; y++){
-                    var testttt = observers[x][y].Controller;
-                    if(observers[x][y].Controller is Replaceable.Controller dfg){
-                        var controller = observers[x][y].Controller as Replaceable.Controller;
-                        controller.ConnectReplacingTile(ReplaceTile(x, y));                        
+                    var controller = (observers[x][y] as TileNode).Controller;
+                    if(controller is Replaceable.Controller dfg){
+                        //var controller = observers[x][y].Controller as Replaceable.Controller;
+                        (controller as Replaceable.Controller).ConnectReplacingTile(ReplaceTile(x, y));                        
                     }
                 }
             }
@@ -75,14 +75,16 @@ namespace Grid {
                 var tileType = (TileNames) tileEnumAsInt;
                 GD.Print("Greetings from the grid model, will now replace:  " + tileType.ToString());
 
-                //var parent = GetNode<Node>("%TacticalGrid"); //nosir, I do not like this...  (also the model is not part of the scene tree, it wasn't added...)
-                var newTile = gridFactory.Create(
+                Node newTile = gridFactory.Create(
                     tileType,
                     tacticalGrid,
                     new Vector2I(col, row)
                 );
-                SetTile(newTile, col, row);
+                var oldTile = observers[col][row];
+                SetTile(newTile, col, row); 
 
+                tacticalGrid.RemoveChild(oldTile);
+                (tacticalGrid as Grid.Viewable).Update(observers);            
                 var bp = 234;
             };
         }
@@ -90,7 +92,7 @@ namespace Grid {
             
         // }
 
-        public void SetTile(TileNode tileNode_, int x_, int y_) { 
+        public void SetTile(/* TileNode */Node tileNode_, int x_, int y_) { 
             var observer = observers[x_][y_] = tileNode_;
             var tileModel = ((Controllable) observer).Model;
             (tileModel as Tiles.Model).Position = new Vector2I(x_, y_);
@@ -100,7 +102,7 @@ namespace Grid {
         }
 
         public Tiles.Model GetTileModel(Vector2I position){
-            return observers[position.X][position.Y].Model as  Tiles.Model;
+            return (observers[position.X][position.Y] as Controllable).Model as  Tiles.Model;
         }
 
         public Array<Array<Tiles.Model>> GetAllTileModels(){
@@ -111,7 +113,7 @@ namespace Grid {
             for(int x=0; x<columns; x++){
                 models[x].Resize(rows);
                 for(int y=0; y<rows; y++){
-                    models[x][y] = (Tiles.Model) observers[x][y].Model;
+                    models[x][y] = (Tiles.Model) (observers[x][y] as Controllable).Model;
                 }
             }
             return models;
@@ -119,7 +121,7 @@ namespace Grid {
         public Array<Tiles.Model> GetModelsFromMatches(Array<Vector2I> matches){
             var matchedModels = new Godot.Collections.Array<Tiles.Model>();
             foreach(var match in matches){
-                matchedModels.Add(observers[match.X][match.Y].Model as Tiles.Model);
+                matchedModels.Add((observers[match.X][match.Y] as Controllable).Model as Tiles.Model);
             }
             return matchedModels;
         }
@@ -140,7 +142,7 @@ namespace Grid {
             for(int x=0; x<cols; x++){
                 nameMatrix[x].Resize(rows);
                 for(int y=0; y<cols; y++){
-                    nameMatrix[x][y] = (observers[x][y].Model as Tiles.Model).Name; //name is a very dangerous interface since Node has it too and if I don't cast I'll get the wrong value
+                    nameMatrix[x][y] = ((observers[x][y] as Controllable).Model as Tiles.Model).Name; //name is a very dangerous interface since Node has it too and if I don't cast I'll get the wrong value
                 }
             }
             GridUtilities.PrintGridInitialsFromStringMatrix(nameMatrix, header);
@@ -158,8 +160,8 @@ namespace Grid {
             Vector2I destination = source + direction;
             if(destination.X >= 0 && destination.Y >= 0){
                 var newGrid = observers.Duplicate(true);
-                var sourceTile = observers[source.X][source.Y]; //these shouldn't be here...
-                var destinationTile = observers[destination.X][destination.Y];
+                var sourceTile = (TileNode) observers[source.X][source.Y]; //these shouldn't be here...
+                var destinationTile = (TileNode) observers[destination.X][destination.Y];
 
                 // GridUtilities.PlaceTileOnBoard(destinationTile, newGrid, source.X, source.Y); //can't update player model position here
                 // GridUtilities.PlaceTileOnBoard(sourceTile, newGrid, destination.X, destination.Y);
@@ -168,8 +170,8 @@ namespace Grid {
 
                 (var sourceMatches, var destinationMatches) = FindMatchGroups(sourceTile, destinationTile, newGrid);
 
-                 TileNode sourceNode = observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
-                 TileNode destinationNode = observers[destination.X][destination.Y];
+                 /* TileNode */ var sourceNode = (TileNode) observers[source.X][source.Y]; //MAKE SURE THESE CHANGE WITH THE MODEL
+                 /* TileNode */ var destinationNode = (TileNode) observers[destination.X][destination.Y];
                 if((sourceMatches.Count > 0) || (destinationMatches.Count > 0)){ //not enough but w/e      
                     //new
                     SetTile(destinationTile, source.X, source.Y); //this is a bit redundant but I can only change player model positions here...
@@ -201,7 +203,7 @@ namespace Grid {
             if((targetTile as Obtainable.Model).IsObtainable){
                 var sourceTile = observers[source.X][source.Y];
                 SetTile(sourceTile, destination.X, destination.Y);
-                return targetTile.Model as Tiles.Model;
+                return (targetTile as Controllable).Model as Tiles.Model;
             }
             return null;
         }
@@ -214,7 +216,7 @@ namespace Grid {
 
         public void BuffDamage(Tiles.Model tile, Vector2I positionInPath){
             var playerPosition = FindTilesByName(TileNames.Player)[0];                
-            var player = observers[playerPosition.X][playerPosition.Y];
+            var player = (TileNode) observers[playerPosition.X][playerPosition.Y];
             var pos = positionInPath;
             if(tile is BuffableDamage.Model){ //probably shouldn't buff if active actor not adjacent
                 ((BuffableDamage.Model) player.Model).IncreaseDamageOfMelee(((BuffableDamage.Model) tile).MeleeBuff);
@@ -234,7 +236,7 @@ namespace Grid {
 
         public Tiles.Model GetPlayer(){
             var playerPosition = FindTilesByName(TileNames.Player)[0];                
-            return observers[playerPosition.X][playerPosition.Y].Model as Tiles.Model;            
+            return (observers[playerPosition.X][playerPosition.Y] as Controllable).Model as Tiles.Model;            
         }   
 
         public bool CheckIfActorNearPath(TileNode actor, Array<Vector2I> path){
@@ -247,7 +249,7 @@ namespace Grid {
         //provisory
         public void NotifyMathedTileToPerformBehaviors(Array<Vector2I> matches){
             foreach(var match in matches){
-                var tile = observers[match.X][match.Y].Model as Tiles.Model;
+                var tile = (observers[match.X][match.Y] as Controllable).Model as Tiles.Model;
                 if(
                     tile is Tiles.Melee.Model /* || 
                     tile is Tiles.Player.Model */
@@ -261,11 +263,11 @@ namespace Grid {
 
         public Tiles.Model GetActorModel(TileNames actor){ //should be limited to actors, not all tiles
             var pos =  FindTilesByName(actor)[0];
-            return observers[pos.X][pos.Y].Model as Tiles.Model;
+            return (observers[pos.X][pos.Y] as Controllable).Model as Tiles.Model;
         }
         public TileNode GetActor(TileNames actor){ //should be limited to actors, not all tiles
             var pos =  FindTilesByName(actor)[0];
-            return observers[pos.X][pos.Y];
+            return (TileNode) observers[pos.X][pos.Y];
         }    
 
         public Node TransferTile(Vector2I target, Node emitter){
@@ -291,8 +293,8 @@ namespace Grid {
         }
 //   /////////////////////////////////////////////////////////
         public Tiles.Model JustSwap(Vector2I source, Vector2I destination){
-            var sourceTile = observers[source.X][source.Y]; 
-            var destinationTile = observers[destination.X][destination.Y];
+            var sourceTile = (TileNode) observers[source.X][source.Y]; 
+            var destinationTile = (TileNode) observers[destination.X][destination.Y];
 
             GridUtilities.PlaceTileOnBoard(destinationTile, observers, source.X, source.Y);
             GridUtilities.PlaceTileOnBoard(sourceTile, observers, destination.X, destination.Y);
@@ -314,7 +316,7 @@ namespace Grid {
 
             foreach(var pos in surroundings){
                 if(MathUtilities.CheckNegativeVectorAxes(pos)){
-                    neighbors.Add(observers[pos.X][pos.Y].Model as Tiles.Model);
+                    neighbors.Add((observers[pos.X][pos.Y] as Controllable).Model as Tiles.Model);
                 }                
             }
             return neighbors;
@@ -377,7 +379,7 @@ namespace Grid {
         // }
 
 
-        private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(TileNode sourceTile, TileNode destinationTile, Array<Array<TileNode>> newGrid){            
+        private (Array<Vector2I>, Array<Vector2I>) FindMatchGroups(TileNode sourceTile, TileNode destinationTile, Array<Array</* Tile */Node>> newGrid){            
             Array<Vector2I> sourceMatches = [];
             Array<Vector2I> destinationMatches = [];
 
@@ -413,8 +415,8 @@ namespace Grid {
 
 
         private bool CheckIfSwappingActor(Vector2I source, Vector2I destination){
-            Tiles.Model sourceTile = observers[source.X][source.Y].Model as Tiles.Model;
-            Tiles.Model destinationTile = observers[destination.X][destination.Y].Model as Tiles.Model;
+            Tiles.Model sourceTile = (observers[source.X][source.Y] as Controllable).Model as Tiles.Model;
+            Tiles.Model destinationTile = (observers[destination.X][destination.Y] as Controllable).Model as Tiles.Model;
             string player = TileNames.Player.ToString().ToLower();
 
             return (sourceTile.Name == player || destinationTile.Name == player);
@@ -425,7 +427,7 @@ namespace Grid {
             Array<Vector2I> tilePositions = [];
             for(int x = 0; x < observers.Count; x++){
                 for(int y = 0; y < observers[0].Count; y++){
-                    if((observers[x][y] is not null) && ((observers[x][y].Model as Tiles.Model).Name == tileName)){
+                    if((observers[x][y] is not null) && (((observers[x][y] as Controllable).Model as Tiles.Model).Name == tileName)){
                         tilePositions.Add(new Vector2I(x, y));
                     }
                 }
@@ -434,14 +436,14 @@ namespace Grid {
         }
 
 
-        private Array<Vector2I> FindMatchesWith(TileNode tile_, Array<Array<TileNode>> grid_){
+        private Array<Vector2I> FindMatchesWith(TileNode tile_, Array<Array</* Tile */Node>> grid_){
             var horizontalMatches = FindHorizontal(tile_, grid_);
             var verticalMatches = FindVertical(tile_, grid_);
             var mergedCsharpArray = horizontalMatches.Concat(verticalMatches).ToArray();            
             return new Array<Vector2I>(mergedCsharpArray);
         }
 
-        private Array<Vector2I> FindHorizontal(TileNode tile_, Array<Array<TileNode>> grid_){
+        private Array<Vector2I> FindHorizontal(TileNode tile_, Array<Array</* Tile */Node>> grid_){
             var name = (tile_.Model as Tiles.Model).Name;  //CAREFUL, IF NO CAST IT ACCESSES Name PROP of Node, NOT Tiles.Model
             var matches = new Array<Vector2I>();
 
@@ -449,9 +451,9 @@ namespace Grid {
                 for(int y = 0; y < columns; y++){
                     if(y > 0 && y < (columns - 1)){
                         if(
-                            name == (grid_[x][y - 1].Model as Tiles.Model).Name && 
-                            name == (grid_[x][y].Model as Tiles.Model).Name && 
-                            name == (grid_[x][y + 1].Model as Tiles.Model).Name 					
+                            name == ((grid_[x][y - 1] as Controllable).Model as Tiles.Model).Name && 
+                            name == ((grid_[x][y] as Controllable).Model as Tiles.Model).Name && 
+                            name == ((grid_[x][y + 1] as Controllable).Model as Tiles.Model).Name 					
                         ){
                             matches.Add(new Vector2I(x, y - 1));
                             matches.Add(new Vector2I(x, y));
@@ -463,7 +465,7 @@ namespace Grid {
             return Collections.RemoveDuplicates(matches);	
         }
 
-        private Array<Vector2I> FindVertical(TileNode tile_, Array<Array<TileNode>> grid_){        
+        private Array<Vector2I> FindVertical(TileNode tile_, Array<Array</* Tile */Node>> grid_){        
             var name = tile_.Model.Name;
             var matches = new Array<Vector2I>();
 
@@ -471,9 +473,9 @@ namespace Grid {
                 for(int y = 0; y < rows; y++){
                     if(y > 0 && y < (rows - 1)){
                         if(
-                            name == (grid_[y - 1][x].Model as Tiles.Model).Name && 
-                            name == (grid_[y][x].Model as Tiles.Model).Name && 
-                            name == (grid_[y + 1][x].Model as Tiles.Model).Name 					
+                            name == ((grid_[y - 1][x] as Controllable).Model as Tiles.Model).Name && 
+                            name == ((grid_[y][x] as Controllable).Model as Tiles.Model).Name && 
+                            name == ((grid_[y + 1][x] as Controllable).Model as Tiles.Model).Name 					
                         ){
                             matches.Add(new Vector2I(y - 1, x));
                             matches.Add(new Vector2I(y, x));
