@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c2bbcbjgw186g"]
+[gd_scene load_steps=16 format=3 uid="uid://c2bbcbjgw186g"]
 
 [ext_resource type="PackedScene" uid="uid://u4ulndp0wa6k" path="res://features/tiles/variants/tile.tscn" id="1_7yhcl"]
 [ext_resource type="Texture2D" uid="uid://djk6vfwkdo5fs" path="res://assets/images/tiles/char_p.png" id="2_ib1fk"]
@@ -8,10 +8,13 @@
 [ext_resource type="Script" uid="uid://b6mg3e8720o20" path="res://features/tiles/behavior/DamageBuff.cs" id="5_hunij"]
 [ext_resource type="Script" uid="uid://cfk36jqcxacin" path="res://features/tiles/variants/player/Model.cs" id="5_kqfgq"]
 [ext_resource type="Script" uid="uid://c5do70scu2xcx" path="res://features/tiles/animators/AttackAnimator.cs" id="6_di0hx"]
+[ext_resource type="Script" uid="uid://bcyeyalemv4p3" path="res://features/tiles/animators/DefenseAnimator.cs" id="7_1hfbd"]
+[ext_resource type="PackedScene" uid="uid://bat5m03vla221" path="res://features/tiles/feedback/damage_number.tscn" id="8_ksvi8"]
 [ext_resource type="Script" uid="uid://bks2gbdoqjmr1" path="res://features/tiles/behavior/Offend.cs" id="9_1bdos"]
 [ext_resource type="Script" uid="uid://clvt00ras2j7f" path="res://features/tiles/behavior/Defender.cs" id="10_c77j6"]
 [ext_resource type="Script" uid="uid://be02jfmlvfifs" path="res://features/tiles/behavior/Movement.cs" id="10_di0hx"]
 [ext_resource type="Script" uid="uid://bk3ko6hcthm46" path="res://features/tiles/behavior/Haul.cs" id="11_0hbcq"]
+[ext_resource type="Script" uid="uid://d04t8vh0q3yil" path="res://features/tiles/behavior/Disposition.cs" id="13_wmw1d"]
 
 [node name="Player" instance=ExtResource("1_7yhcl")]
 texture_normal = ExtResource("2_ib1fk")
@@ -33,7 +36,14 @@ duration = 0.52
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 
-[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer", "offender", "defender", "hauler", "movement")]
+[node name="Defend" type="Node" parent="Animators" index="3"]
+unique_name_in_owner = true
+script = ExtResource("7_1hfbd")
+
+[node name="DamageNumber" parent="Animators" index="4" instance=ExtResource("8_ksvi8")]
+unique_name_in_owner = true
+
+[node name="Model" parent="." index="2" node_paths=PackedStringArray("transporter", "damageBuffer", "offender", "defender", "hauler", "movement", "disposition")]
 script = ExtResource("5_kqfgq")
 transporter = NodePath("../Animators/Transport")
 damageBuffer = NodePath("DamageBuffer")
@@ -41,6 +51,7 @@ offender = NodePath("Offender")
 defender = NodePath("Defender")
 hauler = NodePath("Hauler")
 movement = NodePath("Movement")
+disposition = NodePath("Disposition")
 
 [node name="DamageBuffer" type="Node" parent="Model" index="2"]
 unique_name_in_owner = true
@@ -57,11 +68,17 @@ health = 5
 maxHealth = 10
 defense = 2
 
-[node name="Movement" type="Node" parent="Model" index="5"]
+[node name="Disposition" type="Node" parent="Model" index="5"]
+unique_name_in_owner = true
+script = ExtResource("13_wmw1d")
+isAggressive = true
+isEnemy = true
+
+[node name="Movement" type="Node" parent="Model" index="6"]
 unique_name_in_owner = true
 script = ExtResource("10_di0hx")
 stamina = 10
 
-[node name="Hauler" type="Node" parent="Model" index="6"]
+[node name="Hauler" type="Node" parent="Model" index="7"]
 unique_name_in_owner = true
 script = ExtResource("11_0hbcq")

@@ -5,7 +5,13 @@ using Godot.Collections;
 
 namespace Tiles { 
     namespace Player{
-        public partial class Model : Tiles.Model, Movable.Model, /* Transportable.Model, */ BuffableDamage.Model, Offensive.Model, Defensive.Model, Haulable.Model{ //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
+        public partial class Model : Tiles.Model, Movable.Model, 
+            /* Transportable.Model, */ BuffableDamage.Model, 
+            Offensive.Model, 
+            Defensive.Model, 
+            Haulable.Model,
+            Hostility.Model
+        { //should not have the buffable damage interface, only damage buff tiles can .. well, buff damage
             [Export]
             private Node transporter;
             [Export]
@@ -18,6 +24,10 @@ namespace Tiles {
             private Node hauler;
             [Export]
             private Node movement;
+            [Export]
+            private Node disposition;
+            [Export]
+            private Node damageNumber;
             private Vector2I position;
             public override string Name => "player";
             //public override NamableTile Type => TileName.Player;
@@ -41,6 +51,9 @@ namespace Tiles {
             public int Health => Defender.Health;
             public int MaxHealth => Defender.MaxHealth;
             public int Defense => Defender.Defense;
+            public Hostility.Model Disposition => disposition as Hostility.Model;
+            public bool IsAggressive { get => Disposition.IsAggressive; set => Disposition.IsAggressive = value; }
+            public bool IsEnemy { get => Disposition.IsEnemy; set => Disposition.IsEnemy = value; }
 
             // public bool VerifyShortMoveEligibility(string tileName){
             //     return moveBehavior.VerifyShortMoveEligibility(tileName);
@@ -55,6 +68,7 @@ namespace Tiles {
             // public void RemoveTile(string tileName){
             //     moveBehavior.RemoveTile(tileName);
             // }
+
 
 
             public override void _Ready()

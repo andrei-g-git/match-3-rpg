@@ -16,6 +16,11 @@ namespace Player{
             attackAnimator.Height = SideLength;
             attackAnimator.Margin = Margin;
 
+            var model = GetNode<Node>("%Model");
+            
+            var damageNumber = GetNode<Node>("%DamageNumber");
+            (model as Defensive.Model).ConnectTookDamage((damageNumber as DisplayableNumber).DisplayNumberAt);
+
             var offender = GetNode<Node>("%Offender") as Offensive.Model;
             var hauler = GetNode<Node>("%Hauler") as Haulable.Model;
             hauler.ConnectTryFighting(offender.Attack);
@@ -24,14 +29,19 @@ namespace Player{
             var defender = GetNode<Node>("%Defender") as Defensive.Model;
             movement.ConnectGotHealth(defender.ReceiveHealingFrom);
 
+
+
+            var defenseAnimator  = GetNode<Node>("%Defend");
+            (model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateDefending);
+
             // var model = GetNode<Node>("%Model");
             // var board = (model as GridItem).Board;
             // //movement.ConnectLeftEmptyTile(board.Bar)
 
             
-            var model = (GetParent().GetParent() as TacticalGrid).Model;
+            var gridModel = (GetParent().GetParent() as TacticalGrid).Model;
             //matching.ConnectUpdate(model.Notify);
-            (movement as Updating.Model).ConnectUpdate(model.Notify);
+            (movement as Updating.Model).ConnectUpdate(gridModel.Notify);
 
             
         }
