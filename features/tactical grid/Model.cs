@@ -101,7 +101,7 @@ namespace Grid {
             var tileModel = ((Controllable) observer).Model;
             (tileModel as Tiles.Model).Position = new Vector2I(x_, y_);
 
-            if(x_ == 0 && y_ == 0){(tileModel as Tiles.Model).Position = new Vector2I(69, 420);} //test
+            //if(x_ == 0 && y_ == 0){(tileModel as Tiles.Model).Position = new Vector2I(69, 420);} //test
             var bp = 234;
         }
 
