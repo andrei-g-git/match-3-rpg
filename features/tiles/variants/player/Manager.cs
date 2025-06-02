@@ -37,6 +37,10 @@ namespace Player{
             // var model = GetNode<Node>("%Model");
             // var board = (model as GridItem).Board;
             // //movement.ConnectLeftEmptyTile(board.Bar)
+            
+            (defenseAnimator as Box).Width = SideLength;
+            (defenseAnimator as Box).Height = SideLength;
+            (defenseAnimator as Box).Margin = Margin;
 
             
             var gridModel = (GetParent().GetParent() as TacticalGrid).Model;

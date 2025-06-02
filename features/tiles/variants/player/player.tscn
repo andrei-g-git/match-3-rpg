@@ -32,13 +32,15 @@ duration = 2.265
 [node name="Attack" type="Node" parent="Animators" index="2" node_paths=PackedStringArray("signalEmitter", "tileNode")]
 unique_name_in_owner = true
 script = ExtResource("6_di0hx")
-duration = 0.52
+duration = 0.215
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 
-[node name="Defend" type="Node" parent="Animators" index="3"]
+[node name="Defend" type="Node" parent="Animators" index="3" node_paths=PackedStringArray("tileNode")]
 unique_name_in_owner = true
 script = ExtResource("7_1hfbd")
+duration = 0.305
+tileNode = NodePath("../..")
 
 [node name="DamageNumber" parent="Animators" index="4" instance=ExtResource("8_ksvi8")]
 unique_name_in_owner = true

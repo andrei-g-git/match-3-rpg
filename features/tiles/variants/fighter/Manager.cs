@@ -9,13 +9,17 @@ namespace Fighter{
 
             var model = GetNode<Node>("%Model");
             var defenseAnimator  = GetNode<Node>("%Defend");
-            //(model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateMethod);
+            //(model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateM(ethod);
             (model as Defensive.Model).ConnectTookDamage((defenseAnimator as Defensive.View).AnimateDefending);
 
             var attackAnimator = GetNode<Node>("%Attack") as Box;
             attackAnimator.Width = SideLength;
             attackAnimator.Height = SideLength;
             attackAnimator.Margin = Margin;
+
+            (defenseAnimator as Box).Width = SideLength;
+            (defenseAnimator as Box).Height = SideLength;
+            (defenseAnimator as Box).Margin = Margin;
 
             var damageNumber = GetNode<Node>("%DamageNumber");
             (model as Defensive.Model).ConnectTookDamage((damageNumber as DisplayableNumber).DisplayNumberAt);

@@ -11,4 +11,8 @@ public static class MathUtilities{
     public static bool CheckNegativeVectorAxes(Vector2 vec){
         return vec.X >= 0 && vec.Y >= 0;
     }
+
+    public static Vector2 NegateVector(Vector2 vec){
+        return new Vector2(-vec.X, -vec.Y);
+    }
 }

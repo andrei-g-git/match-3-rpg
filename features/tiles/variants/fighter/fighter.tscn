@@ -21,7 +21,7 @@ script = ExtResource("4_dfqvf")
 [node name="Defend" type="Node" parent="Animators" index="1" node_paths=PackedStringArray("tileNode")]
 unique_name_in_owner = true
 script = ExtResource("4_4glyp")
-duration = 0.5
+duration = 0.3
 tileNode = NodePath("../..")
 
 [node name="DamageNumber" parent="Animators" index="2" instance=ExtResource("6_06fdr")]
@@ -30,7 +30,7 @@ unique_name_in_owner = true
 [node name="Attack" type="Node" parent="Animators" index="3" node_paths=PackedStringArray("signalEmitter", "tileNode")]
 unique_name_in_owner = true
 script = ExtResource("7_qcjfy")
-duration = 0.515
+duration = 0.21
 signalEmitter = NodePath("../../Model/Offender")
 tileNode = NodePath("../..")
 

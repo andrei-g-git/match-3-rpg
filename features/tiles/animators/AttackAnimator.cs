@@ -17,6 +17,33 @@ public partial class AttackAnimator : Node, Box{
 		(signalEmitter as Offend).Attacked += Attack;
 	}
 
+	public void Attack(Vector2I source_, Vector2I target_){
+		var target = MathUtilities.InvertVector(target_);
+		var source = MathUtilities.InvertVector(source_);
+		var direction = target - source; //source - target;
+		var pixelRelativeTarget = direction * width/4; //should just pass direction in the method parameters
+		var pixelRelativeBacktrack = MathUtilities.NegateVector(pixelRelativeTarget);
+		Tween tween = CreateTween()
+			.SetTrans(Tween.TransitionType.Elastic)
+			.SetEase(Tween.EaseType.Out);		
+		tween.TweenProperty(
+			tileNode, 
+			"position", 
+			pixelRelativeTarget, 
+			duration
+		)
+			.AsRelative();	
+		tween.TweenProperty(
+			tileNode, 
+			"position", 
+			pixelRelativeBacktrack, 
+			duration
+		)
+			.AsRelative();		
+
+		var bp = 13454;						
+	}
+
 	public void Attack_old(Vector2I source_, Vector2I target_){
 		var target = MathUtilities.InvertVector(target_);
 		var source = MathUtilities.InvertVector(source_);
@@ -41,7 +68,7 @@ public partial class AttackAnimator : Node, Box{
 			.AsRelative();		
 	}
 
-	public void Attack(Vector2I source_, Vector2I target_){
+	public void Attack_still_old(Vector2I source_, Vector2I target_){
 		var target = MathUtilities.InvertVector(target_);
 		var source = MathUtilities.InvertVector(source_);
 		var direction = MathUtilities.InvertVector(source - target);

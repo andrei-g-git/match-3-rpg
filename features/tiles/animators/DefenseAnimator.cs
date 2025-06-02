@@ -23,6 +23,10 @@ public partial class DefenseAnimator: Node, Box, Defensive.View{
     public void AnimateDefending(Vector2I direction, int damage /* not using */){
         var reverseDestinationInPixels = direction * (width + margin)/3;
         var pixelDestination = MathUtilities.InvertVector(reverseDestinationInPixels);
+        //var pixelStart = (Vector2) reverseDestinationInPixels;
+        //var pixelStart = GetOriginalPoint(pixelDestination);
+        //var pixelStart = GetBackwardVector(pixelDestination);
+        var pixelStart = MathUtilities.NegateVector(pixelDestination);
         var tween = CreateTween()
 			.SetTrans(Tween.TransitionType.Elastic)
 			.SetEase(Tween.EaseType.Out);
@@ -31,6 +35,36 @@ public partial class DefenseAnimator: Node, Box, Defensive.View{
             "position",
             pixelDestination,
             duration
-        );
+        )
+            //.From(pixelStart);
+            .AsRelative();
+
+        tween.TweenProperty(
+            tileNode,
+            "position",
+            pixelStart,
+            duration
+        )
+            //.From(pixelDestination);
+            .AsRelative();
+
+        var bp = 3245;
     } 
+
+    public Vector2 GetOriginalPoint(Vector2 destination){ //make utility
+        var axisTravel = Math.Max(destination.X, destination.Y);
+        var x = destination.X; //one of these should be 0
+        var y = destination.Y;
+        var xx = Math.Max(0, x - axisTravel);
+        var yy = Math.Max(0, y - axisTravel);
+        return new Vector2(xx, yy);
+    }
+
+    public Vector2 GetBackwardVector(Vector2 destination){
+        var x = destination.X; 
+        var y = destination.Y;
+        var xx = -x;
+        var yy = -y;
+        return new Vector2(xx, yy);
+    }
 }
